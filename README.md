@@ -17,7 +17,7 @@ ChineseChess_01_02.zip
 3、代码写完，有空重构优化一下
 
 ChineseChess_02_01.zip
-2.1版本命名按照google谷歌编程规范 ，且略微重构了一番
+2.1版本命名按照google谷歌编程规范命名 ，且略微重构了一番
 
 ChineseChess_03_01.zip
 3.1版本，人机对战模块写好了。可以实现电脑和玩家对战
