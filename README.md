@@ -31,6 +31,14 @@ ChineseChess_04_01.zip
 ChineseChess_05_01.zip
 5.1版本，基本所有的功能都已经实现，且整合。余下的就是一些需要完善的一些地方
 
+ChineseChess_05_02.zip
+5.2版本，添加了关于作者相关信息
 
 ChineseChess_05_03.zip
 5.3版本，且优化加强人机AI对战的算法，和修复之前遗留的小问题。
+
+ChineseChess_05_04.zip
+5.4版本，最终发布版本，无需修改。
+
+
+说明：ChineseChess_AllVersionControl.zip 最为全过程，所有的开发过程，每一个阶段的源码都在。将里面不那么重要的一些版本删掉后，更新按照顺序更名版本号，即为发布到github的全过程版本。在此只是留一个详细的备份作用。
