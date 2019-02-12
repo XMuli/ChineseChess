@@ -4,7 +4,6 @@
 ChineseChess_01_01.zip
 1.1版本，创建一个空的widget的中国象棋项目
 
-
 ChineseChess_01_02.zip
 1.2版本，新增加了单人单机中国象棋对战模式
 完成了中国象棋项目功能如下:
@@ -46,3 +45,4 @@ ChineseChess_05_05.zip
 若需要下载最终的一份源码学习，下载最终的ChineseChess_05_05.zip版本即可以。
 
 说明：且以上所有源码全带有详细注释。
+发开编程环境qt-opensource-windows-x86-5.9.7.exe（附官网下载地址：http://download.qt.io/archive/qt/5.9/5.9.7/）
