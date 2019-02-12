@@ -45,4 +45,4 @@ ChineseChess_05_05.zip
 若需要下载最终的一份源码学习，下载最终的ChineseChess_05_05.zip版本即可以。
 
 说明：且以上所有源码全带有详细注释。
-发开编程环境qt-opensource-windows-x86-5.9.7.exe（附官网下载地址：http://download.qt.io/archive/qt/5.9/5.9.7/）
+发开编程环境qt-opensource-windows-x86-5.9.7.exe（附官网下载地址：http://download.qt.io/archive/qt/5.9/5.9.7/ ）
