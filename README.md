@@ -3,10 +3,7 @@
 个人大学毕业设计，基于Qt开发的中国象棋网络对战平台(含通讯功能)
 
 
-
-## 项目运行演示：
-[![asciicast](https://blog.csdn.net/qq_33154343/article/details/89284983)](https://www.bilibili.com/video/av45509758)
-
+## 项目运行演示：：[2019_01_Qt5_ChinessChess 基于QT的跨平台网络象棋对战演示](https://www.bilibili.com/video/av45509758)
 ![Image text](https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/1.png)
 ![Image text](https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/2.png)
 ![Image text](https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/3.png)
