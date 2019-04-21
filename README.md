@@ -6,9 +6,9 @@
 ## 项目运行演示：
 视频演示：[2019_01_Qt5_ChinessChess 基于QT的跨平台网络象棋对战演示](https://www.bilibili.com/video/av45509758)
 
-<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/1.png"  height="600" width="800">
-<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/2.png"  height="600" width="800">
-<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/3.png"  height="600" width="800">
+<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/1.png"  height="500" width="800">
+<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/2.png"  height="500" width="800">
+<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/3.png"  height="500" width="800">
 
 ## 相关文章链接：
 
