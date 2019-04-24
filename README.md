@@ -10,6 +10,8 @@
 <img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/2.png"  height="500" width="800">
 <img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/3.png"  height="500" width="800">
 
+<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/4.png"  height="500" width="800">
+
 ## 相关文章链接：
 
 [QT5/C++项目：基于QT的跨平台网络对战象棋（一）](https://blog.csdn.net/qq_33154343/article/details/89284983)
@@ -61,9 +63,14 @@
 5.4版本。基本无需修改，但是遗漏了自定义的一个login图标，关于运行程序的图标。
 
 **ChineseChess_05_05.zip**
-5.5版本。最终发布版本。
+5.5版本。当前最终发布版本。
 
 若需要下载最终的一份源码学习，下载最终的ChineseChess_05_05.zip版本即可以。
+
+**ChineseChess_06_00**
+6.0版本。最新版本。
+
+在5.5的版本上面，更新了相关连接，也提供预览源码
 
 
 
