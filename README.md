@@ -24,8 +24,6 @@
 
 <img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/win_macos.gif"  height="500" width="800">
 
-<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/win_macos.gif"  height="500" width="800">
-
 **作者作品详情：**   
 
 <img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/author.png"  height="500" width="800">
