@@ -1,16 +1,34 @@
 # Qt_ChinessChess
 
+[TOC]
+
 个人大学毕业设计，基于Qt开发的中国象棋网络对战平台(含通讯功能)
 
 
 ## 项目运行演示：
 视频演示：[2019_01_Qt5_ChinessChess 基于QT的跨平台网络象棋对战演示](https://www.bilibili.com/video/av45509758)
 
-<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/1.png"  height="500" width="800">
-<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/2.png"  height="500" width="800">
-<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/3.png"  height="500" width="800">
+**win10系统演示：**
 
-<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/4.png"  height="500" width="800">
+<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/win_chess.gif"  height="500" width="800">
+
+**Linux系统演示：**
+
+<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/linux_chess.gif"  height="500" width="800">
+
+**MacOS系统演示：**
+
+<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/macos_chess.gif"  height="500" width="800">
+
+**跨平台对战演示：**   MacOS  vs  Win10
+
+<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/win_macos.gif"  height="500" width="800">
+
+<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/win_macos.gif"  height="500" width="800">
+
+**作者作品详情：**   
+
+<img src="https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/blob/master/images/author.png"  height="500" width="800">
 
 ## 相关文章链接：
 
@@ -70,7 +88,7 @@
 **ChineseChess_06_00**
 6.0版本。最新版本。
 
-在5.5的版本上面，更新了相关连接，也提供预览源码
+在5.5的版本上面，更新了个人信息，也提供直接预览源码
 
 
 
@@ -88,4 +106,4 @@
 
 ### 说明：且以上所有源码全带有详细注释。
 
-发开编程环境qt-opensource-windows-x86-5.9.7.exe（附官网下载地址：http://download.qt.io/archive/qt/5.9/5.9.7/ ）如若下载的项目编译运行失败，请使用下载这一版本的QtCreator编译运行项目
+发开编程环境qt-opensource-windows-x86-5.9.7.exe（附官网下载地址：http://download.qt.io/archive/qt/5.9/5.9.7/ ）如若下载的项目编译运行失败，请使用下载这一版本的QtCreator编译运行项目  （使用Desktop Qt 5.9.7 MinGW 32 bit 直接编译运行）
