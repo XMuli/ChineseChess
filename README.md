@@ -12,23 +12,23 @@
 
 
 
-<font color=#70AD47 size=4 face="幼圆">编码语言：</font>![](https://img.shields.io/badge/language-c++-orange.svg)
+<font color=#70AD47 size=4 face="幼圆">**编码语言：**</font>![](https://img.shields.io/badge/language-c++-orange.svg)
 
-<font color=#70AD47 size=4 face="幼圆">代码大小：</font>![](https://img.shields.io/github/languages/code-size/touwoyimuli/2019_01_Qt5_ChinessChess.svg?logo=chess)
+<font color=#70AD47 size=4 face="幼圆">**代码大小：**</font>![](https://img.shields.io/github/languages/code-size/touwoyimuli/2019_01_Qt5_ChinessChess.svg?logo=chess)
 
-<font color=#70AD47 size=4 face="幼圆">项目进度：</font>![](http://progressed.io/bar/100?title=completed)
+<font color=#70AD47 size=4 face="幼圆">**项目进度：**</font>![](http://progressed.io/bar/100?title=completed)
 
-<font color=#70AD47 size=4 face="幼圆">总下载量：</font>![](https://img.shields.io/github/downloads/touwoyimuli/2019_01_Qt5_ChinessChess/total.svg)
+<font color=#70AD47 size=4 face="幼圆">**总下载量：**</font>![](https://img.shields.io/github/downloads/touwoyimuli/2019_01_Qt5_ChinessChess/total.svg)
 
-<font color=#70AD47 size=4 face="幼圆">项目编译：</font>[![](https://travis-ci.org/Alamofire/Alamofire.svg?branch=master)](https://travis-ci.org/Alamofire/Alamofire)
+<font color=#70AD47 size=4 face="幼圆">**项目编译：**</font>[![](https://travis-ci.org/Alamofire/Alamofire.svg?branch=master)](https://travis-ci.org/Alamofire/Alamofire)
 
-<font color=#70AD47 size=4 face="幼圆">支持平台：</font>![](https://img.shields.io/conda/pn/conda-forge/qt.svg)
+<font color=#70AD47 size=4 face="幼圆">**支持平台：**</font>![](https://img.shields.io/conda/pn/conda-forge/qt.svg)
 
 <br>
 
 ## 项目运行演示：
 
-<font color=#70AD47 size=4 face="幼圆">视频演示：</font> [2019_01_Qt5_ChinessChess 基于QT的跨平台网络象棋对战演示](https://www.bilibili.com/video/av45509758)
+<font color=#70AD47 size=4 face="幼圆">**视频演示：**</font> [2019_01_Qt5_ChinessChess 基于QT的跨平台网络象棋对战演示](https://www.bilibili.com/video/av45509758)
 
 <br>
 
@@ -81,6 +81,7 @@
 最新版本。在上一版本的5.5的版本上面，更新了个人信息。且以上所有源码全带有详细注释。
 
 <br>
+
 ## 历史版本：
 
 [历史版本下载](https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/tree/master/old%20versions)
@@ -89,12 +90,12 @@
 
 ## 说明：
 
-发开编程环境[qt-opensource-windows-x86-5.9.7.exe官网下载](http://download.qt.io/archive/qt/5.9/5.9.7/)。 如若下载的项目编译运行失败，请使用下载**这一版本**5.9.7的QtCreator编译运行项目  （使用Desktop Qt 5.9.7 MinGW 32 bit 直接编译运行）（理论5.9.4及以上的版本均可打开编译运行）
+发开编程环境[qt-opensource-windows-x86-5.9.7.exe](http://download.qt.io/archive/qt/5.9/5.9.7/)。 如若下载的项目编译运行失败，请使用下载**这一版本**5.9.7的QtCreator编译运行项目  （使用Desktop Qt 5.9.7 MinGW 32 bit 直接编译运行）（理论5.9.4及以上的版本均可打开编译运行）
 
 <br>
 
 ## 捐赠
-若是帮助到了你，可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，表示点个赞，手有余香
+若是帮助到了你，可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，方便抬手之间，表示点个赞，手有余香
 <img  src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709003145.jpg" height="205" width="400" align=center/>
 
 <br>
