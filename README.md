@@ -24,7 +24,7 @@
 
 <font color=#70AD47 size=4 face="幼圆">支持平台：</font>![](https://img.shields.io/conda/pn/conda-forge/qt.svg)
 
-<br><br>
+<br>
 
 ## 项目运行演示：
 
@@ -82,21 +82,28 @@
 
 
 
+<br>
 ## 历史版本：
 
+[历史版本下载](https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/tree/master/old%20versions)
 
-
-
+<br>
 
 ## 说明：
 
 发开编程环境[qt-opensource-windows-x86-5.9.7.exe官网下载](http://download.qt.io/archive/qt/5.9/5.9.7/)。 如若下载的项目编译运行失败，请使用下载**这一版本**5.9.7的QtCreator编译运行项目  （使用Desktop Qt 5.9.7 MinGW 32 bit 直接编译运行）（理论5.9.4及以上的版本均可打开编译运行）
 
-
+<br>
 
 ## 捐赠
 
+若是帮助到了你，可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，表示点个赞，手有余香
+
+
+
 <img  src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709003145.jpg" height="205" width="400" align=center/>
+
+
 
 <br>
 
@@ -104,7 +111,7 @@
 
 <font color=#70AD47 size=4 face="幼圆">**touwoyimuli：** </font> touwoyimuli@gmai.com         [作者更多联系方式](https://touwoyimuli.github.io/about/)
 
-
+<br>
 
 ## 协议
 
