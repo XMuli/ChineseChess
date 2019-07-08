@@ -24,7 +24,7 @@
 
 <font color=#70AD47 size=4 face="幼圆">支持平台：</font>![](https://img.shields.io/conda/pn/conda-forge/qt.svg)
 
-<br><br>
+<br>
 
 ## 项目运行演示：
 
@@ -80,19 +80,17 @@
 
 最新版本。在上一版本的5.5的版本上面，更新了个人信息。且以上所有源码全带有详细注释。
 
-
-
+<br>
 ## 历史版本：
 [历史版本下载](https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/tree/master/old%20versions)
 
-
-
+<br>
 
 ## 说明：
 
 发开编程环境[qt-opensource-windows-x86-5.9.7.exe官网下载](http://download.qt.io/archive/qt/5.9/5.9.7/)。 如若下载的项目编译运行失败，请使用下载**这一版本**5.9.7的QtCreator编译运行项目  （使用Desktop Qt 5.9.7 MinGW 32 bit 直接编译运行）（理论5.9.4及以上的版本均可打开编译运行）
 
-
+<br>
 
 ## 捐赠
 
@@ -104,8 +102,7 @@
 
 <font color=#70AD47 size=4 face="幼圆">**touwoyimuli：** </font> touwoyimuli@gmai.com         [作者更多联系方式](https://touwoyimuli.github.io/about/)
 
-
-
+<br>
 ## 协议
 
 <img src='https://www.gnu.org/graphics/gplv3-127x51.png' width='127' height='51'/>
