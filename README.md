@@ -76,7 +76,7 @@
 
 ## 源码说明：
 
-<font color=#70AD47 size=4 face="幼圆">版本:</font>![](https://img.shields.io/badge/v-6.0-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**版本:**</font>![](https://img.shields.io/badge/v-6.0-brightgreen.svg)
 
 最新版本。在上一版本的5.5的版本上面，更新了个人信息。且以上所有源码全带有详细注释。
 

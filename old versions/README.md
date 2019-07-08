@@ -78,10 +78,10 @@
 
 <font color=#70AD47 size=5 face="幼圆">历史版本:</font>
 
-<font color=#70AD47 size=4 face="幼圆">旧版本:</font>![](https://img.shields.io/badge/v-1.1-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**旧版本:**</font>![](https://img.shields.io/badge/v-1.1-brightgreen.svg)
 1.1版本，创建一个空的widget的中国象棋项目
 
-<font color=#70AD47 size=4 face="幼圆">旧版本:</font>![](https://img.shields.io/badge/v-1.2-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**旧版本:**</font>![](https://img.shields.io/badge/v-1.2-brightgreen.svg)
 
 1.2版本，新增加了单人单机中国象棋对战模式
 完成了中国象棋项目功能如下:
@@ -89,44 +89,38 @@
 2、每一种棋子的规则走法确定
 3、实现了一台电脑一个人同时控制两方象棋的进行游戏
 
-<font color=#70AD47 size=4 face="幼圆">旧版本:</font>![](https://img.shields.io/badge/v-2.1-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**旧版本:**</font>![](https://img.shields.io/badge/v-2.1-brightgreen.svg)
 
 2.1版本命名按照google谷歌编程规范命名 ，且略微重构了一番
 
-<font color=#70AD47 size=4 face="幼圆">旧版本:</font>![](https://img.shields.io/badge/v-3.1-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**旧版本:**</font>![](https://img.shields.io/badge/v-3.1-brightgreen.svg)
 
 3.1版本，新增加人机对战模式。可以实现电脑和玩家对战
  但是人工智能略有缺陷： (不影响使用，后续全部完成了再继续优化)
 （1）电脑过于弱智，只能看一步的局面分。
 （2）由于设计的人工智能步骤，电脑是依靠杀死玩家的棋子，来进行下一步的，若是无棋可杀，程序则会自动结束（算是一个崩溃吧，在5.3版本已经修复）
 
-<font color=#70AD47 size=4 face="幼圆">旧版本:</font>![](https://img.shields.io/badge/v-4.1-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**旧版本:**</font>![](https://img.shields.io/badge/v-4.1-brightgreen.svg)
 
 4.1版本，新增游戏模式，在局域网下，双人同时不同台PC进行对战游戏
 
-<font color=#70AD47 size=4 face="幼圆">旧版本:</font>![](https://img.shields.io/badge/v-5.1-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**旧版本:**</font>![](https://img.shields.io/badge/v-5.1-brightgreen.svg)
 
 5.1版本，基本所有的功能都已经实现，且整合。余下的就是一些需要完善的一些地方
 
-<font color=#70AD47 size=4 face="幼圆">旧版本:</font>![](https://img.shields.io/badge/v-5.2-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**旧版本:**</font>![](https://img.shields.io/badge/v-5.2-brightgreen.svg)
 
 5.2版本，添加了关于作者相关信息
 
-<font color=#70AD47 size=4 face="幼圆">旧版本:</font>![](https://img.shields.io/badge/v-5.3-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**旧版本:**</font>![](https://img.shields.io/badge/v-5.3-brightgreen.svg)
 
 5.3版本。基本无需修改，但是遗漏了自定义的一个login图标，关于运行程序的图标。
 
-<font color=#70AD47 size=4 face="幼圆">旧版本:</font>![](https://img.shields.io/badge/v-5.5-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**旧版本:**</font>![](https://img.shields.io/badge/v-5.5-brightgreen.svg)
 
 5.5版本。当前最终发布版本。
 
 若需要下载最终的一份源码学习，下载最终的ChineseChess_05_05.zip版本即可以。
-
-<br>
-
-## 历史版本：
-
-[历史版本下载](https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/tree/master/old%20versions)
 
 <br>
 
