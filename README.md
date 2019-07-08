@@ -80,8 +80,6 @@
 
 最新版本。在上一版本的5.5的版本上面，更新了个人信息。且以上所有源码全带有详细注释。
 
-
-
 <br>
 ## 历史版本：
 
@@ -96,14 +94,8 @@
 <br>
 
 ## 捐赠
-
 若是帮助到了你，可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，表示点个赞，手有余香
-
-
-
 <img  src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709003145.jpg" height="205" width="400" align=center/>
-
-
 
 <br>
 
@@ -117,7 +109,7 @@
 
 <img src='https://www.gnu.org/graphics/gplv3-127x51.png' width='127' height='51'/>
 
-<font color=#70AD47 size=4 face="幼圆">**touwoyimuli：** </font> 博客代码基于 GPLv3 协议进行分发和使用，更多信息参见[协议文件](/LICENSE)。
+<font color=#70AD47 size=4 face="幼圆">**touwoyimuli：** </font> 博客代码基于 GPLv3 协议进行分发和使用，更多信息参见[The Foundations of the GPL](http://www.gnu.org/licenses/gpl-3.0.html)。
 
 <img src='https://raw.githubusercontent.com/EyreFree/EFArticles/master/res/cc-by-nc-nd.png' width='145.77' height='51'/>
 
