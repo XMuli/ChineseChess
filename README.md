@@ -94,7 +94,7 @@
 <br>
 
 ## 捐赠
-
+若是帮助到了你，可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，表示点个赞，手有余香
 <img  src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709003145.jpg" height="205" width="400" align=center/>
 
 <br>
