@@ -16,7 +16,7 @@
 #Facebook: touwoyimuli
 #Telegram: https://t.me/joinchat/AAAAAEsU6akLiS41OXPzPQ
 #QQ GMAILE: 252311126@qq.com
-#GOOGLE GMAILE: 252311126@gmial.com
+#GOOGLE GMAILE: touwoyimuli@gmial.com
 #Personal Blog: 愿以百年挽朝夕的博客
 #
 #-------------------------------------------------
