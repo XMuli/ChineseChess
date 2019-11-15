@@ -54,7 +54,7 @@
 
 <br>
 
-<font color=#FE7207  size=4 face="幼圆">**作者作品详情：** s's's</font>
+<font color=#FE7207  size=4 face="幼圆">**作者作品详情：** </font>
 
 <img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/blog-imange/img/20191116004852.png"  height="500" width="800">
 
