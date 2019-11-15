@@ -2,7 +2,7 @@
 
 
 
-![](https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/log/20190708214213.png)
+<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/dev/img/20191025221436.jpg"/>
 
 ## 项目介绍：
 
@@ -54,9 +54,9 @@
 
 <br>
 
-<font color=#FE7207  size=4 face="幼圆">**作者作品详情：**   </font>
+<font color=#FE7207  size=4 face="幼圆">**作者作品详情：** s's's</font>
 
-<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709004107.png"  height="500" width="800">
+<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/blog-imange/img/20191116004852.png"  height="500" width="800">
 
 <br>
 
@@ -74,15 +74,15 @@
 
 ## 源码说明：
 
-<font color=#70AD47 size=4 face="幼圆">**版本:**</font>![](https://img.shields.io/badge/v-6.0-brightgreen.svg)
+<font color=#70AD47 size=4 face="幼圆">**版本:**</font>![](https://img.shields.io/badge/v-5.3-brightgreen.svg)
 
-最新版本。在上一版本的5.5的版本上面，更新了个人信息。且以上所有源码全带有详细注释。
+最新版本。且以上所有源码全带有详细注释。
 
 <br>
 
 ## 历史版本：
 
-[历史版本下载](https://github.com/touwoyimuli/2019_01_Qt5_ChinessChess/tree/master/old%20versions)
+ 查看`git commit`的`tag`记录；每一阶段，均有对应的源码，逐步更新完善新功能。
 
 <br>
 
