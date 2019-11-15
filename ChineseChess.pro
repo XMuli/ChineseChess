@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-01-21T19:27:03
+# Project created by QtCreator 2019-01-22T19:52:58
 #
 #-------------------------------------------------
 
@@ -19,4 +19,4 @@ SOURCES += main.cpp\
 HEADERS  += ChessBoard.h \
     ChessPieces.h
 
-FORMS    += ChessBoard.ui
+FORMS    += chessboard.ui

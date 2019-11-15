@@ -1,22 +1,18 @@
 #include "ChessBoard.h"
-#include "ui_ChessBoard.h"
-#include <QPainter>
-#include <QMouseEvent>
+#include "ui_chessboard.h"
 
 ChessBoard::ChessBoard(QWidget *parent) :
-    QWidget(parent),
+    QFrame(parent),
     ui(new Ui::ChessBoard)
 {
-
-    //初始化32个象棋
-    for(int i = 0; i <= 31; i++)
+    for(int i = 0; i<32; i++)
     {
-        _ChessPieces[i].initialize(i);
+        m_ChessPieces[i].init(i);
     }
 
-    _selectId = -1;  //IS? 选中棋子[-1:选棋子 || 非-1:走棋子]
-    _bRedTrue = true;
-
+    m_nSelectID = -1;
+    m_nCheckedID = -1;
+    m_bIsRed = true;
     ui->setupUi(this);
 }
 
@@ -25,22 +21,20 @@ ChessBoard::~ChessBoard()
     delete ui;
 }
 
-
+bool ChessBoard::isDead(int id)
+{
+    if(id == -1)return true;
+    return m_ChessPieces[id].m_bDead;
+}
 
 int ChessBoard::getStoneId(int row, int col)
 {
     for(int i=0; i<32; ++i)
     {
-        if(_ChessPieces[i]._row == row && _ChessPieces[i]._col == col && !isDead(i))
+        if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && !isDead(i))
             return i;
     }
     return -1;
-}
-
-bool ChessBoard::isDead(int id)
-{
-    if(id == -1)return true;
-    return _ChessPieces[id]._deal;
 }
 
 int ChessBoard::getStoneCountAtLine(int row1, int col1, int row2, int col2)
@@ -75,117 +69,8 @@ int ChessBoard::getStoneCountAtLine(int row1, int col1, int row2, int col2)
 }
 
 
-//绘画棋盘
-void ChessBoard::paintEvent(QPaintEvent *)
-{
-    QPainter painter(this);
-
-    _offset = 60;  //距离界面的边距
-    _d = 90; //间距为50px
-    _r = _d/2;  //棋子半径为d/2
-
-
-    //*******************绘画棋盘*******************
-    //绘画10条横线
-    for(int i = 0; i <= 9; i++)
-    {
-        painter.drawLine(QPoint(_offset, _offset+i*_d), QPoint(_offset+8*_d, _offset+i*_d));
-    }
-
-
-    //绘画9条竖线
-    for(int i = 0; i <= 8; i++)
-    {
-        if(i==0 || i==8)
-        {
-            painter.drawLine(QPoint(_offset+i*_d, _offset), QPoint(_offset+i*_d, _offset+9*_d));
-        }
-        else
-        {
-            painter.drawLine(QPoint(_offset+i*_d, _offset), QPoint(_offset+i*_d, _offset+4*_d));
-            painter.drawLine(QPoint(_offset+i*_d, _offset+5*_d), QPoint(_offset+i*_d, _offset+9*_d));
-        }
-    }
-
-    //绘画4条斜线
-    painter.drawLine(QPoint(_offset+3*_d, _offset), QPoint(_offset+5*_d, _offset+2*_d));
-    painter.drawLine(QPoint(_offset+3*_d, _offset+2*_d), QPoint(_offset+5*_d, _offset));
-    painter.drawLine(QPoint(_offset+3*_d, _offset+7*_d), QPoint(_offset+5*_d, _offset+9*_d));
-    painter.drawLine(QPoint(_offset+3*_d, _offset+9*_d), QPoint(_offset+5*_d, _offset+7*_d));
-
-    QRect rect1(_offset+_d,   _offset+4*_d, _d, _d);
-    QRect rect2(_offset+2*_d, _offset+4*_d, _d, _d);
-    QRect rect3(_offset+5*_d, _offset+4*_d, _d, _d);
-    QRect rect4(_offset+6*_d, _offset+4*_d, _d, _d);
-    painter.setFont(QFont("隶书", _r, 800));
-    painter.drawText(rect1, "楚", QTextOption(Qt::AlignCenter));
-    painter.drawText(rect2, "河", QTextOption(Qt::AlignCenter));
-    painter.drawText(rect3, "汉", QTextOption(Qt::AlignCenter));
-    painter.drawText(rect4, "界", QTextOption(Qt::AlignCenter));
-
-
-
-
-
-    //*******************绘画棋子*******************
-    for(int i = 0; i <= 31; i++)
-    {
-        drawStone(painter, i);
-    }
-
-
-}
-
-//象棋的棋盘的坐标转换成界面坐标
-QPoint ChessBoard::center(int row, int col)
-{
-    QPoint rePoint;
-    //这里注意坐标的转换
-    rePoint.rx() = col*_d+_offset;
-    rePoint.ry() = row*_d+_offset;
-    return rePoint;
-}
-
-//重载:坐标转换
-QPoint ChessBoard::center(int id)
-{
-    return center(_ChessPieces[id]._row, _ChessPieces[id]._col);
-}
-
-
-//绘画单个具体的棋子
-void ChessBoard::drawStone(QPainter &painter, int id)
-{
-    if(_ChessPieces[id]._deal)
-        return;
-
-    QPoint temp = center(id);
-    QRect rect(temp.x()-_r, temp.y()-_r, _d, _d);
-
-    if(_selectId == id)
-        painter.setBrush(QBrush(QColor(64,64,196, 80)));
-    else
-        painter.setBrush(QBrush(QColor(64,64,196, 10)));
-
-    painter.setPen(QColor(0, 0, 0));
-    painter.drawEllipse(center(id), _r, _r);  //绘画圆形
-    painter.setFont(QFont("华文行楷", _r, 700));
-
-    if(id < 16)
-    {
-        painter.setPen(QColor(255, 0, 0));
-    }
-    else
-    {
-        painter.setPen(QColor(0, 0, 0));
-    }
-
-    painter.drawText(rect, _ChessPieces[id].getText(), QTextOption(Qt::AlignCenter));  //绘画圆形里面的汉字
-
-}
-
-//界面坐标转换成棋盘的行列值[获取鼠标点击的像素坐标，是位于棋盘的哪一个行列值]
-bool ChessBoard::getRowCol(QPoint pt, int &row, int &col)
+//是否选中该枚棋子。pt为输入参数; row， col为输出参数
+bool ChessBoard::isChecked(QPoint pt, int &row, int &col)
 {
     for(row = 0; row <= 9; row++)
     {
@@ -195,11 +80,115 @@ bool ChessBoard::getRowCol(QPoint pt, int &row, int &col)
             int x = temp.x()-pt.x();
             int y = temp.y()-pt.y();
 
-            if(x*x+y*y < _r*_r)
+            if(x*x+y*y < m_nR*m_nR)
                 return true;
         }
     }
 }
+
+//象棋的棋盘的坐标转换成界面坐标
+QPoint ChessBoard::center(int row, int col)
+{
+    QPoint rePoint;
+    //这里注意坐标的转换
+    rePoint.ry() = row*m_nD+m_nOffSet;
+    rePoint.rx() = col*m_nD+m_nOffSet;
+
+    return rePoint;
+}
+
+//重载:坐标转换
+QPoint ChessBoard::center(int id)
+{
+    return center(m_ChessPieces[id].m_nRow, m_ChessPieces[id].m_nCol);
+}
+
+void ChessBoard::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+
+        m_nOffSet = 60;  //距离界面的边距
+        m_nD = 90; //间距为50px
+        m_nR = m_nD/2;  //棋子半径为d/2
+
+        //*******************绘画棋盘*******************
+        //绘画10条横线
+        for(int i = 0; i <= 9; i++)
+        {
+            painter.drawLine(QPoint(m_nOffSet, m_nOffSet+i*m_nD), QPoint(m_nOffSet+8*m_nD, m_nOffSet+i*m_nD));
+        }
+
+
+        //绘画9条竖线
+        for(int i = 0; i <= 8; i++)
+        {
+            if(i==0 || i==8)
+            {
+                painter.drawLine(QPoint(m_nOffSet+i*m_nD, m_nOffSet), QPoint(m_nOffSet+i*m_nD, m_nOffSet+9*m_nD));
+            }
+            else
+            {
+                painter.drawLine(QPoint(m_nOffSet+i*m_nD, m_nOffSet), QPoint(m_nOffSet+i*m_nD, m_nOffSet+4*m_nD));
+                painter.drawLine(QPoint(m_nOffSet+i*m_nD, m_nOffSet+5*m_nD), QPoint(m_nOffSet+i*m_nD, m_nOffSet+9*m_nD));
+            }
+        }
+
+        //绘画4条斜线
+        painter.drawLine(QPoint(m_nOffSet+3*m_nD, m_nOffSet), QPoint(m_nOffSet+5*m_nD, m_nOffSet+2*m_nD));
+        painter.drawLine(QPoint(m_nOffSet+3*m_nD, m_nOffSet+2*m_nD), QPoint(m_nOffSet+5*m_nD, m_nOffSet));
+        painter.drawLine(QPoint(m_nOffSet+3*m_nD, m_nOffSet+7*m_nD), QPoint(m_nOffSet+5*m_nD, m_nOffSet+9*m_nD));
+        painter.drawLine(QPoint(m_nOffSet+3*m_nD, m_nOffSet+9*m_nD), QPoint(m_nOffSet+5*m_nD, m_nOffSet+7*m_nD));
+
+        QRect rect1(m_nOffSet+m_nD,   m_nOffSet+4*m_nD, m_nD, m_nD);
+        QRect rect2(m_nOffSet+2*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
+        QRect rect3(m_nOffSet+5*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
+        QRect rect4(m_nOffSet+6*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
+        painter.setFont(QFont("隶书", m_nR, 800));
+        painter.drawText(rect1, "楚", QTextOption(Qt::AlignCenter));
+        painter.drawText(rect2, "河", QTextOption(Qt::AlignCenter));
+        painter.drawText(rect3, "汉", QTextOption(Qt::AlignCenter));
+        painter.drawText(rect4, "界", QTextOption(Qt::AlignCenter));
+
+
+        //*******************绘画棋子*******************
+        for(int i = 0; i < 32; i++)
+        {
+            drawChessPieces(painter, i);
+        }
+
+        //drawChessPieces(painter, 0);
+
+}
+
+void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具体的棋子
+{
+    if(m_ChessPieces[id].m_bDead)
+        return;
+
+    QPoint temp = center(id);
+    QRect rect(temp.x()-m_nR, temp.y()-m_nR, m_nD, m_nD);
+
+    if(m_nSelectID == id)
+        painter.setBrush(QBrush(QColor(64,64,196, 80)));
+    else
+        painter.setBrush(QBrush(QColor(64,64,196, 10)));
+
+    painter.setPen(QColor(0, 0, 0));
+    painter.drawEllipse(center(id), m_nR, m_nR);  //绘画圆形
+    painter.setFont(QFont("华文行楷", m_nR, 700));
+
+    if(id < 16)
+    {
+        painter.setPen(QColor(0, 0, 0));
+    }
+    else
+    {
+        painter.setPen(QColor(255, 0, 0));
+    }
+
+    painter.drawText(rect, m_ChessPieces[id].getnName(), QTextOption(Qt::AlignCenter));  //绘画圆形里面的汉字
+}
+
 
 
 //鼠标点击事件
@@ -211,55 +200,55 @@ void ChessBoard::mousePressEvent(QMouseEvent *ev)
     int row, col;
 
     //点击棋盘外面就不做处理
-    if(!getRowCol(pt, row, col))
+    if(!isChecked(pt, row, col))
         return;
 
-    _clickId = -1;
+    m_nCheckedID = -1;
     int i;
 
     //判断是哪一个棋子被选中，根据ID（这里的局部i）来记录下来
     for(i = 0; i <= 31; i++)
     {
-        if(_ChessPieces[i]._row == row && _ChessPieces[i]._col == col && _ChessPieces[i]._deal == false)
+        if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && m_ChessPieces[i].m_bDead == false)
             break;
     }
 
 
     if(i < 32)
-        _clickId = i;  //选中的棋子的ID
+        m_nCheckedID = i;  //选中的棋子的ID
 
 
-    if(_selectId == -1)//选中棋子
+    if(m_nSelectID == -1)//选中棋子
     {
-        if(_clickId != -1)
+        if(m_nCheckedID != -1)
         {
-            if(_bRedTrue == _ChessPieces[_clickId]._red)
+            if(m_bIsRed == m_ChessPieces[m_nCheckedID].m_bRed)
             {
-                _selectId = _clickId;
+                m_nSelectID = m_nCheckedID;
             }
 
         }
     }
     else//走棋子
     {
-        if(canMove(_selectId, _clickId, row, col ))
+        if(canMove(m_nSelectID, m_nCheckedID, row, col ))
         {
             //_selectId为第一次点击选中的棋子，
             //_clickId为第二次点击||被杀的棋子ID，准备选中棋子下子的地方
-            _ChessPieces[_selectId]._row = row;
-            _ChessPieces[_selectId]._col = col;
-            if(_clickId != -1)
-                _ChessPieces[_clickId]._deal = true;
+            m_ChessPieces[m_nSelectID].m_nRow = row;
+            m_ChessPieces[m_nSelectID].m_nCol = col;
+            if(m_nCheckedID != -1)
+                m_ChessPieces[m_nCheckedID].m_bDead = true;
 
-            _selectId = -1;
-            _bRedTrue = !_bRedTrue;
+            m_nSelectID = -1;
+            m_bIsRed = !m_bIsRed;
         }
 
     }
 
     update();
-
 }
+
 
 //总的移动规则，选中准备下的棋子，被杀的棋子， 准备移动到的目的行列值
 bool ChessBoard::canMove(int moveId, int killId, int row, int col)
@@ -267,11 +256,11 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
     //1.确定是选择其它棋子还是走棋
     //2.是否需要使用到canMoveXXX()来做限制
     //3.罗列出所有情况，和需要的得到的结果值 ==>  然后进行中间的逻辑层判断※不要受到别人的代码框架的束缚※
-        if(_ChessPieces[moveId]._red == _ChessPieces[killId]._red)  //选择其它棋子，返回false
+        if(m_ChessPieces[moveId].m_bRed == m_ChessPieces[killId].m_bRed)  //选择其它棋子，返回false
         {
-            if(killId == -1)  //其中有一个特殊情况，黑+_ChessPieces[-1]._red ==> 也需要判断能否
+            if(killId == -1)  //其中有一个特殊情况，黑+m_ChessPieces[-1].m_bRed ==> 也需要判断能否
             {
-                switch (_ChessPieces[moveId]._type)
+                switch (m_ChessPieces[moveId].m_emType)
                 {
                 case ChessPieces::JIANG:
                     return canMoveJIANG(moveId, killId, row, col);
@@ -291,14 +280,14 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
 
             }
 
-            _selectId = killId;
+            m_nSelectID = killId;
             update();
 
             return false;
         }
         else  //选择其走棋，返回true
         {
-            switch (_ChessPieces[moveId]._type)
+            switch (m_ChessPieces[moveId].m_emType)
             {
             case ChessPieces::JIANG:
                 return canMoveJIANG(moveId, killId, row, col);
@@ -325,17 +314,18 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
 
 bool ChessBoard::canMoveJIANG(int moveId, int killId, int row, int col)
 {
-    if(_ChessPieces[moveId]._red) //红 将
-    {
-        if(row > 2 || col < 3 || col > 5) return false;
-    }
-    else  //黑 将
+    if(m_ChessPieces[moveId].m_bRed) //红 将
     {
         if(row < 7 || col < 3 || col > 5) return false;
     }
+    else  //黑 将
+    {
 
-    int dr = _ChessPieces[moveId]._row - row;
-    int dc = _ChessPieces[moveId]._col - col;
+        if(row > 2 || col < 3 || col > 5) return false;
+    }
+
+    int dr = m_ChessPieces[moveId].m_nRow - row;
+    int dc = m_ChessPieces[moveId].m_nCol - col;
     int d = abs(dr)*10 + abs(dc);
     if(d == 1 || d == 10)
         return true;
@@ -345,17 +335,18 @@ bool ChessBoard::canMoveJIANG(int moveId, int killId, int row, int col)
 
 bool ChessBoard::canMoveSHI(int moveId, int killId, int row, int col)
 {
-    if(_ChessPieces[moveId]._red) //红 士
-    {
-        if(row > 2 || col < 3 || col > 5) return false;
-    }
-    else  //黑 士
+    if(m_ChessPieces[moveId].m_bRed) //红 士
     {
         if(row < 7 || col < 3 || col > 5) return false;
     }
+    else  //黑 士
+    {
 
-    int dr = _ChessPieces[moveId]._row - row;
-    int dc = _ChessPieces[moveId]._col - col;
+        if(row > 2 || col < 3 || col > 5) return false;
+    }
+
+    int dr = m_ChessPieces[moveId].m_nRow - row;
+    int dc = m_ChessPieces[moveId].m_nCol - col;
     int d = abs(dr)*10 + abs(dc);
     if(d == 11)
         return true;
@@ -365,29 +356,30 @@ bool ChessBoard::canMoveSHI(int moveId, int killId, int row, int col)
 
 bool ChessBoard::canMoveXIANG(int moveId, int killId, int row, int col)
 {
-    if(_ChessPieces[moveId]._red) //红
-    {
-        if(row > 4) return false;
-    }
-    else  //黑
+    if(m_ChessPieces[moveId].m_bRed) //红
     {
         if(row < 5) return false;
     }
+    else  //黑
+    {
+
+        if(row > 4) return false;
+    }
 
 
 
-    int dr = _ChessPieces[moveId]._row - row;
-    int dc = _ChessPieces[moveId]._col - col;
+    int dr = m_ChessPieces[moveId].m_nRow - row;
+    int dc = m_ChessPieces[moveId].m_nCol - col;
     int d = abs(dr)*10 + abs(dc);
 
-    int dr2 = (_ChessPieces[moveId]._row + row)/2;
-    int dc2 = (_ChessPieces[moveId]._col + col)/2;
+    int dr2 = (m_ChessPieces[moveId].m_nRow + row)/2;
+    int dc2 = (m_ChessPieces[moveId].m_nCol + col)/2;
 
     //象眼被堵，就不能够调，就会有i属于0~31，返回false
     int i = 0;
     for(i = 0; i <= 31; i++)
     {
-        if(_ChessPieces[i]._row == dr2 && _ChessPieces[i]._col == dc2 && _ChessPieces[i]._deal == false)
+        if(m_ChessPieces[i].m_nRow == dr2 && m_ChessPieces[i].m_nCol == dc2 && m_ChessPieces[i].m_bDead == false)
             break;
     }
 
@@ -404,23 +396,23 @@ bool ChessBoard::canMoveXIANG(int moveId, int killId, int row, int col)
 bool ChessBoard::canMoveMA(int moveId, int killId, int row, int col)
 {
 
-    int dr = _ChessPieces[moveId]._row - row;
-    int dc = _ChessPieces[moveId]._col - col;
+    int dr = m_ChessPieces[moveId].m_nRow - row;
+    int dc = m_ChessPieces[moveId].m_nCol - col;
     int d = abs(dr)*10 + abs(dc);
 
-    int dr2 = (_ChessPieces[moveId]._row + row)/2;
-    int dc2 = (_ChessPieces[moveId]._col + col)/2;
+    int dr2 = (m_ChessPieces[moveId].m_nRow + row)/2;
+    int dc2 = (m_ChessPieces[moveId].m_nCol + col)/2;
 
 
     //蹩脚马
     if(abs(dr) == 2 && abs(dc)==1)
     {
         int i = 0;
-        if(row < _ChessPieces[moveId]._row )
+        if(row < m_ChessPieces[moveId].m_nRow )
         {
             for(i = 0; i <= 31; i++)
             {
-                if(_ChessPieces[i]._row == (_ChessPieces[moveId]._row-1) && _ChessPieces[i]._col == _ChessPieces[moveId]._col && _ChessPieces[i]._deal == false)
+                if(m_ChessPieces[i].m_nRow == (m_ChessPieces[moveId].m_nRow-1) && m_ChessPieces[i].m_nCol == m_ChessPieces[moveId].m_nCol && m_ChessPieces[i].m_bDead == false)
                     break;
             }
         }
@@ -428,7 +420,7 @@ bool ChessBoard::canMoveMA(int moveId, int killId, int row, int col)
         {
             for(i = 0; i <= 31; i++)
             {
-                if(_ChessPieces[i]._row == (_ChessPieces[moveId]._row+1) && _ChessPieces[i]._col == _ChessPieces[moveId]._col && _ChessPieces[i]._deal == false)
+                if(m_ChessPieces[i].m_nRow == (m_ChessPieces[moveId].m_nRow+1) && m_ChessPieces[i].m_nCol == m_ChessPieces[moveId].m_nCol && m_ChessPieces[i].m_bDead == false)
                     break;
             }
         }
@@ -441,12 +433,12 @@ bool ChessBoard::canMoveMA(int moveId, int killId, int row, int col)
     if(abs(dr) == 1 && abs(dc)==2)
     {
         int i = 0;
-        if(col < _ChessPieces[moveId]._col)
+        if(col < m_ChessPieces[moveId].m_nCol)
         {
 
             for(i = 0; i <= 31; i++)
             {
-                if(_ChessPieces[i]._row == _ChessPieces[moveId]._row && _ChessPieces[i]._col == (_ChessPieces[moveId]._col-1) && _ChessPieces[i]._deal == false)
+                if(m_ChessPieces[i].m_nRow == m_ChessPieces[moveId].m_nRow && m_ChessPieces[i].m_nCol == (m_ChessPieces[moveId].m_nCol-1) && m_ChessPieces[i].m_bDead == false)
                     break;
             }
         }
@@ -454,7 +446,7 @@ bool ChessBoard::canMoveMA(int moveId, int killId, int row, int col)
         {
             for(i = 0; i <= 31; i++)
             {
-                if(_ChessPieces[i]._row == _ChessPieces[moveId]._row && _ChessPieces[i]._col == (_ChessPieces[moveId]._col+1) && _ChessPieces[i]._deal == false)
+                if(m_ChessPieces[i].m_nRow == m_ChessPieces[moveId].m_nRow && m_ChessPieces[i].m_nCol == (m_ChessPieces[moveId].m_nCol+1) && m_ChessPieces[i].m_bDead == false)
                     break;
             }
         }
@@ -472,7 +464,7 @@ bool ChessBoard::canMoveMA(int moveId, int killId, int row, int col)
 
 bool ChessBoard::canMoveCHE(int moveId, int killId, int row, int col)
 {
-    int ret = getStoneCountAtLine(_ChessPieces[moveId]._row, _ChessPieces[moveId]._col, row, col);
+    int ret = getStoneCountAtLine(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
     if(ret == 0)
         return true;
     return false;
@@ -480,7 +472,7 @@ bool ChessBoard::canMoveCHE(int moveId, int killId, int row, int col)
 
 bool ChessBoard::canMovePAO(int moveId, int killId, int row, int col)
 {
-    int ret = getStoneCountAtLine(row, col, _ChessPieces[moveId]._row, _ChessPieces[moveId]._col);
+    int ret = getStoneCountAtLine(row, col, m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol);
     if(killId != -1)
     {
         if(ret == 1) return true;
@@ -494,49 +486,46 @@ bool ChessBoard::canMovePAO(int moveId, int killId, int row, int col)
 
 bool ChessBoard::canMoveBING(int moveId, int killId, int row, int col)
 {
-    int dr = _ChessPieces[moveId]._row - row;
-    int dc = _ChessPieces[moveId]._col - col;
+    int dr = m_ChessPieces[moveId].m_nRow - row;
+    int dc = m_ChessPieces[moveId].m_nCol - col;
     int d = abs(dr)*10 + abs(dc);
     if(d != 1 && d != 10) return false;
 
 
-    if(_ChessPieces[moveId]._red) //红 兵
+    if(m_ChessPieces[moveId].m_bRed) //红 兵
     {
-
-
-        if(row <  _ChessPieces[moveId]._row) return false;
-        if(_ChessPieces[moveId]._row == 3 || _ChessPieces[moveId]._row == 4)
+        if(row >  m_ChessPieces[moveId].m_nRow) return false;
+        if(m_ChessPieces[moveId].m_nRow == 5 || m_ChessPieces[moveId].m_nRow == 6)
         {
-            if(col == _ChessPieces[moveId]._col && row == (_ChessPieces[moveId]._row+1))
+            if(col == m_ChessPieces[moveId].m_nCol && row == (m_ChessPieces[moveId].m_nRow-1))
                 return true;
         }
         else
         {
-            if((col == _ChessPieces[moveId]._col && row >= 5) || (row == _ChessPieces[moveId]._row && abs(col-_ChessPieces[moveId]._col)==1))
+            if((col == m_ChessPieces[moveId].m_nCol && row <= 4) || (row == m_ChessPieces[moveId].m_nRow && abs(col-m_ChessPieces[moveId].m_nCol)==1))
                     return true;
         }
         return false;
+
+
     }
     else  //黑 兵
     {
-        if(row >  _ChessPieces[moveId]._row) return false;
-        if(_ChessPieces[moveId]._row == 5 || _ChessPieces[moveId]._row == 6)
+        if(row <  m_ChessPieces[moveId].m_nRow) return false;
+        if(m_ChessPieces[moveId].m_nRow == 3 || m_ChessPieces[moveId].m_nRow == 4)
         {
-            if(col == _ChessPieces[moveId]._col && row == (_ChessPieces[moveId]._row-1))
+            if(col == m_ChessPieces[moveId].m_nCol && row == (m_ChessPieces[moveId].m_nRow+1))
                 return true;
         }
         else
         {
-            if((col == _ChessPieces[moveId]._col && row <= 4) || (row == _ChessPieces[moveId]._row && abs(col-_ChessPieces[moveId]._col)==1))
+            if((col == m_ChessPieces[moveId].m_nCol && row >= 5) || (row == m_ChessPieces[moveId].m_nRow && abs(col-m_ChessPieces[moveId].m_nCol)==1))
                     return true;
         }
         return false;
-
     }
 
     return true;
 }
-
-
 
 
