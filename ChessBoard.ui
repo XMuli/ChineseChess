@@ -45,6 +45,12 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>华文行楷</family>
+     <pointsize>18</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>对战计时:</string>
    </property>
@@ -61,6 +67,12 @@
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QPushButton" name="pushButton_start">
+      <property name="font">
+       <font>
+        <family>华文行楷</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>开始</string>
       </property>
@@ -81,6 +93,12 @@
     </item>
     <item>
      <widget class="QPushButton" name="pushButton_reset">
+      <property name="font">
+       <font>
+        <family>华文行楷</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>重置</string>
       </property>
@@ -97,12 +115,47 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>华文行楷</family>
+     <pointsize>10</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="text">
     <string>关于作者</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>860</x>
+     <y>0</y>
+     <width>291</width>
+     <height>941</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="chooseresource.qrc">:/images/b.jpg</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <zorder>label_2</zorder>
+  <zorder>line_2</zorder>
+  <zorder>lcdNumber</zorder>
+  <zorder>label</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>pushButton_about</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="chooseresource.qrc"/>
+ </resources>
  <connections/>
 </ui>

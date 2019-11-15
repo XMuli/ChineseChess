@@ -1,5 +1,52 @@
+/*
+ * Copyright (C)  2019 ~ 2019 touwoyimuli.  All rights reserved.
+ *
+ * Author:  touwoyimuli <touwoyimuli@gmai.com>
+ *
+ * github:  https://github.com/touwoyimuli
+ * blogs:   https://touwoyimuli.github.io/
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://touwoyimuli.github.io/>.
+ */
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
+
+/***
+ *      ┌─┐       ┌─┐ + +
+ *   ┌──┘ ┴───────┘ ┴──┐++
+ *   │                 │
+ *   │       ───       │++ + + +
+ *   ███████───███████ │+
+ *   │                 │+
+ *   │       ─┴─       │
+ *   │                 │
+ *   └───┐         ┌───┘
+ *       │         │
+ *       │         │   + +
+ *       │         │
+ *       │         └──────────────┐
+ *       │                        │
+ *       │                        ├─┐
+ *       │                        ┌─┘
+ *       │                        │
+ *       └─┐  ┐  ┌───────┬──┐  ┌──┘  + + + +
+ *         │ ─┤ ─┤       │ ─┤ ─┤
+ *         └──┴──┘       └──┴──┘  + + + +
+ *                神兽保佑
+ *               代码无BUG!
+ */
+
 
 //#include <QWidget>
 #include <QFrame>        //QFrame而不是用QWidget???
@@ -9,6 +56,7 @@
 #include <QMouseEvent>
 #include <QTimer>
 #include <QTime>
+#include <QMessageBox>
 #include "AboutAuthor.h"
 
 namespace Ui {         //具体作用???
@@ -29,6 +77,8 @@ public:
     int getStoneId(int row, int col);
     //车 炮 的功能辅助函数   判断两个点是否在一个直线上面,且返回直线之间的棋子个数
     int  getStoneCountAtLine(int row1, int col1, int row2, int col2);
+    void whoWin();  //谁胜谁负
+
 
 
     bool isChecked(QPoint pt, int& row, int& col);   //是否选中该枚棋子。pt为输入参数; row， col为输出参数
@@ -69,7 +119,6 @@ private slots:
     void updateTime();
     void on_pushButton_start_clicked();
     void on_pushButton_reset_clicked();
-
     void on_pushButton_about_clicked();
 
 private:
@@ -79,7 +128,7 @@ private:
     QTime * m_timeRecord;  //记录时间
     bool m_bIsStart;        //记录是否已经开始计时
 
-    AboutAuthor *m_pAbout;
+    AboutAuthor* m_pAbout;
 
 
 };

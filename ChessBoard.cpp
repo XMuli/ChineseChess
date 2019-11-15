@@ -1,3 +1,24 @@
+/*
+ * Copyright (C)  2019 ~ 2019 touwoyimuli.  All rights reserved.
+ *
+ * Author:  touwoyimuli <touwoyimuli@gmai.com>
+ *
+ * github:  https://github.com/touwoyimuli
+ * blogs:   https://touwoyimuli.github.io/
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://touwoyimuli.github.io/>.
+ */
 #include "ChessBoard.h"
 #include "ui_chessboard.h"
 
@@ -5,6 +26,7 @@ ChessBoard::ChessBoard(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::ChessBoard)
 {
+
     for(int i = 0; i<32; i++)
     {
         m_ChessPieces[i].init(i);
@@ -23,6 +45,7 @@ ChessBoard::ChessBoard(QWidget *parent) :
 
     m_pAbout = new AboutAuthor();
 
+    this->setWindowIcon(QIcon(":/images/qaz.ico"));
     ui->setupUi(this);
 }
 
@@ -77,6 +100,30 @@ int ChessBoard::getStoneCountAtLine(int row1, int col1, int row2, int col2)
     return ret;
 
 }
+
+
+void ChessBoard::whoWin()  //谁胜谁负
+{
+
+
+
+    if(m_ChessPieces[4].m_bDead == true && m_ChessPieces[20].m_bDead == false)
+    {
+        QMessageBox message(QMessageBox::Information, "提示", "本局结束，红方胜利.");
+        message.setIconPixmap(QPixmap(":/images/Is.JPG"));
+        message.setFont(QFont("华文行楷",16,QFont::Bold));
+        message.exec();
+    }
+
+    if(m_ChessPieces[4].m_bDead == false && m_ChessPieces[20].m_bDead == true)
+    {
+        QMessageBox message(QMessageBox::Information, "提示", "本局结束，黑方胜利.");
+        message.setIconPixmap(QPixmap(":/images/Is.JPG"));
+        message.setFont(QFont("华文行楷",16,QFont::Bold));
+        message.exec();
+    }
+}
+
 
 
 //是否选中该枚棋子。pt为输入参数; row， col为输出参数
@@ -280,6 +327,8 @@ void ChessBoard::clickPieces(int checkedID, int& row, int& col)
         }
 
     }
+
+    whoWin();
 
     update();
 }
@@ -608,3 +657,41 @@ void ChessBoard::on_pushButton_about_clicked()
     m_pAbout->show();
 
 }
+
+
+
+/***
+ *                                         ,s555SB@@&
+ *                                      :9H####@@@@@Xi
+ *                                     1@@@@@@@@@@@@@@8
+ *                                   ,8@@@@@@@@@B@@@@@@8
+ *                                  :B@@@@X3hi8Bs;B@@@@@Ah,
+ *             ,8i                  r@@@B:     1S ,M@@@@@@#8;
+ *            1AB35.i:               X@@8 .   SGhr ,A@@@@@@@@S
+ *            1@h31MX8                18Hhh3i .i3r ,A@@@@@@@@@5
+ *            ;@&i,58r5                 rGSS:     :B@@@@@@@@@@A
+ *             1#i  . 9i                 hX.  .: .5@@@@@@@@@@@1
+ *              sG1,  ,G53s.              9#Xi;hS5 3B@@@@@@@B1
+ *               .h8h.,A@@@MXSs,           #@H1:    3ssSSX@1
+ *               s ,@@@@@@@@@@@@Xhi,       r#@@X1s9M8    .GA981
+ *               ,. rS8H#@@@@@@@@@@#HG51;.  .h31i;9@r    .8@@@@BS;i;
+ *                .19AXXXAB@@@@@@@@@@@@@@#MHXG893hrX#XGGXM@@@@@@@@@@MS
+ *                s@@MM@@@hsX#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&,
+ *              :GB@#3G@@Brs ,1GM@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@B,
+ *            .hM@@@#@@#MX 51  r;iSGAM@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8
+ *          :3B@@@@@@@@@@@&9@h :Gs   .;sSXH@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
+ *      s&HA#@@@@@@@@@@@@@@M89A;.8S.       ,r3@@@@@@@@@@@@@@@@@@@@@@@@@@@r
+ *   ,13B@@@@@@@@@@@@@@@@@@@5 5B3 ;.         ;@@@@@@@@@@@@@@@@@@@@@@@@@@@i
+ *  5#@@#&@@@@@@@@@@@@@@@@@@9  .39:          ;@@@@@@@@@@@@@@@@@@@@@@@@@@@;
+ *  9@@@X:MM@@@@@@@@@@@@@@@#;    ;31.         H@@@@@@@@@@@@@@@@@@@@@@@@@@:
+ *   SH#@B9.rM@@@@@@@@@@@@@B       :.         3@@@@@@@@@@@@@@@@@@@@@@@@@@5
+ *     ,:.   9@@@@@@@@@@@#HB5                 .M@@@@@@@@@@@@@@@@@@@@@@@@@B
+ *           ,ssirhSM@&1;i19911i,.             s@@@@@@@@@@@@@@@@@@@@@@@@@@S
+ *              ,,,rHAri1h1rh&@#353Sh:          8@@@@@@@@@@@@@@@@@@@@@@@@@#:
+ *            .A3hH@#5S553&@@#h   i:i9S          #@@@@@@@@@@@@@@@@@@@@@@@@@A.
+ *
+ *
+ *    又看源码，看你妹妹呀！自己多想想。
+ */
+
+

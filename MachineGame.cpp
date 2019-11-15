@@ -1,3 +1,24 @@
+/*
+ * Copyright (C)  2019 ~ 2019 touwoyimuli.  All rights reserved.
+ *
+ * Author:  touwoyimuli <touwoyimuli@gmai.com>
+ *
+ * github:  https://github.com/touwoyimuli
+ * blogs:   https://touwoyimuli.github.io/
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://touwoyimuli.github.io/>.
+ */
 #include "MachineGame.h"
 
 MachineGame::MachineGame()
@@ -50,6 +71,8 @@ void MachineGame::chooseOrMovePieces(int tempID, int& row, int& col)
         }
     }
 
+    whoWin();
+
     update();
 }
 
@@ -101,6 +124,37 @@ void MachineGame::getAllPossibleMoveStep(QVector<ChessStep *> &steps)
     }
 
 
+}
+
+void MachineGame::getAllPossibleMoveStepAndNoKill(QVector<ChessStep *> &steps)
+{
+    for(int id = 0; id<16; id++)   //存在的黑棋， 能否走到这些盘棋盘里面的格子
+    {
+        if(m_ChessPieces[id].m_bDead)
+            continue;
+
+        for(int row=0; row<10; row++)
+        {
+            for(int col=0; col<9; col++)
+            {
+
+                int i = 0;
+                for(; i <= 31; i++)
+                {
+                    if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && m_ChessPieces[i].m_bDead == false)
+                    break;
+                }
+
+                if(id < 16 && i == 32)
+                {
+                    if(canMove(id, -1, row, col))
+                    {
+                        saveStep(id, -1, row, col, steps);
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -220,14 +274,25 @@ int MachineGame::calcScore()
 
 
 //获得最好的移动步骤
+//玩了一把，发现我居然下不赢自己写的算法。哭了哭了哭了555555........
 ChessStep* MachineGame::getBestMove()
 {
+
+    int maxScore = -10000;
+    ChessStep* retStep = NULL;
+
+    //------------------------
+    //有可击杀的红棋子就走击杀红棋子最优的一步
     // 1.看看有那些步骤可以走
     QVector<ChessStep*> steps;
     getAllPossibleMoveStep(steps);   // 黑棋吃红棋的所有可能的步骤
 
-    int maxScore = -10000;
-    ChessStep* retStep;
+
+    //------------------------
+    //没有可击杀的红棋子就走最后的一步
+    QVector<ChessStep*> stepsAndNoKill;
+    getAllPossibleMoveStepAndNoKill(stepsAndNoKill);   // 黑棋移动所有可能的步骤(不吃红棋子)
+
     //2.试着走一下
     for(QVector<ChessStep*>::iterator it = steps.begin(); it!=steps.end(); it++)
     {
@@ -243,21 +308,52 @@ ChessStep* MachineGame::getBestMove()
         }
     }
 
+    if(retStep != NULL)
+        return retStep;
+
+
+
+    //2.试着走一下
+    //从这种不击杀红棋子，只是单纯移动黑棋steps里面，随机抽选一种进行下棋
+    int nStepsCount = stepsAndNoKill.count();
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime())); //随机数种子, 0~MAX
+    int temp =qrand()% nStepsCount;
+    QVector<ChessStep*>::iterator it = stepsAndNoKill.begin();
+    retStep = it[temp];
+
+
+    if(retStep == NULL)
+        whoWin();
+
 
 
     //4.取最好的结果作为参考
     return retStep;
+
+
+
+
+
 }
 
 void MachineGame::machineChooseAndMovePieces()
 {
     ChessStep* step = getBestMove();
 
-    m_ChessPieces[step->m_nKillID].m_bDead = true;
-    m_ChessPieces[step->m_nMoveID].m_nRow = m_ChessPieces[step->m_nKillID].m_nRow;
-    m_ChessPieces[step->m_nMoveID].m_nCol = m_ChessPieces[step->m_nKillID].m_nCol;
+    if(step->m_nKillID == -1)  //黑棋没有可以击杀的红棋子，只好走能够走的过程中最后一步棋
+    {
+        m_ChessPieces[step->m_nMoveID].m_nRow = step->m_nRowTo;
+        m_ChessPieces[step->m_nMoveID].m_nCol = step->m_nnColTo;
 
-    m_nSelectID = -1;
+    }
+    else //黑棋有可以击杀的红棋子，故击杀红棋子
+    {
+        m_ChessPieces[step->m_nKillID].m_bDead = true;
+        m_ChessPieces[step->m_nMoveID].m_nRow = m_ChessPieces[step->m_nKillID].m_nRow;
+        m_ChessPieces[step->m_nMoveID].m_nCol = m_ChessPieces[step->m_nKillID].m_nCol;
+        m_nSelectID = -1;
+    }
+
     m_bIsRed = !m_bIsRed;
 
 
