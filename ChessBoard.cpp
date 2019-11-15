@@ -86,6 +86,18 @@ bool ChessBoard::isChecked(QPoint pt, int &row, int &col)
     }
 }
 
+void ChessBoard::whoPlay(int slelsctID)
+{
+    if(m_nCheckedID != -1)
+    {
+        if(m_bIsRed == m_ChessPieces[slelsctID].m_bRed)
+        {
+            m_nSelectID = m_nCheckedID;
+        }
+    }
+
+}
+
 //象棋的棋盘的坐标转换成界面坐标
 QPoint ChessBoard::center(int row, int col)
 {
@@ -203,10 +215,10 @@ void ChessBoard::mousePressEvent(QMouseEvent *ev)
     if(!isChecked(pt, row, col))
         return;
 
-    m_nCheckedID = -1;
-    int i;
-
     //判断是哪一个棋子被选中，根据ID（这里的局部i）来记录下来
+    int i;
+    m_nCheckedID = -1;
+
     for(i = 0; i <= 31; i++)
     {
         if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && m_ChessPieces[i].m_bDead == false)
@@ -220,14 +232,15 @@ void ChessBoard::mousePressEvent(QMouseEvent *ev)
 
     if(m_nSelectID == -1)//选中棋子
     {
-        if(m_nCheckedID != -1)
-        {
-            if(m_bIsRed == m_ChessPieces[m_nCheckedID].m_bRed)
-            {
-                m_nSelectID = m_nCheckedID;
-            }
+        whoPlay(m_nCheckedID);
 
-        }
+//        if(m_nCheckedID != -1)
+//        {
+//            if(m_bIsRed == m_ChessPieces[m_nCheckedID].m_bRed)
+//            {
+//                m_nSelectID = m_nCheckedID;
+//            }
+//        }
     }
     else//走棋子
     {

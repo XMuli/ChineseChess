@@ -14,9 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         ChessBoard.cpp \
-    ChessPieces.cpp
+    ChessPieces.cpp \
+    ChessStep.cpp \
+    MachineGame.cpp \
+    NetworkGame.cpp
 
 HEADERS  += ChessBoard.h \
-    ChessPieces.h
+    ChessPieces.h \
+    ChessStep.h \
+    MachineGame.h \
+    NetworkGame.h
 
 FORMS    += chessboard.ui
