@@ -14,6 +14,7 @@ ChessBoard::ChessBoard(QWidget *parent) :
     m_nCheckedID = -1;
     m_bIsTcpServer = true;
     m_bIsRed = true;
+
     ui->setupUi(this);
 }
 
@@ -553,5 +554,4 @@ bool ChessBoard::canMoveBING(int moveId, int killId, int row, int col)
 
     return true;
 }
-
 

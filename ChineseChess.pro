@@ -17,12 +17,16 @@ SOURCES += main.cpp\
     ChessPieces.cpp \
     ChessStep.cpp \
     MachineGame.cpp \
-    NetworkGame.cpp
+    NetworkGame.cpp \
+    ChooseMainWindow.cpp \
+    SelectGameMode.cpp
 
 HEADERS  += ChessBoard.h \
     ChessPieces.h \
     ChessStep.h \
     MachineGame.h \
-    NetworkGame.h
+    NetworkGame.h \
+    ChooseMainWindow.h \
+    SelectGameMode.h
 
 FORMS    += chessboard.ui

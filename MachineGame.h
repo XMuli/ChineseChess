@@ -14,12 +14,8 @@ public:
 
     void chooseOrMovePieces(int tempID, int& row, int& col); //辅助函： 选棋或移动棋子
 
-
-
-
     void saveStep(int moveID, int checkedID, int row, int col, QVector<ChessStep*>& steps);
     void getAllPossibleMoveStep(QVector<ChessStep*>& steps);  //获得所有可能的移动步骤
-
 
     virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
     void clickPieces(int checkedID, int& row, int& col);

@@ -61,8 +61,11 @@ public:
     bool m_bIsTcpServer;
 
 
+
 private:
     Ui::ChessBoard *ui;
+
+
 };
 
 #endif // CHESSBOARD_H
