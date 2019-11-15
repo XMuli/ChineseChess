@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     MachineGame.cpp \
     NetworkGame.cpp \
     ChooseMainWindow.cpp \
-    SelectGameMode.cpp
+    SelectGameMode.cpp \
+    AboutAuthor.cpp
 
 HEADERS  += ChessBoard.h \
     ChessPieces.h \
@@ -27,6 +28,13 @@ HEADERS  += ChessBoard.h \
     MachineGame.h \
     NetworkGame.h \
     ChooseMainWindow.h \
-    SelectGameMode.h
+    SelectGameMode.h \
+    AboutAuthor.h
 
-FORMS    += chessboard.ui
+FORMS    += chessboard.ui \
+    AboutAuthor.ui
+
+RESOURCES += \
+    chooseresource.qrc
+
+

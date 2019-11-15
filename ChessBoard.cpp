@@ -15,6 +15,14 @@ ChessBoard::ChessBoard(QWidget *parent) :
     m_bIsTcpServer = true;
     m_bIsRed = true;
 
+    //计时器部分
+    m_timer = new QTimer;  //初始化定时器
+    m_timeRecord  = new QTime(0, 0, 0); //初始化时间
+    m_bIsStart = false;  //初始为还未计时
+    connect(m_timer,SIGNAL(timeout()),this,SLOT(updateTime()));
+
+    m_pAbout = new AboutAuthor();
+
     ui->setupUi(this);
 }
 
@@ -555,3 +563,48 @@ bool ChessBoard::canMoveBING(int moveId, int killId, int row, int col)
     return true;
 }
 
+//刷新时间
+void ChessBoard::updateTime()
+{
+    *m_timeRecord = m_timeRecord->addSecs(1);
+    ui->lcdNumber->display(m_timeRecord->toString("hh:mm:ss"));
+
+    if(m_bIsStart == false)
+    {
+        ui->pushButton_start->setText("开始");
+    }
+    else if(m_bIsStart == true)
+    {
+        ui->pushButton_start->setText("暂停");
+    }
+}
+
+
+void ChessBoard::on_pushButton_start_clicked()
+{
+    if(!m_bIsStart) //尚未开始 开始计时
+        {
+            m_timer->start(1000);
+        }
+        else //已经开始，暂停
+        {
+            m_timer->stop();
+        }
+        m_bIsStart = !m_bIsStart;
+}
+
+void ChessBoard::on_pushButton_reset_clicked()
+{
+    m_timer->stop();    //计时器停止
+    m_timeRecord->setHMS(0,0,0); //时间设为0
+    ui->lcdNumber->display(m_timeRecord->toString("hh:mm:ss")); //显示00:00:00
+    m_bIsStart = false;
+    ui->pushButton_start->setText("开始");
+}
+
+void ChessBoard::on_pushButton_about_clicked()
+{
+    m_pAbout->setWindowTitle("关于作者");
+    m_pAbout->show();
+
+}
