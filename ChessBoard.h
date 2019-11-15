@@ -30,7 +30,7 @@ public:
 
     bool isChecked(QPoint pt, int& row, int& col);   //是否选中该枚棋子。pt为输入参数; row， col为输出参数
 
-    virtual void whoPlay(int slelsctID);  //判断是谁正在 选择棋子
+    //virtual void whoPlay(int slelsctID);  //判断是谁正在 选择棋子
 public:
     QPoint center(int row, int col);         //象棋的棋盘的坐标转换成界面坐标
     QPoint center(int id);
@@ -38,6 +38,7 @@ public:
     void drawChessPieces(QPainter& painter, int id);  //绘画单个具体的棋子
 
     virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
+    virtual void clickPieces(int checkedID, int& row, int& col);
 
     //象棋移动的规则[将  士  象  马  车  炮  兵]
     bool canMove(int moveId, int killId, int row, int col);
@@ -57,6 +58,7 @@ public:
     int m_nSelectID;   //选中棋子[-1:选棋子 || 非-1:走棋子]
     int m_nCheckedID;    //将要被击杀的棋子ID
     bool m_bIsRed;     //是否是红棋
+    bool m_bIsTcpServer;
 
 
 private:

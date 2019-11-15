@@ -44,6 +44,8 @@ ChessPieces::~ChessPieces()
 void ChessPieces::init(int id)
 {
 
+
+
     if(id <16)
     {
         m_nRow = tPos[id].t_nRow;
@@ -62,10 +64,7 @@ void ChessPieces::init(int id)
     m_bDead = false;
 }
 
-//void ChessPieces::rotate()
-//{
 
-//}
 
 
 QString ChessPieces::getnName()

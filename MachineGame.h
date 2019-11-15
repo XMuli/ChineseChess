@@ -22,6 +22,7 @@ public:
 
 
     virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
+    void clickPieces(int checkedID, int& row, int& col);
 
     void fakeMove(ChessStep* step);  //假装移动棋子
     void unFakeMove(ChessStep* step);  //撤回先前假装移动棋子的步骤

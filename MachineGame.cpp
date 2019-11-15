@@ -123,10 +123,10 @@ void MachineGame::mousePressEvent(QMouseEvent *ev)
     }
 
     if(0<=i && i<32)
-    {
         m_nCheckedID = i;
-    }
 
+
+    clickPieces(m_nCheckedID, row, col);
 
 
     if(m_bIsRed) //红方玩家时间
@@ -142,6 +142,20 @@ void MachineGame::mousePressEvent(QMouseEvent *ev)
 
 
 
+}
+
+void MachineGame::clickPieces(int checkedID, int &row, int &col)
+{
+    if(m_bIsRed) //红方玩家时间
+    {
+        chooseOrMovePieces(checkedID, row, col);
+
+        if(!m_bIsRed) //黑方紧接着进行游戏
+        {
+            machineChooseAndMovePieces();
+            //ToDo: 机器 黑方时间
+        }
+    }
 }
 
 

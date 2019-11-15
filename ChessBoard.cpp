@@ -12,6 +12,7 @@ ChessBoard::ChessBoard(QWidget *parent) :
 
     m_nSelectID = -1;
     m_nCheckedID = -1;
+    m_bIsTcpServer = true;
     m_bIsRed = true;
     ui->setupUi(this);
 }
@@ -86,17 +87,17 @@ bool ChessBoard::isChecked(QPoint pt, int &row, int &col)
     }
 }
 
-void ChessBoard::whoPlay(int slelsctID)
-{
-    if(m_nCheckedID != -1)
-    {
-        if(m_bIsRed == m_ChessPieces[slelsctID].m_bRed)
-        {
-            m_nSelectID = m_nCheckedID;
-        }
-    }
+//void ChessBoard::whoPlay(int slelsctID)
+//{
+//    if(m_nCheckedID != -1)
+//    {
+//        if(m_bIsRed == m_ChessPieces[slelsctID].m_bRed)
+//        {
+//            m_nSelectID = m_nCheckedID;
+//        }
+//    }
 
-}
+//}
 
 //象棋的棋盘的坐标转换成界面坐标
 QPoint ChessBoard::center(int row, int col)
@@ -226,28 +227,40 @@ void ChessBoard::mousePressEvent(QMouseEvent *ev)
     }
 
 
-    if(i < 32)
+
+    if(0<=i && i<32)
         m_nCheckedID = i;  //选中的棋子的ID
 
 
+    clickPieces(m_nCheckedID, row, col);
+
+    update();
+}
+
+
+void ChessBoard::clickPieces(int checkedID, int& row, int& col)
+{
+
+    m_nCheckedID = checkedID;
+
     if(m_nSelectID == -1)//选中棋子
     {
-        whoPlay(m_nCheckedID);
+       // whoPlay(m_nCheckedID);
 
-//        if(m_nCheckedID != -1)
-//        {
-//            if(m_bIsRed == m_ChessPieces[m_nCheckedID].m_bRed)
-//            {
-//                m_nSelectID = m_nCheckedID;
-//            }
-//        }
+        if(m_nCheckedID != -1)
+        {
+            if(m_bIsRed == m_ChessPieces[m_nCheckedID].m_bRed)
+            {
+                m_nSelectID = m_nCheckedID;
+            }
+        }
     }
     else//走棋子
     {
         if(canMove(m_nSelectID, m_nCheckedID, row, col ))
         {
-            //_selectId为第一次点击选中的棋子，
-            //_clickId为第二次点击||被杀的棋子ID，准备选中棋子下子的地方
+            //m_nSelectID为第一次点击选中的棋子，
+            //m_nCheckedID为第二次点击||被杀的棋子ID，准备选中棋子下子的地方
             m_ChessPieces[m_nSelectID].m_nRow = row;
             m_ChessPieces[m_nSelectID].m_nCol = col;
             if(m_nCheckedID != -1)
