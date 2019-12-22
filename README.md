@@ -16,8 +16,6 @@
 
 <font color=#70AD47 size=4 face="幼圆">**代码大小：**</font>![](https://img.shields.io/github/languages/code-size/touwoyimuli/2019_01_Qt5_ChinessChess.svg?logo=chess)
 
-<font color=#70AD47 size=4 face="幼圆">**项目进度：**</font>![](http://progressed.io/bar/100?title=completed)
-
 <font color=#70AD47 size=4 face="幼圆">**总下载量：**</font>![](https://img.shields.io/github/downloads/touwoyimuli/2019_01_Qt5_ChinessChess/total.svg)
 
 <font color=#70AD47 size=4 face="幼圆">**支持平台：**</font>![](https://img.shields.io/conda/pn/conda-forge/qt.svg)
