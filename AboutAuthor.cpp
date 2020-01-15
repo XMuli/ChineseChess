@@ -21,6 +21,7 @@
  */
 #include "AboutAuthor.h"
 #include "ui_AboutAuthor.h"
+#include <QIcon>
 
 AboutAuthor::AboutAuthor(QWidget *parent) :
     QDialog(parent),
