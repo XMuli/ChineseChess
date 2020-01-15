@@ -1,4 +1,4 @@
-name: CI
+name: MyCi
 
 on: [push]
 
@@ -9,10 +9,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: Trass3r/setup-cpp@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2.2.1
+    - name: Run a qt project
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        qmake -v
