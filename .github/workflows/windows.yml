@@ -1,0 +1,17 @@
+name: MyCi_windows
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2.2.1
+    - name: Run a qt project
+      run: |
+        qmake
+        make
