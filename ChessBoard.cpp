@@ -20,7 +20,7 @@
  * along with this program.  If not, see <https://touwoyimuli.github.io/>.
  */
 #include "ChessBoard.h"
-#include "ui_chessboard.h"
+#include "ui_ChessBoard.h"
 
 ChessBoard::ChessBoard(QWidget *parent) :
     QFrame(parent),
