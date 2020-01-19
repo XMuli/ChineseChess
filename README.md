@@ -1,8 +1,6 @@
 # Qt_ChinessChess
 
-
-
-<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/dev/img/20191025221436.jpg"/>
+<div align=center><img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/blog-imange/img/muli.png"/></div>
 
 ## 项目介绍：
 
@@ -54,7 +52,7 @@
 
 <font color=#FE7207  size=4 face="幼圆">**作者作品详情：** </font>
 
-<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/blog-imange/img/20191116004852.png"  height="500" width="800">
+<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/blog-imange/img/20200119191403.png" height="500" width="800"/>
 
 <br>
 
