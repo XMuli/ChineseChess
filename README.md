@@ -1,26 +1,33 @@
 # Qt_ChinessChess
 
-<div align=center><img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/blog-imange/img/muli.png"/></div>
-
-## 项目介绍：
-
-个人大学毕业设计，基于Qt5开发的中国象棋网络对战平台(含通讯功能)
-
-该项目主要功能模块分为①玩家与自己对战、②玩家与电脑AI对战、③多人网络对战(可跨系统)、④对战计时、⑤关于作品信息。实现了在单机或联网状态下，无论是单人还是多人，无论使用系统是否相同，均可以实现象棋游戏功能。
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/touwoyimuli/xmuliPic@pic/2020/muli.png"  height="240" width="240" />
+</div>
 
 
+## 项目介绍
 
-<font color=#70AD47 size=4 face="幼圆">**编码语言：**</font>![](https://img.shields.io/badge/language-c++-orange.svg)
+基于Qt5开发的中国象棋网络对战平台(含通讯功能)，实现了在单机或联网状态下，无论是单人还是多人，无论使用系统是否相同，均可以实现象棋游戏功能。
 
-<font color=#70AD47 size=4 face="幼圆">**代码大小：**</font>![](https://img.shields.io/github/languages/code-size/touwoyimuli/2019_01_Qt5_ChinessChess.svg?logo=chess)
+**该项目主要功能模块分为：**
 
-<font color=#70AD47 size=4 face="幼圆">**总下载量：**</font>![](https://img.shields.io/github/downloads/touwoyimuli/2019_01_Qt5_ChinessChess/total.svg)
+①玩家与自己对战
 
-<font color=#70AD47 size=4 face="幼圆">**支持平台：**</font>![](https://img.shields.io/conda/pn/conda-forge/qt.svg)
+②玩家与电脑AI对战 
+
+③多人网络对战(可跨系统)
+
+④对战计时
+
+⑤关于作品信息
 
 <br>
 
-## 项目运行演示：
+ ![](https://img.shields.io/badge/language-c++-orange.svg) ![](https://img.shields.io/github/languages/code-size/touwoyimuli/2019_01_Qt5_ChinessChess.svg?logo=chess) ![](https://img.shields.io/github/forks/xmuli/chinessChess) ![](https://img.shields.io/github/stars/xmuli/chinessChess) ![](https://img.shields.io/github/license/xmuli/chinessChess) 
+
+<br>
+
+# 项目运行演示：
 
 <font color=#70AD47 size=4 face="幼圆">**视频演示：**</font> [2019_01_Qt5_ChinessChess 基于QT的跨平台网络象棋对战演示](https://www.bilibili.com/video/av45509758)
 
@@ -50,11 +57,9 @@
 
 <br>
 
-<font color=#FE7207  size=4 face="幼圆">**作者作品详情：** </font>
+<font color=#FE7207  size=4 face="幼圆">**作者作品详情：** </font> 
 
-<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/blog-imange/img/20200119191403.png" height="500" width="800"/>
-
-<br>
+ <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/chessme.png" width="100%"/>
 
 <br>
 
@@ -88,24 +93,23 @@
 
 <br>
 
-## 互助
-若是帮助到了你，可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，方便抬手之间，表示点个赞，手有余香
+## star:
 
+若是帮助到了你，<font color=#FE7207  size=4 face="幼圆">可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，方便抬手之间，相当点个赞，</font>手有余香。
 
 <br>
 
 ## 关于作者：
 
-<font color=#70AD47 size=4 face="幼圆">**touwoyimuli：** </font> touwoyimuli@gmai.com         [作者更多联系方式](https://touwoyimuli.github.io/about/)
+- <font color=#70AD47 size=4 face="幼圆">**xmuli：** </font> 
+  - [xmulitech@gmail.com](https://xmuli.tech/about/) 
 
 <br>
 
 ## 协议：
 
-<img src='https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709052645.png' width='127' height='51'/>
+<img src='https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709052148.jpg' width='240' height='https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709052153.jpg'/>
 
-<font color=#70AD47 size=4 face="幼圆">**touwoyimuli**</font> 博客代码基于GNU General Public License v3.0 协议进行分发和使用，更多信息参见[协议文件](/LICENSE)。
+博客代码基于Apache License 2.0 协议进行分发和使用，更多信息参见[协议文件](/LICENSE)。
 
-<img src='https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709052632.png' width='145.77' height='51'/>
-
-<font color=#70AD47 size=4 face="幼圆">**touwoyimuli**</font> 所含文章使用以下协议进行保护：[署名-非商业性使用-禁止演绎](http://creativecommons.org/licenses/by-nc-nd/3.0/cn/)。
+<img src='https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709052153.jpg' width='127' height='127'/>
