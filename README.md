@@ -59,7 +59,7 @@
 
 <font color=#FE7207  size=4 face="幼圆">**作者作品详情：** </font> 
 
- <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/chessme.png" width="100%"/>
+ <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20200522214458.png" width="100%"/>
 
 <br>
 
@@ -71,13 +71,13 @@
 
 [QT5/C++项目：基于QT的跨平台网络对战象棋（三）](https://blog.csdn.net/qq_33154343/article/details/89286553)
 
-<br><br>
+<br>
 
 ## 源码说明：
 
 <font color=#70AD47 size=4 face="幼圆">**版本:**</font>![](https://img.shields.io/badge/v-5.3-brightgreen.svg)
 
-最新版本。且以上所有源码全带有详细注释。
+最新版本，上所有源码全带有详细注释。若有兴趣，欢迎提交 pr。
 
 <br>
 
@@ -101,8 +101,7 @@
 
 ## 关于作者：
 
-- <font color=#70AD47 size=4 face="幼圆">**xmuli：** </font> 
-  - [xmulitech@gmail.com](https://xmuli.tech/about/) 
+<font color=#70AD47 size=4 face="幼圆">**与子偕臧：** </font> [xmulitech@gmail.com](https://xmuli.tech/about/) 
 
 <br>
 
