@@ -1,10 +1,10 @@
 /*
- * Copyright (C)  2019 ~ 2019 touwoyimuli.  All rights reserved.
+ * Copyright (C)  2019  与子偕臧.  All rights reserved.
  *
- * Author:  touwoyimuli <touwoyimuli@gmai.com>
+ * Author:  与子偕臧 xmulitech@gmail.com
  *
- * github:  https://github.com/touwoyimuli
- * blogs:   https://touwoyimuli.github.io/
+ * github:  https://github.com/xmuli
+ * blogs:   https://xmuli.tech
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,6 @@ public:
     MachineGame();
     ~MachineGame();
 
-
     void chooseOrMovePieces(int tempID, int& row, int& col); //辅助函： 选棋或移动棋子
 
     void saveStep(int moveID, int checkedID, int row, int col, QVector<ChessStep*>& steps);  //保存棋子步骤
@@ -48,7 +47,6 @@ public:
     ChessStep* getBestMove();   //获得最好的移动步骤
 
     void machineChooseAndMovePieces(); //机器 黑方时间: 进行选棋+下棋
-
 };
 
 #endif // MACHINEGAME_H

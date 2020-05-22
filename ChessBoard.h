@@ -1,10 +1,10 @@
 /*
- * Copyright (C)  2019 ~ 2019 touwoyimuli.  All rights reserved.
+ * Copyright (C)  2019  与子偕臧.  All rights reserved.
  *
- * Author:  touwoyimuli <touwoyimuli@gmai.com>
+ * Author:  与子偕臧 xmulitech@gmail.com
  *
- * github:  https://github.com/touwoyimuli
- * blogs:   https://touwoyimuli.github.io/
+ * github:  https://github.com/xmuli
+ * blogs:   https://xmuli.tech
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,16 +71,12 @@ public:
     explicit ChessBoard(QWidget *parent = 0);
     ~ChessBoard();
 
-
 //private:
     bool isDead(int id);
     int getStoneId(int row, int col);
     //车 炮 的功能辅助函数   判断两个点是否在一个直线上面,且返回直线之间的棋子个数
     int  getStoneCountAtLine(int row1, int col1, int row2, int col2);
     void whoWin();  //谁胜谁负
-
-
-
     bool isChecked(QPoint pt, int& row, int& col);   //是否选中该枚棋子。pt为输入参数; row， col为输出参数
 
     //virtual void whoPlay(int slelsctID);  //判断是谁正在 选择棋子
@@ -103,7 +99,6 @@ public:
     bool canMovePAO(int moveId, int killId, int row, int col);
     bool canMoveBING(int moveId, int killId, int row, int col);
 
-
     ChessPieces m_ChessPieces[32];  //所有棋子
     int m_nR;          //棋子半径
     int m_nOffSet;     //距离界面的边距
@@ -112,8 +107,6 @@ public:
     int m_nCheckedID;    //将要被击杀的棋子ID
     bool m_bIsRed;     //是否是红棋
     bool m_bIsTcpServer;
-
-
 
 private slots:
     void updateTime();
@@ -127,10 +120,7 @@ private:
     QTimer * m_timer;      //定时器 每秒更新时间
     QTime * m_timeRecord;  //记录时间
     bool m_bIsStart;        //记录是否已经开始计时
-
     AboutAuthor* m_pAbout;
-
-
 };
 
 #endif // CHESSBOARD_H

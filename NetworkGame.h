@@ -1,10 +1,10 @@
 /*
- * Copyright (C)  2019 ~ 2019 touwoyimuli.  All rights reserved.
+ * Copyright (C)  2019  与子偕臧.  All rights reserved.
  *
- * Author:  touwoyimuli <touwoyimuli@gmai.com>
+ * Author:  与子偕臧 xmulitech@gmail.com
  *
- * github:  https://github.com/touwoyimuli
- * blogs:   https://touwoyimuli.github.io/
+ * github:  https://github.com/xmuli
+ * blogs:   https://xmuli.tech
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,14 +37,11 @@ public:
     NetworkGame(bool isServer);
     ~NetworkGame();
 
-
-
     QTcpServer* m_tcpServer;
     QTcpSocket* m_tcpSocket;
 
     //virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
     virtual void clickPieces(int checkedID, int& row, int& col);
-
 
 public slots:
     void slotNewConnection();
