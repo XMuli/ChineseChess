@@ -50,7 +50,7 @@
 
 <br>
 
-**<font color=#D0087E size=4 face="幼圆">MacOS系统演示：**</font>
+<font color=#D0087E size=4 face="幼圆">**MacOS系统演示：**</font>
 
 <img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709004745.gif"  height="500" width="800">
 
