@@ -23,7 +23,7 @@
 #include "ui_ChessBoard.h"
 
 ChessBoard::ChessBoard(QWidget *parent) :
-    QFrame(parent),
+    QMainWindow(parent),
     ui(new Ui::ChessBoard)
 {
 
