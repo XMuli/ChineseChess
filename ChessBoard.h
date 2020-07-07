@@ -49,6 +49,7 @@
 
 
 //#include <QWidget>
+#include <QMainWindow>
 #include <QFrame>        //QFrame而不是用QWidget???
 #include "ChessPieces.h"
 #include <QPainter>
@@ -63,7 +64,7 @@ namespace Ui {         //具体作用???
 class ChessBoard;      //???
 }
 
-class ChessBoard : public QFrame
+class ChessBoard : public QMainWindow
 {
     Q_OBJECT
 
