@@ -141,6 +141,7 @@ bool ChessBoard::isChecked(QPoint pt, int &row, int &col)
                 return true;
         }
     }
+    return false;
 }
 
 //void ChessBoard::whoPlay(int slelsctID)
@@ -175,6 +176,8 @@ QPoint ChessBoard::center(int id)
 void ChessBoard::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
+    int side = qMin(int((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), ui->label->height());
+    painter.scale(side / 960.0, side / 960.0);
 
         m_nOffSet = 60;  //距离界面的边距
         m_nD = 90; //间距为50px
@@ -260,10 +263,20 @@ void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具�
 
 
 
+QPoint ChessBoard::getRealPoint(QPoint pt){
+    int side = qMin(int((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), ui->label->height());
+    QPoint ret;
+    ret.setX(pt.x() / double(side) * 960.0);
+    ret.setY(pt.y() / double(side) * 960.0);
+    return ret;
+}
+
+
 //鼠标点击事件
 void ChessBoard::mousePressEvent(QMouseEvent *ev)
 {
     QPoint pt = ev->pos();
+    pt = getRealPoint(pt);
     //将pt转化成棋盘的像行列值
     //判断这个行列值上面有没有棋子
     int row, col;

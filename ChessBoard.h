@@ -58,6 +58,7 @@
 #include <QTimer>
 #include <QTime>
 #include <QMessageBox>
+#include <QtGlobal>
 #include "AboutAuthor.h"
 
 namespace Ui {         //具体作用???
@@ -79,6 +80,7 @@ public:
     int  getStoneCountAtLine(int row1, int col1, int row2, int col2);
     void whoWin();  //谁胜谁负
     bool isChecked(QPoint pt, int& row, int& col);   //是否选中该枚棋子。pt为输入参数; row， col为输出参数
+    QPoint getRealPoint(QPoint pt);
 
     //virtual void whoPlay(int slelsctID);  //判断是谁正在 选择棋子
 public:
