@@ -80,7 +80,7 @@ public:
     int  getStoneCountAtLine(int row1, int col1, int row2, int col2);
     void whoWin();  //谁胜谁负
     bool isChecked(QPoint pt, int& row, int& col);   //是否选中该枚棋子。pt为输入参数; row， col为输出参数
-    QPoint getRealPoint(QPoint pt);
+    QPoint getRealPoint(QPoint pt);  // 使mouseMoveEvent取得的坐标同Painter的坐标一致
 
     //virtual void whoPlay(int slelsctID);  //判断是谁正在 选择棋子
 public:

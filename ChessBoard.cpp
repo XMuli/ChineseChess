@@ -266,8 +266,10 @@ void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具�
 QPoint ChessBoard::getRealPoint(QPoint pt){
     int side = qMin(int((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), ui->label->height());
     QPoint ret;
+
     ret.setX(pt.x() / double(side) * 960.0);
     ret.setY(pt.y() / double(side) * 960.0);
+    
     return ret;
 }
 

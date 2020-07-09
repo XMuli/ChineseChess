@@ -117,6 +117,12 @@ border-image: url(:/images/b.jpg);
          </property>
          <item>
           <widget class="QPushButton" name="pushButton_start">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>开始</string>
            </property>
@@ -137,6 +143,12 @@ border-image: url(:/images/b.jpg);
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_reset">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>重置</string>
            </property>
@@ -177,6 +189,12 @@ border-image: url(:/images/b.jpg);
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_about">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>关于作者</string>
            </property>
