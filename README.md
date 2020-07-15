@@ -114,11 +114,9 @@
 
 ## 作者：
 
-<font color=#70AD47 size=4 face="幼圆">**与子偕臧：** </font> [xmulitech@gmail.com](https://xmuli.tech/about/) 
+<font color=#70AD47 size=4 face="幼圆">**偕臧：** </font>     [xmuli.tech](https://xmuli.tech/)
 
 <font color=#70AD47 size=4 face="幼圆">**CSDN：** </font>   [xmuli.blog.csdn.net](https://xmuli.blog.csdn.net/)
-
-<font color=#70AD47 size=4 face="幼圆">**偕臧：** </font>     [xmuli.tech](https://xmuli.tech/)
 
 <br>
 
