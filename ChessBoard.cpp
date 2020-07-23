@@ -36,6 +36,7 @@ ChessBoard::ChessBoard(QWidget *parent) :
     m_nCheckedID = -1;
     m_bIsTcpServer = true;
     m_bIsRed = true;
+    m_bIsOver = false;
 
     //计时器部分
     m_timer = new QTimer;  //初始化定时器
@@ -109,6 +110,7 @@ void ChessBoard::whoWin()  //谁胜谁负
 
     if(m_ChessPieces[4].m_bDead == true && m_ChessPieces[20].m_bDead == false)
     {
+        m_bIsOver = true;
         QMessageBox message(QMessageBox::Information, "提示", "本局结束，红方胜利.");
         message.setIconPixmap(QPixmap(":/images/Is.JPG"));
         message.setFont(QFont("华文行楷",16,QFont::Bold));
@@ -117,6 +119,7 @@ void ChessBoard::whoWin()  //谁胜谁负
 
     if(m_ChessPieces[4].m_bDead == false && m_ChessPieces[20].m_bDead == true)
     {
+        m_bIsOver = true;
         QMessageBox message(QMessageBox::Information, "提示", "本局结束，黑方胜利.");
         message.setIconPixmap(QPixmap(":/images/Is.JPG"));
         message.setFont(QFont("华文行楷",16,QFont::Bold));
@@ -263,6 +266,9 @@ void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具�
 //鼠标点击事件
 void ChessBoard::mousePressEvent(QMouseEvent *ev)
 {
+    if(ev->button() != Qt::LeftButton || ev->type() != QEvent::Type::MouseButtonPress)
+        return;
+
     QPoint pt = ev->pos();
     //将pt转化成棋盘的像行列值
     //判断这个行列值上面有没有棋子
@@ -271,6 +277,15 @@ void ChessBoard::mousePressEvent(QMouseEvent *ev)
     //点击棋盘外面就不做处理
     if(!isChecked(pt, row, col))
         return;
+
+    if(m_bIsOver)
+    {
+        QMessageBox message(QMessageBox::Information, "提示", "本局已结束，请重新开始.");
+        message.setIconPixmap(QPixmap(":/images/Is.JPG"));
+        message.setFont(QFont("华文行楷",16,QFont::Bold));
+        message.exec();
+        return;
+    }
 
     //判断是哪一个棋子被选中，根据ID（这里的局部i）来记录下来
     int i;
@@ -291,6 +306,7 @@ void ChessBoard::mousePressEvent(QMouseEvent *ev)
     clickPieces(m_nCheckedID, row, col);
 
     update();
+    whoWin();
 }
 
 
@@ -327,10 +343,6 @@ void ChessBoard::clickPieces(int checkedID, int& row, int& col)
         }
 
     }
-
-    whoWin();
-
-    update();
 }
 
 
@@ -365,7 +377,7 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
             }
 
             m_nSelectID = killId;
-            update();
+//            update();
 
             return false;
         }
