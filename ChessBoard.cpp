@@ -27,16 +27,7 @@ ChessBoard::ChessBoard(QWidget *parent) :
     ui(new Ui::ChessBoard)
 {
 
-    for(int i = 0; i<32; i++)
-    {
-        m_ChessPieces[i].init(i);
-    }
-
-    m_nSelectID = -1;
-    m_nCheckedID = -1;
-    m_bIsTcpServer = true;
-    m_bIsRed = true;
-    m_bIsOver = false;
+    init();
 
     //计时器部分
     m_timer = new QTimer;  //初始化定时器
@@ -48,6 +39,20 @@ ChessBoard::ChessBoard(QWidget *parent) :
 
     this->setWindowIcon(QIcon(":/images/qaz.ico"));
     ui->setupUi(this);
+}
+
+void ChessBoard::init()
+{
+    for(int i = 0; i<32; i++)
+    {
+        m_ChessPieces[i].init(i);
+    }
+
+    m_nSelectID = -1;
+    m_nCheckedID = -1;
+    m_bIsTcpServer = true;
+    m_bIsRed = true;
+    m_bIsOver = false;
 }
 
 ChessBoard::~ChessBoard()
@@ -670,6 +675,11 @@ void ChessBoard::on_pushButton_about_clicked()
 
 }
 
+void ChessBoard::on_pushButton_restart_clicked()
+{
+    init();
+    update();
+}
 
 
 /***

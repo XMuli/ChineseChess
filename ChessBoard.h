@@ -99,6 +99,8 @@ public:
     bool canMovePAO(int moveId, int killId, int row, int col);
     bool canMoveBING(int moveId, int killId, int row, int col);
 
+    void init(); //初始化棋盘
+
     ChessPieces m_ChessPieces[32];  //所有棋子
     int m_nR;          //棋子半径
     int m_nOffSet;     //距离界面的边距
@@ -114,6 +116,8 @@ private slots:
     void on_pushButton_start_clicked();
     void on_pushButton_reset_clicked();
     void on_pushButton_about_clicked();
+
+    void on_pushButton_restart_clicked();
 
 private:
     Ui::ChessBoard *ui;
