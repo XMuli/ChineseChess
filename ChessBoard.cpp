@@ -27,16 +27,7 @@ ChessBoard::ChessBoard(QWidget *parent) :
     ui(new Ui::ChessBoard)
 {
 
-    for(int i = 0; i<32; i++)
-    {
-        m_ChessPieces[i].init(i);
-    }
-
-    m_nSelectID = -1;
-    m_nCheckedID = -1;
-    m_bIsTcpServer = true;
-    m_bIsRed = true;
-    m_bIsOver = false;
+    init();
 
     //计时器部分
     m_timer = new QTimer;  //初始化定时器
@@ -53,6 +44,20 @@ ChessBoard::ChessBoard(QWidget *parent) :
 ChessBoard::~ChessBoard()
 {
     delete ui;
+}
+
+void ChessBoard::init()
+{
+    for(int i = 0; i<32; i++)
+    {
+        m_ChessPieces[i].init(i);
+    }
+
+    m_nSelectID = -1;
+    m_nCheckedID = -1;
+    m_bIsTcpServer = true;
+    m_bIsRed = true;
+    m_bIsOver = false;
 }
 
 bool ChessBoard::isDead(int id)
@@ -111,6 +116,14 @@ void ChessBoard::whoWin()  //谁胜谁负
     if(m_ChessPieces[4].m_bDead == true && m_ChessPieces[20].m_bDead == false)
     {
         m_bIsOver = true;
+        //游戏结束 则计时停止 & 计时控制按钮不再可用 直到用户重新游戏
+        if(m_bIsStart)
+        {
+            m_timer->stop();
+            m_bIsStart = false;
+        }
+        ui->pushButton_start->setEnabled(false);
+
         QMessageBox message(QMessageBox::Information, "提示", "本局结束，红方胜利.");
         message.setIconPixmap(QPixmap(":/images/Is.JPG"));
         message.setFont(QFont("华文行楷",16,QFont::Bold));
@@ -120,6 +133,13 @@ void ChessBoard::whoWin()  //谁胜谁负
     if(m_ChessPieces[4].m_bDead == false && m_ChessPieces[20].m_bDead == true)
     {
         m_bIsOver = true;
+        if(m_bIsStart)
+        {
+            m_timer->stop();
+            m_bIsStart = false;
+        }
+        ui->pushButton_start->setEnabled(false);
+
         QMessageBox message(QMessageBox::Information, "提示", "本局结束，黑方胜利.");
         message.setIconPixmap(QPixmap(":/images/Is.JPG"));
         message.setFont(QFont("华文行楷",16,QFont::Bold));
@@ -664,10 +684,12 @@ void ChessBoard::on_pushButton_start_clicked()
     if(!m_bIsStart) //尚未开始 开始计时
         {
             m_timer->start(1000);
+            ui->pushButton_start->setText("暂停");
         }
         else //已经开始，暂停
         {
             m_timer->stop();
+            ui->pushButton_start->setText("继续");
         }
         m_bIsStart = !m_bIsStart;
 }
@@ -679,6 +701,7 @@ void ChessBoard::on_pushButton_reset_clicked()
     ui->lcdNumber->display(m_timeRecord->toString("hh:mm:ss")); //显示00:00:00
     m_bIsStart = false;
     ui->pushButton_start->setText("开始");
+    ui->pushButton_start->setEnabled(true);
 }
 
 void ChessBoard::on_pushButton_about_clicked()
@@ -688,7 +711,12 @@ void ChessBoard::on_pushButton_about_clicked()
 
 }
 
-
+void ChessBoard::on_pushButton_restart_clicked()
+{
+    init();
+    on_pushButton_reset_clicked();
+    update();
+}
 
 /***
  *                                         ,s555SB@@&
