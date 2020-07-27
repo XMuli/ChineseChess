@@ -92,7 +92,7 @@
 
 ## 编译：
 
-发开编程环境[qt-opensource-windows-x86-5.9.7.exe](http://download.qt.io/archive/qt/5.9/5.9.7/)。 如若下载的项目编译运行失败，请使用下载**这一版本**5.9.7的QtCreator编译运行项目  （使用Desktop Qt 5.9.7 MinGW 32 bit 直接编译运行）（理论5.9.4及以上的版本均可打开编译运行）
+安装 [Qt](https://download.qt.io/archive/qt/)  后，在 QtCreator 选择  MinGW 32 bit 直接编译运行即可（推荐  5.9. 8+ 以上版本）。
 
 <br>
 
@@ -106,9 +106,10 @@
 
 感谢帮助提交贡献的小伙伴🥳🥳:
 
-| 贡献者                                                       | 链接                                    |
-| ------------------------------------------------------------ | --------------------------------------- |
-| <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20200709204616.png" width="10%" /> | [Bruce-Ch](https://github.com/Bruce-Ch) |
+| 贡献者                                                       | 链接                                      |
+| ------------------------------------------------------------ | ----------------------------------------- |
+| <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20200709204616.png" width="10%" /> | [Bruce-Ch](https://github.com/Bruce-Ch)   |
+| <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20200727212509.png" width="10%"/> | [BlueArvin](https://github.com/BlueArvin) |
 
 <br>
 
