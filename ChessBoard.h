@@ -110,6 +110,7 @@ public:
     int m_nCheckedID;    //将要被击杀的棋子ID
     bool m_bIsRed;     //是否是红棋
     bool m_bIsTcpServer;
+    bool m_bIsOver; //是否已经游戏结束
 
 private slots:
     void updateTime();
