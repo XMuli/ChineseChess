@@ -1,7 +1,7 @@
 /*
- * Copyright (C)  2019  与子偕臧.  All rights reserved.
+ * Copyright (C)  2019~2020  偕臧  All rights reserved.
  *
- * Author:  与子偕臧 xmulitech@gmail.com
+ * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
  * blogs:   https://xmuli.tech
@@ -50,23 +50,17 @@ POS tPos[16]= {
               {3, 8, ChessPieces::BING}
               };
 
-
 ChessPieces::ChessPieces()
 {
-
 }
 
 ChessPieces::~ChessPieces()
 {
-
 }
 
 //初始化  对每一个棋子进行检验判断而后赋相应的值
 void ChessPieces::init(int id)
 {
-
-
-
     if(id <16)
     {
         m_nRow = tPos[id].t_nRow;
@@ -84,9 +78,6 @@ void ChessPieces::init(int id)
 
     m_bDead = false;
 }
-
-
-
 
 QString ChessPieces::getnName()
 {
@@ -112,6 +103,4 @@ QString ChessPieces::getnName()
     }
 
     return "ERROR";
-
 }
-

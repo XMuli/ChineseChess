@@ -1,7 +1,7 @@
 /*
- * Copyright (C)  2019  与子偕臧.  All rights reserved.
+ * Copyright (C)  2019~2020  偕臧  All rights reserved.
  *
- * Author:  与子偕臧 xmulitech@gmail.com
+ * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
  * blogs:   https://xmuli.tech
@@ -47,10 +47,8 @@
  *               代码无BUG!
  */
 
-
-//#include <QWidget>
 #include <QMainWindow>
-#include <QFrame>        //QFrame而不是用QWidget???
+#include <QFrame>
 #include "ChessPieces.h"
 #include <QPainter>
 #include <QPoint>
@@ -61,8 +59,8 @@
 #include <QtGlobal>
 #include "AboutAuthor.h"
 
-namespace Ui {         //具体作用???
-class ChessBoard;      //???
+namespace Ui {
+class ChessBoard;
 }
 
 class ChessBoard : public QMainWindow
@@ -73,10 +71,9 @@ public:
     explicit ChessBoard(QWidget *parent = 0);
     ~ChessBoard();
 
-//private:
     bool isDead(int id);
     int getStoneId(int row, int col);
-    //车 炮 的功能辅助函数   判断两个点是否在一个直线上面,且返回直线之间的棋子个数
+    // 车、炮的功能辅助函数   判断两个点是否在一个直线上面,且返回直线之间的棋子个数
     int  getStoneCountAtLine(int row1, int col1, int row2, int col2);
     void whoWin();  //谁胜谁负
     bool isChecked(QPoint pt, int& row, int& col);   //是否选中该枚棋子。pt为输入参数; row， col为输出参数

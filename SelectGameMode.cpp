@@ -1,7 +1,7 @@
 /*
- * Copyright (C)  2019  与子偕臧.  All rights reserved.
+ * Copyright (C)  2019~2020  偕臧  All rights reserved.
  *
- * Author:  与子偕臧 xmulitech@gmail.com
+ * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
  * blogs:   https://xmuli.tech
@@ -31,15 +31,11 @@ SelectGameMode::SelectGameMode(QWidget *parent): QDialog(parent)
     lay->addWidget(m_buttons[2] = new QPushButton("双人网络对战"));
 
     for(int i=0; i<3; i++)
-    {
         connect(m_buttons[i], SIGNAL(clicked()), this, SLOT(slotClicked()));
-    }
-
 }
 
 SelectGameMode::~SelectGameMode()
 {
-
 }
 
 void SelectGameMode::slotClicked()
@@ -53,6 +49,7 @@ void SelectGameMode::slotClicked()
             break;
         }
     }
+
     accept();
 }
 

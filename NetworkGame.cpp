@@ -1,7 +1,7 @@
 /*
- * Copyright (C)  2019  与子偕臧.  All rights reserved.
+ * Copyright (C)  2019~2020  偕臧  All rights reserved.
  *
- * Author:  与子偕臧 xmulitech@gmail.com
+ * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
  * blogs:   https://xmuli.tech
@@ -45,15 +45,13 @@ NetworkGame::NetworkGame(bool isServer)
 
         connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotRecv()));
     }
-
-
 }
 
 NetworkGame::~NetworkGame()
 {
-
 }
-/*
+
+
 //void NetworkGame::mousePressEvent(QMouseEvent *ev)
 //{
 //    QPoint pt = ev->pos();
@@ -75,21 +73,17 @@ NetworkGame::~NetworkGame()
 //            break;
 //    }
 
-
-
 //    if(0<=i && i<32)
 //        m_nCheckedID = i;  //选中的棋子的ID
-
 
 //    clickPieces(m_nCheckedID, row, col);
 
 //    update();
 //}
-*/
+
 
 void NetworkGame::clickPieces(int checkedID, int &row, int &col)
 {
-
     //不能够替对方选棋和下棋
     if(m_bIsTcpServer) //作为服务器一方  不能替黑棋下棋
     {
@@ -112,18 +106,12 @@ void NetworkGame::clickPieces(int checkedID, int &row, int &col)
 
     whoWin();
 
-
     ChessBoard::clickPieces(checkedID, row, col);
     char arry[3];
     arry[0] = checkedID;
     arry[1] = row;
     arry[2] = col;
     m_tcpSocket->write(arry, 3);
-
-
-
-
-
 }
 
 
@@ -134,26 +122,17 @@ void NetworkGame::slotNewConnection()
         return;
 
     m_tcpSocket = m_tcpServer->nextPendingConnection();
-
-    //qDebug()<<" connect 2019-1-28";
     connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotRecv()));
-
-
 }
 
 void NetworkGame::slotRecv()
 {
-
     QByteArray arry = m_tcpSocket->readAll();
-
 
     int nCheckedID = arry[0];
     int nRow = arry[1];
     int nCol = arry[2];
 
     //qDebug()<<nCheckedID<<"   "<<nRow<<"   "<<nCol<<"   ";
-
     ChessBoard::clickPieces(nCheckedID, nRow, nCol);
-
 }
-

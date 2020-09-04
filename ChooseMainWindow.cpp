@@ -1,7 +1,7 @@
 /*
- * Copyright (C)  2019  与子偕臧.  All rights reserved.
+ * Copyright (C)  2019~2020  偕臧  All rights reserved.
  *
- * Author:  与子偕臧 xmulitech@gmail.com
+ * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
  * blogs:   https://xmuli.tech
@@ -26,8 +26,6 @@
 #include "MachineGame.h"
 #include "NetworkGame.h"
 #include <QMessageBox>
-
-
 
 ChooseMainWindow::ChooseMainWindow(int nChooseGame, QWidget *parent) : QWidget(parent)
 {
@@ -55,24 +53,20 @@ ChooseMainWindow::ChooseMainWindow(int nChooseGame, QWidget *parent) : QWidget(p
 
         bool bServer = false;
         if(ret == QMessageBox::Yes)
-        {
             bServer = true;
-        }
+
         m_p3 = new NetworkGame(bServer);
         m_p3->setWindowTitle("双人网络对战");
         m_p3->show();
     }
     else
     {
-
     }
-
 
 }
 
 ChooseMainWindow::~ChooseMainWindow()
 {
-
     if(0 == m_nChooseGame)
     {
         delete m_p1;

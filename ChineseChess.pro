@@ -1,20 +1,18 @@
 #-------------------------------------------------
-#
 # Project created by QtCreator 2019-01-22T19:52:58
-#
 #
 # 关于作者:
 # 与子偕臧 xmulitech@gmail.com
 # 项目完成时间:2019-02-01
 # 其他:如果觉得该作品对你有用，或者有疑惑或者感谢，可以联系作者或者打赏;
-#     对我的 star 和 fork 是最大鼓励；当然有人欢迎你提交在 github 提交 pr。已将源码和思路开源公布于我的github和博客，供大家学习参考
+#     对我的 star 和 fork 是最大鼓励；当然有人欢迎你提交在 github 提交 pr,
+#     已将源码和思路开源公布于我的github和博客，供大家学习参考
 #
 # 联系作者:
 # GitHub:        https://github.com/xmuli
 # Telegram:      https://t.me/xmuli
 # CSDN Bolg:     https://blog.csdn.net/qq_33154343
 # My Blog:       https://xmuli.tech
-#
 #-------------------------------------------------
 
 QT       += core gui network

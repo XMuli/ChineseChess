@@ -1,7 +1,7 @@
 /*
- * Copyright (C)  2019  与子偕臧.  All rights reserved.
+ * Copyright (C)  2019~2020  偕臧  All rights reserved.
  *
- * Author:  与子偕臧 xmulitech@gmail.com
+ * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
  * blogs:   https://xmuli.tech
@@ -37,10 +37,6 @@ public:
     int m_nColFrom;  //原位置的列
     int m_nRowTo;    //目的位置的行
     int m_nnColTo;   //目的位置的列
-
-signals:
-
-public slots:
 };
 
 #endif // CHESSSTEP_H

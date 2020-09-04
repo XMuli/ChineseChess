@@ -1,7 +1,7 @@
 /*
- * Copyright (C)  2019  与子偕臧.  All rights reserved.
+ * Copyright (C)  2019~2020  偕臧  All rights reserved.
  *
- * Author:  与子偕臧 xmulitech@gmail.com
+ * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
  * blogs:   https://xmuli.tech
@@ -36,28 +36,6 @@
  *          不见满街漂亮妹，哪个归得程序员？
  */
 
-/***
- *                    .::::.
- *                  .::::::::.
- *                 :::::::::::    Now, see it,
- *             ..:::::::::::'     I think it is a beautiful girl.
- *           '::::::::::::'
- *             .::::::::::
- *        '::::::::::::::..
- *             ..::::::::::::.
- *           ``::::::::::::::::
- *            ::::``:::::::::'        .:::.
- *           ::::'   ':::::'       .::::::::.
- *         .::::'      ::::     .:::::::'::::.
- *        .:::'       :::::  .:::::::::' ':::::.
- *       .::'        :::::.:::::::::'      ':::::.
- *      .::'         ::::::::::::::'         ``::::.
- *  ...:::           ::::::::::::'              ``::.
- * ```` ':.          ':::::::::'                  ::::..
- *                    '.:::::'                    ':'````..
- */
-
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -67,12 +45,9 @@ int main(int argc, char *argv[])
     dlg.setFixedSize(200,120);
     dlg.setWindowIcon(QIcon(":/images/qaz.ico"));
     if(dlg.exec() != QDialog::Accepted)
-    {
         return 0;
-    }
 
     ChooseMainWindow wnd(dlg.m_nSelect);
-
 
     return a.exec();
 }

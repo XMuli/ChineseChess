@@ -1,7 +1,7 @@
 /*
- * Copyright (C)  2019  与子偕臧.  All rights reserved.
+ * Copyright (C)  2019~2020  偕臧  All rights reserved.
  *
- * Author:  与子偕臧 xmulitech@gmail.com
+ * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
  * blogs:   https://xmuli.tech
@@ -23,16 +23,11 @@
 
 MachineGame::MachineGame()
 {
-
 }
 
 MachineGame::~MachineGame()
 {
-
 }
-
-
-
 
 //辅助函: 选棋或移动棋子
 void MachineGame::chooseOrMovePieces(int tempID, int& row, int& col)
@@ -50,10 +45,7 @@ void MachineGame::chooseOrMovePieces(int tempID, int& row, int& col)
                 m_nSelectID = -1;
                 return;
             }
-
         }
-
-
     }
     else
     {
@@ -72,7 +64,6 @@ void MachineGame::chooseOrMovePieces(int tempID, int& row, int& col)
     }
 
     whoWin();
-
     update();
 }
 
@@ -89,7 +80,6 @@ void MachineGame::saveStep(int selectID, int checkedID, int row, int col, QVecto
     step->m_nKillID = checkedID;
 
     steps.append(step);
-
 }
 
 void MachineGame::getAllPossibleMoveStep(QVector<ChessStep *> &steps)
@@ -113,17 +103,11 @@ void MachineGame::getAllPossibleMoveStep(QVector<ChessStep *> &steps)
                 if(i!=32)
                 {
                     if(canMove(id, i, row, col))
-                    {
                         saveStep(id, i, row, col, steps);
-                    }
                 }
-
-
             }
         }
     }
-
-
 }
 
 void MachineGame::getAllPossibleMoveStepAndNoKill(QVector<ChessStep *> &steps)
@@ -142,30 +126,27 @@ void MachineGame::getAllPossibleMoveStepAndNoKill(QVector<ChessStep *> &steps)
                 for(; i <= 31; i++)
                 {
                     if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && m_ChessPieces[i].m_bDead == false)
-                    break;
+                        break;
                 }
 
                 if(id < 16 && i == 32)
                 {
                     if(canMove(id, -1, row, col))
-                    {
                         saveStep(id, -1, row, col, steps);
-                    }
                 }
             }
         }
     }
 }
 
-
-
 void MachineGame::mousePressEvent(QMouseEvent *ev)
 {
-
-    if(ev->button() != Qt::LeftButton) return;
+    if(ev->button() != Qt::LeftButton)
+        return;
 
     int row, col;
-    if(!isChecked(ev->pos(), row, col))  return;
+    if(!isChecked(ev->pos(), row, col))
+        return;
 
     m_nCheckedID = -1;
 
@@ -179,9 +160,7 @@ void MachineGame::mousePressEvent(QMouseEvent *ev)
     if(0<=i && i<32)
         m_nCheckedID = i;
 
-
     clickPieces(m_nCheckedID, row, col);
-
 
     if(m_bIsRed) //红方玩家时间
     {
@@ -205,10 +184,8 @@ void MachineGame::clickPieces(int checkedID, int &row, int &col)
         chooseOrMovePieces(checkedID, row, col);
 
         if(!m_bIsRed) //黑方紧接着进行游戏
-        {
             machineChooseAndMovePieces();
             //ToDo: 机器 黑方时间
-        }
     }
 }
 
@@ -218,16 +195,11 @@ void MachineGame::clickPieces(int checkedID, int &row, int &col)
 void MachineGame::fakeMove(ChessStep *step)
 {
      if(step->m_nKillID != -1)
-     {
          m_ChessPieces[step->m_nKillID].m_bDead = true;
-     }
-
 
      m_ChessPieces[step->m_nMoveID].m_nRow = step->m_nRowTo;
      m_ChessPieces[step->m_nMoveID].m_nCol = step->m_nnColTo;
      m_bIsRed = !m_bIsRed;
-
-
 }
 
 
@@ -235,9 +207,7 @@ void MachineGame::fakeMove(ChessStep *step)
 void MachineGame::unFakeMove(ChessStep *step)
 {
     if(step->m_nKillID != -1)
-    {
         m_ChessPieces[step->m_nKillID].m_bDead = false;
-    }
 
     m_ChessPieces[step->m_nMoveID].m_nRow = step->m_nRowFrom;
     m_ChessPieces[step->m_nMoveID].m_nCol = step->m_nColFrom;
@@ -274,10 +244,9 @@ int MachineGame::calcScore()
 
 
 //获得最好的移动步骤
-//玩了一把，发现我居然下不赢自己写的算法。哭了哭了哭了555555........
+//第一此玩了一把，发现我居然下不赢自己写的算法。哭了哭了哭了555555........
 ChessStep* MachineGame::getBestMove()
 {
-
     int maxScore = -10000;
     ChessStep* retStep = NULL;
 
@@ -286,7 +255,6 @@ ChessStep* MachineGame::getBestMove()
     // 1.看看有那些步骤可以走
     QVector<ChessStep*> steps;
     getAllPossibleMoveStep(steps);   // 黑棋吃红棋的所有可能的步骤
-
 
     //------------------------
     //没有可击杀的红棋子就走最后的一步
@@ -311,8 +279,6 @@ ChessStep* MachineGame::getBestMove()
     if(retStep != NULL)
         return retStep;
 
-
-
     //2.试着走一下
     //从这种不击杀红棋子，只是单纯移动黑棋steps里面，随机抽选一种进行下棋
     int nStepsCount = stepsAndNoKill.count();
@@ -321,19 +287,11 @@ ChessStep* MachineGame::getBestMove()
     QVector<ChessStep*>::iterator it = stepsAndNoKill.begin();
     retStep = it[temp];
 
-
     if(retStep == NULL)
         whoWin();
 
-
-
     //4.取最好的结果作为参考
     return retStep;
-
-
-
-
-
 }
 
 void MachineGame::machineChooseAndMovePieces()
@@ -355,8 +313,4 @@ void MachineGame::machineChooseAndMovePieces()
     }
 
     m_bIsRed = !m_bIsRed;
-
-
 }
-
-
