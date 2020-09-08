@@ -16,8 +16,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, ubuntu-20.04]
-        qt_ver: [5.9.8,5.12.9]
+        os: [ubuntu-20.04]
+        qt_ver: [5.12.9]
     steps:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.0.0
