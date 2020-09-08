@@ -37,7 +37,7 @@ ChessBoard::ChessBoard(QWidget *parent) :
 
     m_pAbout = new AboutAuthor();
 
-    this->setWindowIcon(QIcon(":/images/qaz.ico"));
+    this->setWindowIcon(QIcon(":/images/chess.svg"));
     ui->setupUi(this);
 }
 
@@ -122,7 +122,7 @@ void ChessBoard::whoWin()  //谁胜谁负
         ui->pushButton_start->setEnabled(false);
 
         QMessageBox message(QMessageBox::Information, "提示", "本局结束，红方胜利.");
-        message.setIconPixmap(QPixmap(":/images/Is.JPG"));
+        message.setIconPixmap(QPixmap(":/images/win.jpg"));
         message.setFont(QFont("华文行楷",16,QFont::Bold));
         message.exec();
     }
@@ -138,7 +138,7 @@ void ChessBoard::whoWin()  //谁胜谁负
         ui->pushButton_start->setEnabled(false);
 
         QMessageBox message(QMessageBox::Information, "提示", "本局结束，黑方胜利.");
-        message.setIconPixmap(QPixmap(":/images/Is.JPG"));
+        message.setIconPixmap(QPixmap(":/images/win.jpg"));
         message.setFont(QFont("华文行楷",16,QFont::Bold));
         message.exec();
     }
@@ -313,7 +313,7 @@ void ChessBoard::mousePressEvent(QMouseEvent *ev)
     if(m_bIsOver)
     {
         QMessageBox message(QMessageBox::Information, "提示", "本局已结束，请重新开始.");
-        message.setIconPixmap(QPixmap(":/images/Is.JPG"));
+        message.setIconPixmap(QPixmap(":/images/win.jpg"));
         message.setFont(QFont("华文行楷",16,QFont::Bold));
         message.exec();
         return;

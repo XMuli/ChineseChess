@@ -2,10 +2,10 @@
     <qresource prefix="/">
         <file>images/5abc.png</file>
         <file>images/b.jpg</file>
-        <file>images/ch.png</file>
-        <file>images/qaz.ico</file>
-        <file>images/Is.JPG</file>
         <file>images/Alipay.png</file>
         <file>images/WeChat.png</file>
+        <file>images/background.jpg</file>
+        <file>images/win.jpg</file>
+        <file>images/chess.svg</file>
     </qresource>
 </RCC>

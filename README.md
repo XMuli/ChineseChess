@@ -1,8 +1,9 @@
 # ChinessChess
 
 <div align=center>
-<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/xmuli_round.png" height="240" width="240" />
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/chess_128px.svg" height="240" width="240" />
 </div>
+
 <br>
 
 ## Introduction:
@@ -67,7 +68,7 @@
 
 <font color=#FE7207  size=4 face="幼圆">**About the program:** </font> 
 
- <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20200522214458.png" width="100%"/>
+ <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20200908_180345.png" width="100%"/>
 
 <br>
 

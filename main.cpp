@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     SelectGameMode dlg;
     dlg.setWindowTitle("选择游戏方式");
     dlg.setFixedSize(200,120);
-    dlg.setWindowIcon(QIcon(":/images/qaz.ico"));
+    dlg.setWindowIcon(QIcon(":/images/chess.svg"));
     if(dlg.exec() != QDialog::Accepted)
         return 0;
 
