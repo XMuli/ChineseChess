@@ -113,8 +113,13 @@
 <br>
 
 <table frame=void>
-  <thead>
     <tr>
+      <th align="center" style="width: 80px;">
+        <a href="https://github.com/xmuli">
+          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20201101220931.png" width="50px"><br>            
+          <sub>xmuli</sub>
+        </a>
+      </th>        
       <th align="center" style="width: 80px;">
         <a href="https://github.com/Bruce-Ch">
           <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20200709204616.png" width="50px"><br>
@@ -125,6 +130,12 @@
         <a href="https://github.com/BlueArvin">
           <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20200727212509.png" width="50px"><br>
           <sub>BlueArvin</sub>
+        </a>
+      </th>
+         <th align="center" style="width: 80px;">
+        <a href="https://github.com/Ubuntuser2012">
+          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20201101215738.png" width="50px"><br>
+          <sub>Ubuntuser2012</sub>
         </a>
       </th>
     </tr>
