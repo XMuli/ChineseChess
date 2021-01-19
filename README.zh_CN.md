@@ -1,15 +1,16 @@
 # ChinessChess
 
 <div align=center>
-<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/chess_128px.svg" height="240" width="240" />
+<img src="docs/logo.svg" height="240" width="240" />
 </div>
+
 
 
 <br>
 
 ## 项目介绍
 
-<p align="right"><br><a href="README.md">English</a> | <a href="README_zh.md">简体中文</a></p>
+<p align="right"><br><a href="README.md">English</a> | <a href="README.zh_CN.md">简体中文</a></p>
 
  ![](https://img.shields.io/badge/language-c++-orange.svg) ![](https://img.shields.io/badge/language-Qt-orange.svg) ![](https://img.shields.io/github/license/xmuli/chinessChess) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/xmuli/chinessChess)  
 
@@ -47,25 +48,25 @@
 
 <font color=#D0087E size=4 face="幼圆">**win10系统演示：**</font>
 
-<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709004321.gif"  height="500" width="800">
+<img src="docs/20190709004321.gif"  height="500" width="800">
 
 <br>
 
 <font color=#D0087E size=4 face="幼圆">**Linux系统演示：**</font>
 
-<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709004216.gif"  height="500" width="800">
+<img src="docs/20190709004216.gif"  height="500" width="800">
 
 <br>
 
 <font color=#D0087E size=4 face="幼圆">**MacOS系统演示：**</font>
 
-<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709004745.gif"  height="500" width="800">
+<img src="docs/20190709004745.gif"  height="500" width="800">
 
 <br>
 
 <font color=#70AD47 size=4 face="幼圆">**跨平台对战演示：**</font>   **MacOS 10.14  vs  Win10**
 
-<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709004454.gif"  height="500" width="800">
+<img src="docs/20190709004454.gif"  height="500" width="800">
 
 <br>
 
