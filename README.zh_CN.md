@@ -1,8 +1,9 @@
 # ChinessChess
 
 <div align=center>
-<img src="docs/logo.svg" height="240" width="240" />
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/logo.svg" height="240" width="240" />
 </div>
+
 
 
 
@@ -48,31 +49,31 @@
 
 <font color=#D0087E size=4 face="幼圆">**win10系统演示：**</font>
 
-<img src="docs/20190709004321.gif"  height="500" width="800">
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20190709004321.gif"  height="500" width="800">
 
 <br>
 
 <font color=#D0087E size=4 face="幼圆">**Linux系统演示：**</font>
 
-<img src="docs/20190709004216.gif"  height="500" width="800">
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20190709004216.gif"  height="500" width="800">
 
 <br>
 
 <font color=#D0087E size=4 face="幼圆">**MacOS系统演示：**</font>
 
-<img src="docs/20190709004745.gif"  height="500" width="800">
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20190709004745.gif"  height="500" width="800">
 
 <br>
 
 <font color=#70AD47 size=4 face="幼圆">**跨平台对战演示：**</font>   **MacOS 10.14  vs  Win10**
 
-<img src="docs/20190709004454.gif"  height="500" width="800">
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20190709004454.gif"  height="500" width="800">
 
 <br>
 
 <font color=#FE7207  size=4 face="幼圆">**作者作品详情：** </font> 
 
- <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20200908_180345.png" width="100%"/>
+ <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/about.png" width="100%"/>
 
 <br>
 
