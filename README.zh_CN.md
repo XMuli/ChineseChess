@@ -13,9 +13,9 @@
 
 <p align="right"><br><a href="README.md">English</a> | <a href="README.zh_CN.md">简体中文</a></p>
 
- ![](https://img.shields.io/badge/language-c++-orange.svg) ![](https://img.shields.io/badge/language-Qt-orange.svg) ![](https://img.shields.io/github/license/xmuli/chinessChess) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/xmuli/chinessChess)  
+![](https://img.shields.io/badge/language-c++-orange.svg) ![](https://img.shields.io/badge/language-Qt-orange.svg) ![](https://img.shields.io/github/license/xmuli/chinessChess) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/xmuli/chinessChess)
 
- ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/xmuli/chinessChess/MyCi_MacOS) ![GitHub All Releases](https://img.shields.io/github/downloads/xmuli/chinessChess/total)  ![GitHub stars](https://img.shields.io/github/stars/xmuli/chinessChess?style=social) ![GitHub forks](https://img.shields.io/github/forks/xmuli/chinessChess?style=social) 
+[![macos-badge](https://github.com/xmuli/chinessChess/workflows/MacOS/badge.svg)](https://github.com/xmuli/chinessChess/workflows/MacOS/badge.svg)  [![win-badge](https://github.com/xmuli/chinessChess/workflows/Windows/badge.svg)](https://github.com/xmuli/chinessChess/workflows/Windows/badge.svg)  [![ubuntu-badge](https://github.com/xmuli/chinessChess/workflows/Ubuntu/badge.svg)](https://github.com/xmuli/chinessChess/workflows/Ubuntu/badge.svg)  ![GitHub All Releases](https://img.shields.io/github/downloads/xmuli/chinessChess/total)  ![GitHub stars](https://img.shields.io/github/stars/xmuli/chinessChess?style=social) ![GitHub forks](https://img.shields.io/github/forks/xmuli/chinessChess?style=social) 
 
 <br>
 
