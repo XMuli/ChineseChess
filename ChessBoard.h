@@ -119,10 +119,9 @@ private slots:
 
     void on_pushButton_restart_clicked();
 
-public:
+private:
     Ui::ChessBoard *ui;
 
-private:
     QTimer * m_timer;      //定时器 每秒更新时间
     QTime * m_timeRecord;  //记录时间
     bool m_bIsStart;        //记录是否已经开始计时

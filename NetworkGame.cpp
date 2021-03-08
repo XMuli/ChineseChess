@@ -20,64 +20,28 @@
  * along with this program.  If not, see <https://touwoyimuli.github.io/>.
  */
 #include "NetworkGame.h"
-#include "ui_ChessBoard.h"
 #include <QDebug>
-#include <QHostInfo>
-#include <QNetworkAddressEntry>
 
 NetworkGame::NetworkGame(bool isServer)
 {
     m_tcpServer = NULL;
     m_tcpSocket = NULL;
 
-    connect(ui->btnApply, &QPushButton::clicked, this, &NetworkGame::onClicked);
-
     if(isServer) //作为服务器端
     {
         m_bIsTcpServer = true;
 
         m_tcpServer = new QTcpServer(this);
-
-        bool ok = false;
-        int prot = ui->lineEditProt->text().toInt(&ok);
-        m_tcpServer->listen(QHostAddress::Any, prot);
+        m_tcpServer->listen(QHostAddress::Any, 9999);
 
         connect(m_tcpServer, SIGNAL(newConnection()),this, SLOT(slotNewConnection()));
     }
     else   //作为客户端
     {
         m_bIsTcpServer = false;
-        QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
-        if (list.isEmpty())
-            return;
-
-        if (list.isEmpty())
-        {
-            ui->lineEditIp->setText("127.0.0.1");
-        }
-        else
-        {
-            foreach (QNetworkInterface var, list) {
-                if (!var.isValid())
-                    continue;
-
-                if (var.humanReadableName() == "eno1") {
-                    QList<QNetworkAddressEntry> entry = var.addressEntries();
-                    foreach (QNetworkAddressEntry ent, entry) {
-                        if (ent.ip().protocol() == QAbstractSocket::IPv4Protocol)
-                            ui->lineEditIp->setText(ent.ip().toString());
-                    }
-                }
-            }
-        }
-
-        ui->lineEditProt->setText("9999");
 
         m_tcpSocket = new QTcpSocket(this);
-        QString clientIp = ui->lineEditIp->text();
-        bool ok = false;
-        int prot = ui->lineEditProt->text().toInt(&ok);
-        m_tcpSocket->connectToHost(QHostAddress(clientIp), prot);
+        m_tcpSocket->connectToHost(QHostAddress("127.0.0.1"), 9999);
 
         connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotRecv()));
     }
