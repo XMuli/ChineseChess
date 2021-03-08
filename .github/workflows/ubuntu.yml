@@ -25,7 +25,8 @@ jobs:
           version: ${{ matrix.qt_ver }}
       - name: ubuntu install GL library
         run: sudo apt-get install -y libglew-dev libglfw3-dev
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
         with:
           fetch-depth: 1
       - name: build ubuntu
