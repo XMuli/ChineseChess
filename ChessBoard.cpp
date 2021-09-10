@@ -60,6 +60,11 @@ void ChessBoard::init()
     m_bIsOver = false;
 }
 
+bool ChessBoard:: isRed(int id)
+{
+    return m_ChessPieces[id].m_bRed;
+}
+
 bool ChessBoard::isDead(int id)
 {
     if(id == -1)
@@ -146,7 +151,17 @@ void ChessBoard::whoWin()  //谁胜谁负
     }
 }
 
+int ChessBoard:: relation(int row1,int col1,int row2,int col2)
+{
+    /**
+    原坐标(row1,col1)与目标坐标(row2,col2)的关系
+    使用原坐标与目标坐标的行相减的绝对值乘以10 加上原坐标与目标坐标的列相减的绝对值
+    作为关系值
+    关系值用于判断是否符合棋子移动规则
+    **/
 
+    return abs(row1-row2)*10+ abs(col1-col2);
+}
 
 //是否选中该枚棋子。pt为输入参数; row， col为输出参数
 bool ChessBoard::isChecked(QPoint pt, int &row, int &col)
@@ -167,17 +182,6 @@ bool ChessBoard::isChecked(QPoint pt, int &row, int &col)
     return false;
 }
 
-//void ChessBoard::whoPlay(int slelsctID)
-//{
-//    if(m_nCheckedID != -1)
-//    {
-//        if(m_bIsRed == m_ChessPieces[slelsctID].m_bRed)
-//        {
-//            m_nSelectID = m_nCheckedID;
-//        }
-//    }
-
-//}
 
 //象棋的棋盘的坐标转换成界面坐标
 QPoint ChessBoard::center(int row, int col)
@@ -353,7 +357,7 @@ void ChessBoard::clickPieces(int checkedID, int& row, int& col)
             if(m_bIsRed == m_ChessPieces[m_nCheckedID].m_bRed)
             {
                 m_nSelectID = m_nCheckedID;
-                chessvoice.voiceSelect();
+                chessvoice.voiceSelect();   //选棋音效
             }
         }
     }
@@ -366,9 +370,12 @@ void ChessBoard::clickPieces(int checkedID, int& row, int& col)
             m_ChessPieces[m_nSelectID].m_nRow = row;
             m_ChessPieces[m_nSelectID].m_nCol = col;
             if(m_nCheckedID != -1)
+            {
                 m_ChessPieces[m_nCheckedID].m_bDead = true;
+                chessvoice.voiceEat();  //吃子音效
+            }
+            chessvoice.voiceMove(); //移动音效
 
-            chessvoice.voiceEat();
             m_nSelectID = -1;
             m_bIsRed = !m_bIsRed;
         }
@@ -382,7 +389,7 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
     //1.确定是选择其它棋子还是走棋
     //2.是否需要使用到canMoveXXX()来做限制
     //3.罗列出所有情况，和需要的得到的结果值 ==>  然后进行中间的逻辑层判断※不要受到别人的代码框架的束缚※
-        if(m_ChessPieces[moveId].m_bRed == m_ChessPieces[killId].m_bRed)  //选择其它棋子，返回false
+        if(isRed(moveId) == m_ChessPieces[killId].m_bRed)  //选择其它棋子，返回false
         {
             if(killId == -1)  //其中有一个特殊情况，黑+m_ChessPieces[-1].m_bRed ==> 也需要判断能否
             {
@@ -405,9 +412,7 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
                 }
 
             }
-            chessvoice.voiceSelect();
             m_nSelectID = killId;
-//            update();
 
             return false;
         }
@@ -430,7 +435,6 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
             case ChessPieces::BING:
                 return canMoveBING(moveId, killId, row, col);
             }
-//            chessvoice.voiceEat();
             return true;
 
         }
@@ -442,7 +446,7 @@ bool ChessBoard::canMoveJIANG(int moveId, int killId, int row, int col)
     if (killId != -1 && m_ChessPieces[killId].m_emType == m_ChessPieces->JIANG)
         return canMoveCHE(moveId, killId, row, col );
 
-    if(m_ChessPieces[moveId].m_bRed) //红 将
+    if(isRed(moveId)) //红 将
     {
         if(row < 7 || col < 3 || col > 5) return false;
     }
@@ -452,18 +456,16 @@ bool ChessBoard::canMoveJIANG(int moveId, int killId, int row, int col)
         if(row > 2 || col < 3 || col > 5) return false;
     }
 
-    int dr = m_ChessPieces[moveId].m_nRow - row;
-    int dc = m_ChessPieces[moveId].m_nCol - col;
-    int d = abs(dr)*10 + abs(dc);
+    int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
     if(d == 1 || d == 10)
         return true;
 
     return false;
 }
 
-bool ChessBoard::canMoveSHI(int moveId, int killId, int row, int col)
+bool ChessBoard::canMoveSHI(int moveId, int , int row, int col)
 {
-    if(m_ChessPieces[moveId].m_bRed) //红 士
+    if(isRed(moveId)) //红 士
     {
         if(row < 7 || col < 3 || col > 5) return false;
     }
@@ -473,118 +475,63 @@ bool ChessBoard::canMoveSHI(int moveId, int killId, int row, int col)
         if(row > 2 || col < 3 || col > 5) return false;
     }
 
-    int dr = m_ChessPieces[moveId].m_nRow - row;
-    int dc = m_ChessPieces[moveId].m_nCol - col;
-    int d = abs(dr)*10 + abs(dc);
+    int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
     if(d == 11)
         return true;
 
     return false;
 }
 
-bool ChessBoard::canMoveXIANG(int moveId, int killId, int row, int col)
+bool ChessBoard::canMoveXIANG(int moveId, int , int row, int col)
 {
-    if(m_ChessPieces[moveId].m_bRed) //红
-    {
-        if(row < 5) return false;
-    }
-    else  //黑
-    {
-
-        if(row > 4) return false;
-    }
-
-    int dr = m_ChessPieces[moveId].m_nRow - row;
-    int dc = m_ChessPieces[moveId].m_nCol - col;
-    int d = abs(dr)*10 + abs(dc);
-
-    int dr2 = (m_ChessPieces[moveId].m_nRow + row)/2;
-    int dc2 = (m_ChessPieces[moveId].m_nCol + col)/2;
-
-    //象眼被堵，就不能够调，就会有i属于0~31，返回false
-    int i = 0;
-    for(i = 0; i <= 31; i++)
-    {
-        if(m_ChessPieces[i].m_nRow == dr2 && m_ChessPieces[i].m_nCol == dc2 && m_ChessPieces[i].m_bDead == false)
-            break;
-    }
-
-    if(0 <= i && i <= 31)
+    int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
+    if(d!= 22)
         return false;
 
-    if(d == 22)
-        return true;
+    int row_eye= (m_ChessPieces[moveId].m_nRow+ row)/ 2;
+    int col_eye= (m_ChessPieces[moveId].m_nCol+ col)/ 2;
 
-    return false;
+    //堵象眼
+    if(getStoneId(row_eye,col_eye)!= -1)
+        return false;
+
+    //象不可过河
+    if(isRed(moveId))   //红
+    {
+        if(row< 4)
+            return false;
+    }
+    else    //黑
+    {
+        if(row> 5)
+            return false;
+    }
+
+    return true;
 }
 
-bool ChessBoard::canMoveMA(int moveId, int killId, int row, int col)
+bool ChessBoard::canMoveMA(int moveId, int , int row, int col)
 {
-    int dr = m_ChessPieces[moveId].m_nRow - row;
-    int dc = m_ChessPieces[moveId].m_nCol - col;
-    int d = abs(dr)*10 + abs(dc);
+    int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
+    if(d!=12 && d!=21)
+        return false;
 
-    int dr2 = (m_ChessPieces[moveId].m_nRow + row)/2;
-    int dc2 = (m_ChessPieces[moveId].m_nCol + col)/2;
-
-    // 蹩脚马
-    if(abs(dr) == 2 && abs(dc)==1)
+    //蹩马脚
+    if(d==12)
     {
-        int i = 0;
-        if(row < m_ChessPieces[moveId].m_nRow )
-        {
-            for(i = 0; i <= 31; i++)
-            {
-                if(m_ChessPieces[i].m_nRow == (m_ChessPieces[moveId].m_nRow-1) && m_ChessPieces[i].m_nCol == m_ChessPieces[moveId].m_nCol && m_ChessPieces[i].m_bDead == false)
-                    break;
-            }
-        }
-        else
-        {
-            for(i = 0; i <= 31; i++)
-            {
-                if(m_ChessPieces[i].m_nRow == (m_ChessPieces[moveId].m_nRow+1) && m_ChessPieces[i].m_nCol == m_ChessPieces[moveId].m_nCol && m_ChessPieces[i].m_bDead == false)
-                    break;
-            }
-        }
-
-        if(0 <= i && i <= 31)
+        if(getStoneId(m_ChessPieces[moveId].m_nRow, (m_ChessPieces[moveId].m_nCol+ col) /2) != -1)
+            return false;
+    }
+    else
+    {
+        if(getStoneId((m_ChessPieces[moveId].m_nRow+ row) /2 ,m_ChessPieces[moveId].m_nCol) != -1)
             return false;
     }
 
-    if(abs(dr) == 1 && abs(dc)==2)
-    {
-        int i = 0;
-        if(col < m_ChessPieces[moveId].m_nCol)
-        {
-
-            for(i = 0; i <= 31; i++)
-            {
-                if(m_ChessPieces[i].m_nRow == m_ChessPieces[moveId].m_nRow && m_ChessPieces[i].m_nCol == (m_ChessPieces[moveId].m_nCol-1) && m_ChessPieces[i].m_bDead == false)
-                    break;
-            }
-        }
-        else
-        {
-            for(i = 0; i <= 31; i++)
-            {
-                if(m_ChessPieces[i].m_nRow == m_ChessPieces[moveId].m_nRow && m_ChessPieces[i].m_nCol == (m_ChessPieces[moveId].m_nCol+1) && m_ChessPieces[i].m_bDead == false)
-                    break;
-            }
-        }
-
-        if(0 <= i && i <= 31)
-            return false;
-
-    }
-
-    if(d == 12 || d == 21)
-        return true;
-
-    return false;
+    return true;
 }
 
-bool ChessBoard::canMoveCHE(int moveId, int killId, int row, int col)
+bool ChessBoard::canMoveCHE(int moveId, int , int row, int col)
 {
     int ret = getStoneCountAtLine(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
     if(ret == 0)
@@ -609,45 +556,28 @@ bool ChessBoard::canMovePAO(int moveId, int killId, int row, int col)
     return false;
 }
 
-bool ChessBoard::canMoveBING(int moveId, int killId, int row, int col)
+bool ChessBoard::canMoveBING(int moveId, int , int row, int col)
 {
-    int dr = m_ChessPieces[moveId].m_nRow - row;
-    int dc = m_ChessPieces[moveId].m_nCol - col;
-    int d = abs(dr)*10 + abs(dc);
-    if(d != 1 && d != 10) return false;
-
-
-    if(m_ChessPieces[moveId].m_bRed) //红 兵
-    {
-        if(row >  m_ChessPieces[moveId].m_nRow) return false;
-        if(m_ChessPieces[moveId].m_nRow == 5 || m_ChessPieces[moveId].m_nRow == 6)
-        {
-            if(col == m_ChessPieces[moveId].m_nCol && row == (m_ChessPieces[moveId].m_nRow-1))
-                return true;
-        }
-        else
-        {
-            if((col == m_ChessPieces[moveId].m_nCol && row <= 4) || (row == m_ChessPieces[moveId].m_nRow && abs(col-m_ChessPieces[moveId].m_nCol)==1))
-                    return true;
-        }
-
+    int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
+    if(d!= 1 && d!= 10)
         return false;
+
+    if(isRed(moveId))   //红
+    {
+        //兵卒不可后退
+        if(row> m_ChessPieces[moveId].m_nRow)
+            return false;
+
+        //兵卒没过河不可横着走
+        if(m_ChessPieces[moveId].m_nRow>= 5 && m_ChessPieces[moveId].m_nRow== row)
+            return false;
     }
-    else  //黑 兵
+    else    //黑
     {
-        if(row <  m_ChessPieces[moveId].m_nRow) return false;
-        if(m_ChessPieces[moveId].m_nRow == 3 || m_ChessPieces[moveId].m_nRow == 4)
-        {
-            if(col == m_ChessPieces[moveId].m_nCol && row == (m_ChessPieces[moveId].m_nRow+1))
-                return true;
-        }
-        else
-        {
-            if((col == m_ChessPieces[moveId].m_nCol && row >= 5) || (row == m_ChessPieces[moveId].m_nRow && abs(col-m_ChessPieces[moveId].m_nCol)==1))
-                    return true;
-        }
-
-        return false;
+        if(row< m_ChessPieces[moveId].m_nRow)
+            return false;
+        if(m_ChessPieces[moveId].m_nRow<= 4 && m_ChessPieces[moveId].m_nRow== row)
+            return false;
     }
 
     return true;
