@@ -112,6 +112,7 @@ void ChessBoard::whoWin()  //谁胜谁负
 {
     if(m_ChessPieces[4].m_bDead == true && m_ChessPieces[20].m_bDead == false)
     {
+        chessvoice.voiceWin();
         m_bIsOver = true;
         //游戏结束 则计时停止 & 计时控制按钮不再可用 直到用户重新游戏
         if(m_bIsStart)
@@ -129,6 +130,7 @@ void ChessBoard::whoWin()  //谁胜谁负
 
     if(m_ChessPieces[4].m_bDead == false && m_ChessPieces[20].m_bDead == true)
     {
+        chessvoice.voiceWin();
         m_bIsOver = true;
         if(m_bIsStart)
         {
@@ -351,6 +353,7 @@ void ChessBoard::clickPieces(int checkedID, int& row, int& col)
             if(m_bIsRed == m_ChessPieces[m_nCheckedID].m_bRed)
             {
                 m_nSelectID = m_nCheckedID;
+                chessvoice.voiceSelect();
             }
         }
     }
@@ -365,6 +368,7 @@ void ChessBoard::clickPieces(int checkedID, int& row, int& col)
             if(m_nCheckedID != -1)
                 m_ChessPieces[m_nCheckedID].m_bDead = true;
 
+            chessvoice.voiceEat();
             m_nSelectID = -1;
             m_bIsRed = !m_bIsRed;
         }
@@ -401,7 +405,7 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
                 }
 
             }
-
+            chessvoice.voiceSelect();
             m_nSelectID = killId;
 //            update();
 
@@ -426,7 +430,9 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
             case ChessPieces::BING:
                 return canMoveBING(moveId, killId, row, col);
             }
+//            chessvoice.voiceEat();
             return true;
+
         }
 }
 
