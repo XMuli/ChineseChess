@@ -15,7 +15,7 @@
 # My Blog:       https://xmuli.tech
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core gui network multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,6 +27,7 @@ SOURCES += main.cpp\
     ChessBoard.cpp \
     ChessPieces.cpp \
     ChessStep.cpp \
+    ChessVoice.cpp \
     MachineGame.cpp \
     NetworkGame.cpp \
     ChooseMainWindow.cpp \
@@ -36,6 +37,7 @@ SOURCES += main.cpp\
 HEADERS  += ChessBoard.h \
     ChessPieces.h \
     ChessStep.h \
+    ChessVoice.h \
     MachineGame.h \
     NetworkGame.h \
     ChooseMainWindow.h \
