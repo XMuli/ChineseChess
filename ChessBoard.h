@@ -72,15 +72,16 @@ public:
     explicit ChessBoard(QWidget *parent = 0);
     ~ChessBoard();
 
+    bool isRed(int id);
     bool isDead(int id);
     int getStoneId(int row, int col);
     // 车、炮的功能辅助函数   判断两个点是否在一个直线上面,且返回直线之间的棋子个数
     int  getStoneCountAtLine(int row1, int col1, int row2, int col2);
     void whoWin();  //谁胜谁负
     bool isChecked(QPoint pt, int& row, int& col);   //是否选中该枚棋子。pt为输入参数; row， col为输出参数
+    int relation(int row1, int col1, int row2, int col2);    //计算选中的棋子的位置和要移动的位置之间的位置关系
     QPoint getRealPoint(QPoint pt);  // 使mouseMoveEvent取得的坐标同Painter的坐标一致
 
-    //virtual void whoPlay(int slelsctID);  //判断是谁正在 选择棋子
 public:
     QPoint center(int row, int col);         //象棋的棋盘的坐标转换成界面坐标
     QPoint center(int id);
