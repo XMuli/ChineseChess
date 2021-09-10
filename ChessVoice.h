@@ -15,7 +15,7 @@ public:
     QSound *win =new QSound(":/sound/WinSound.wav",this);
     QSound *select =new QSound(":/sound/selectChess.wav",this);
     QSound *move =new QSound(":/sound/moveChess.wav",this);
-    QSound *eat =new QSound(":/sound/eatChess.mp3",this);
+    QSound *eat =new QSound(":/sound/eatChess.wav",this);
 
     void voiceWin();    //胜利音效
     void voiceSelect(); //选棋音效
