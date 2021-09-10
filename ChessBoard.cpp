@@ -432,6 +432,10 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
 
 bool ChessBoard::canMoveJIANG(int moveId, int killId, int row, int col)
 {
+    //对将的情况
+    if (killId != -1 && m_ChessPieces[killId].m_emType == m_ChessPieces->JIANG)
+        return canMoveCHE(moveId, killId, row, col );
+
     if(m_ChessPieces[moveId].m_bRed) //红 将
     {
         if(row < 7 || col < 3 || col > 5) return false;
