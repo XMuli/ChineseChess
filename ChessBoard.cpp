@@ -182,16 +182,12 @@ void ChessBoard::whoWin()  //谁胜谁负
         message.exec();
     }
 }
-
-
 int ChessBoard:: relation(int row1,int col1,int row2,int col2)
 {
-// 原坐标(row1,col1)与目标坐标(row2,col2)的关系
-// 使用原坐标与目标坐标的行相减的绝对值乘以10 加上原坐标与目标坐标的列相减的绝对值
-// 作为关系值
-// 关系值用于判断是否符合棋子移动规则
-int ChessBoard:: relation(int row1,int col1,int row2,int col2)
-{
+    // 原坐标(row1,col1)与目标坐标(row2,col2)的关系
+    // 使用原坐标与目标坐标的行相减的绝对值乘以10 加上原坐标与目标坐标的列相减的绝对值
+    // 作为关系值
+    // 关系值用于判断是否符合棋子移动规则
     return abs(row1-row2)*10+ abs(col1-col2);
 }
 
