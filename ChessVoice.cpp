@@ -11,28 +11,26 @@ ChessVoice:: ~ChessVoice()
 
 }
 
-
-
 void ChessVoice:: voiceWin()
 {
-    if(win!= nullptr)
-        this->win->play();
+    if(m_win!= nullptr)
+        this->m_win->play();
 }
 
 void ChessVoice::voiceSelect()
 {
-    if(select!= nullptr)
-        this->select->play();
+    if(m_select!= nullptr)
+        this->m_select->play();
 }
 
 void ChessVoice:: voiceMove()
 {
-    if(move!= nullptr)
-        this->move->play();
+    if(m_move!= nullptr)
+        this->m_move->play();
 }
 
 void ChessVoice:: voiceEat()
 {
-    if(eat!= nullptr)
-        this->eat->play();
+    if(m_eat!= nullptr)
+        this->m_eat->play();
 }
