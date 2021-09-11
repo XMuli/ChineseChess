@@ -53,6 +53,7 @@ void ChessBoard::init()
         m_ChessPieces[i].init(i);
     }
 
+    m_ChessSteps.clear(); //重置步数
     m_nSelectID = -1;
     m_nCheckedID = -1;
     m_bIsTcpServer = true;
@@ -117,7 +118,7 @@ void ChessBoard::whoWin()  //谁胜谁负
 {
     if(m_ChessPieces[4].m_bDead == true && m_ChessPieces[20].m_bDead == false)
     {
-        chessvoice.voiceWin();
+        m_Chessvoice.voiceWin();
         m_bIsOver = true;
         //游戏结束 则计时停止 & 计时控制按钮不再可用 直到用户重新游戏
         if(m_bIsStart)
@@ -135,7 +136,7 @@ void ChessBoard::whoWin()  //谁胜谁负
 
     if(m_ChessPieces[4].m_bDead == false && m_ChessPieces[20].m_bDead == true)
     {
-        chessvoice.voiceWin();
+        m_Chessvoice.voiceWin();
         m_bIsOver = true;
         if(m_bIsStart)
         {
@@ -357,7 +358,7 @@ void ChessBoard::clickPieces(int checkedID, int& row, int& col)
             if(m_bIsRed == m_ChessPieces[m_nCheckedID].m_bRed)
             {
                 m_nSelectID = m_nCheckedID;
-                chessvoice.voiceSelect();   //选棋音效
+                m_Chessvoice.voiceSelect();   //选棋音效
             }
         }
     }
@@ -372,9 +373,9 @@ void ChessBoard::clickPieces(int checkedID, int& row, int& col)
             if(m_nCheckedID != -1)
             {
                 m_ChessPieces[m_nCheckedID].m_bDead = true;
-                chessvoice.voiceEat();  //吃子音效
+                m_Chessvoice.voiceEat();  //吃子音效
             }
-            chessvoice.voiceMove(); //移动音效
+            m_Chessvoice.voiceMove(); //移动音效
 
             m_nSelectID = -1;
             m_bIsRed = !m_bIsRed;
@@ -463,15 +464,15 @@ bool ChessBoard::canMoveJIANG(int moveId, int killId, int row, int col)
     return false;
 }
 
-bool ChessBoard::canMoveSHI(int moveId, int , int row, int col)
+bool ChessBoard::canMoveSHI(int moveId, int killId, int row, int col)
 {
+    Q_UNUSED(killId);
     if(isRed(moveId)) //红 士
     {
         if(row < 7 || col < 3 || col > 5) return false;
     }
     else  //黑 士
     {
-
         if(row > 2 || col < 3 || col > 5) return false;
     }
 
@@ -482,8 +483,9 @@ bool ChessBoard::canMoveSHI(int moveId, int , int row, int col)
     return false;
 }
 
-bool ChessBoard::canMoveXIANG(int moveId, int , int row, int col)
+bool ChessBoard::canMoveXIANG(int moveId, int killId, int row, int col)
 {
+    Q_UNUSED(killId);
     int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
     if(d!= 22)
         return false;
@@ -510,8 +512,9 @@ bool ChessBoard::canMoveXIANG(int moveId, int , int row, int col)
     return true;
 }
 
-bool ChessBoard::canMoveMA(int moveId, int , int row, int col)
+bool ChessBoard::canMoveMA(int moveId, int killId, int row, int col)
 {
+    Q_UNUSED(killId);
     int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
     if(d!=12 && d!=21)
         return false;
@@ -531,8 +534,9 @@ bool ChessBoard::canMoveMA(int moveId, int , int row, int col)
     return true;
 }
 
-bool ChessBoard::canMoveCHE(int moveId, int , int row, int col)
+bool ChessBoard::canMoveCHE(int moveId, int killId, int row, int col)
 {
+    Q_UNUSED(killId);
     int ret = getStoneCountAtLine(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
     if(ret == 0)
         return true;
@@ -556,8 +560,9 @@ bool ChessBoard::canMovePAO(int moveId, int killId, int row, int col)
     return false;
 }
 
-bool ChessBoard::canMoveBING(int moveId, int , int row, int col)
+bool ChessBoard::canMoveBING(int moveId, int killId, int row, int col)
 {
+    Q_UNUSED(killId);
     int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
     if(d!= 1 && d!= 10)
         return false;
