@@ -7,5 +7,9 @@
         <file>images/background.jpg</file>
         <file>images/win.jpg</file>
         <file>images/chess.svg</file>
+        <file>sound/moveChess.wav</file>
+        <file>sound/selectChess.wav</file>
+        <file>sound/WinSound.wav</file>
+        <file>sound/eatChess.wav</file>
     </qresource>
 </RCC>

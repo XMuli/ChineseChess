@@ -4,7 +4,7 @@
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
- * blogs:   https://xmuli.tech
+ * blogs:   https://ifmet.cn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,8 +66,6 @@ void MachineGame::chooseOrMovePieces(int tempID, int& row, int& col)
     whoWin();
     update();
 }
-
-
 
 void MachineGame::saveStep(int selectID, int checkedID, int row, int col, QVector<ChessStep *> &steps)
 {
@@ -189,8 +187,6 @@ void MachineGame::clickPieces(int checkedID, int &row, int &col)
     }
 }
 
-
-
 //假装移动棋子
 void MachineGame::fakeMove(ChessStep *step)
 {
@@ -202,7 +198,6 @@ void MachineGame::fakeMove(ChessStep *step)
      m_bIsRed = !m_bIsRed;
 }
 
-
 //撤回先前假装移动棋子的步骤
 void MachineGame::unFakeMove(ChessStep *step)
 {
@@ -213,7 +208,6 @@ void MachineGame::unFakeMove(ChessStep *step)
     m_ChessPieces[step->m_nMoveID].m_nCol = step->m_nColFrom;
     m_bIsRed = !m_bIsRed;
 }
-
 
 //计算最好的局面分
 int MachineGame::calcScore()
