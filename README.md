@@ -142,9 +142,15 @@ Thanks for the contributions submitted by the friends 🥳🥳:
           <sub>Ubuntuser2012</sub>
         </a>
       </th>
+         <th align="center" style="width: 80px;">
+        <a href="https://github.com/kira-yamatoo">
+          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210911163133.png" width="50px"><br>
+          <sub>kirayamatoo</sub>
+        </a>
     </tr>
   </thead>
 </table>
+
 
 
 <br>
@@ -155,7 +161,7 @@ If it helped you, <font color=#FE7207 size=4 face="幼圆"> can click on the pro
 
 ## Author:
 
-<font color=#70AD47 size=4 face="幼圆">**偕臧 (xmuli)：** </font> [ifmet.cn](https://ifmet.cn)
+<font color=#70AD47 size=4 face="幼圆">**偕臧 (XMuli)：** </font> [https://ifmet.cn](https://ifmet.cn)
 
 <br>
 
