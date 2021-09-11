@@ -4,7 +4,7 @@
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
- * blogs:   https://xmuli.tech
+ * blogs:   https://ifmet.cn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@ NetworkGame::NetworkGame(bool isServer)
     if(isServer) //作为服务器端
     {
         m_bIsTcpServer = true;
-
         m_tcpServer = new QTcpServer(this);
         m_tcpServer->listen(QHostAddress::Any, 9999);
 
@@ -39,7 +38,6 @@ NetworkGame::NetworkGame(bool isServer)
     else   //作为客户端
     {
         m_bIsTcpServer = false;
-
         m_tcpSocket = new QTcpSocket(this);
         m_tcpSocket->connectToHost(QHostAddress("127.0.0.1"), 9999);
 
@@ -50,7 +48,6 @@ NetworkGame::NetworkGame(bool isServer)
 NetworkGame::~NetworkGame()
 {
 }
-
 
 //void NetworkGame::mousePressEvent(QMouseEvent *ev)
 //{
@@ -113,8 +110,6 @@ void NetworkGame::clickPieces(int checkedID, int &row, int &col)
     arry[2] = col;
     m_tcpSocket->write(arry, 3);
 }
-
-
 
 void NetworkGame::slotNewConnection()
 {

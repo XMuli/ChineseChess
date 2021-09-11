@@ -1,14 +1,11 @@
 #include "ChessVoice.h"
 
-
-
 ChessVoice::ChessVoice(QObject *parent) : QObject(parent)
 {
-
 }
+
 ChessVoice:: ~ChessVoice()
 {
-
 }
 
 void ChessVoice:: voiceWin()
