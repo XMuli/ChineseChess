@@ -147,39 +147,25 @@ int ChessBoard::getStoneCountAtLine(int row1, int col1, int row2, int col2)
 
 void ChessBoard::whoWin()  //谁胜谁负
 {
+    if (hongMenFeast() && m_nSelectID == -1) // 刚执棋落子完成，出现对将
+    {
+        reset();
+        if (m_bIsRed) // 红方赢
+            winMessageBox("提示", "本局结束，红方胜利.");
+        else
+            winMessageBox("提示", "本局结束，黑方胜利.");
+    }
+
     if(m_ChessPieces[4].m_bDead == true && m_ChessPieces[20].m_bDead == false)
     {
-        m_Chessvoice.voiceWin();
-        m_bIsOver = true;
-        //游戏结束 则计时停止 & 计时控制按钮不再可用 直到用户重新游戏
-        if(m_bIsStart)
-        {
-            m_timer->stop();
-            m_bIsStart = false;
-        }
-
-        ui->pushButton_start->setEnabled(false);
-        QMessageBox message(QMessageBox::Information, "提示", "本局结束，红方胜利.");
-        message.setIconPixmap(QPixmap(":/images/win.jpg"));
-        message.setFont(QFont("华文行楷",16,QFont::Bold));
-        message.exec();
+        reset();
+        winMessageBox("提示", "本局结束，红方胜利.");
     }
 
     if(m_ChessPieces[4].m_bDead == false && m_ChessPieces[20].m_bDead == true)
     {
-        m_Chessvoice.voiceWin();
-        m_bIsOver = true;
-        if(m_bIsStart)
-        {
-            m_timer->stop();
-            m_bIsStart = false;
-        }
-
-        ui->pushButton_start->setEnabled(false);
-        QMessageBox message(QMessageBox::Information, "提示", "本局结束，黑方胜利.");
-        message.setIconPixmap(QPixmap(":/images/win.jpg"));
-        message.setFont(QFont("华文行楷",16,QFont::Bold));
-        message.exec();
+        reset();
+        winMessageBox("提示", "本局结束，黑方胜利.");
     }
 }
 int ChessBoard:: relation(int row1,int col1,int row2,int col2)
@@ -301,6 +287,65 @@ void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具�
         painter.setPen(QColor(255, 0, 0));
 
     painter.drawText(rect, m_ChessPieces[id].getnName(), QTextOption(Qt::AlignCenter));  //绘画圆形里面的汉字
+}
+
+// true 产生"对将" 情景了；false 无"对将"情况
+bool ChessBoard::hongMenFeast()
+{
+    if (m_ChessPieces[4].m_bDead || m_ChessPieces[20].m_bDead)
+        return false;
+
+    int colBlack = m_ChessPieces[4].m_nCol;
+    int colRed = m_ChessPieces[20].m_nCol;
+    int rowBlack = m_ChessPieces[4].m_nRow;
+    int rowRed = m_ChessPieces[20].m_nRow;
+
+    bool bColEmpty = true;
+    if (colBlack == colRed){
+        for (int row = rowBlack + 1; row < rowRed ; ++row) {
+            if (havePieces(row, colBlack))
+                bColEmpty = false;  // 将之间有棋子；非此列为空
+        }
+    }
+
+    return bColEmpty;
+}
+
+// 判断某格子是否有棋子在其上
+bool ChessBoard::havePieces(int row, int col)
+{
+    for (auto pieces : m_ChessPieces) {
+        if (pieces.m_bDead)
+            continue;
+
+        if (pieces.m_nRow == row && pieces.m_nCol == col)
+            return true;
+    }
+
+    return false;
+}
+
+// 胜负已分，重置
+void ChessBoard::reset()
+{
+    m_Chessvoice.voiceWin();
+    m_bIsOver = true;
+    //游戏结束 则计时停止 & 计时控制按钮不再可用 直到用户重新游戏
+    if(m_bIsStart)
+    {
+        m_timer->stop();
+        m_bIsStart = false;
+    }
+
+    ui->pushButton_start->setEnabled(false);
+}
+
+void ChessBoard::winMessageBox(QString title, QString msg)
+{
+    QMessageBox message(QMessageBox::Information, title, msg);
+    message.setIconPixmap(QPixmap(":/images/win.jpg"));
+    message.setFont(QFont("华文行楷",16,QFont::Bold));
+    message.exec();
 }
 
 QPoint ChessBoard::getRealPoint(QPoint pt)

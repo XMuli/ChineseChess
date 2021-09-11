@@ -87,12 +87,17 @@ public:
     int relation(int row1, int col1, int row2, int col2);    //计算选中的棋子的位置和要移动的位置之间的位置关系
     QPoint getRealPoint(QPoint pt);  // 使mouseMoveEvent取得的坐标同Painter的坐标一致
 
+private:
+    bool hongMenFeast();                     // 鸿门宴：对将
+    bool havePieces(int row, int col);       // 判断某一格子，是否有棋子
+    void reset();  // 胜负已分，重置
+    void winMessageBox(QString title, QString msg);
+
 public:
     QPoint center(int row, int col);         //象棋的棋盘的坐标转换成界面坐标
     QPoint center(int id);
     virtual void paintEvent(QPaintEvent *);      //绘画棋盘
     void drawChessPieces(QPainter& painter, int id);  //绘画单个具体的棋子
-
     virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
     virtual void clickPieces(int checkedID, int& row, int& col);
 
@@ -131,7 +136,6 @@ private slots:
     void on_pushButton_start_clicked();
     void on_pushButton_reset_clicked();
     void on_pushButton_about_clicked();
-
     void on_pushButton_restart_clicked();
 
 private:
