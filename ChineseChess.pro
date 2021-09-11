@@ -12,7 +12,7 @@
 # GitHub:        https://github.com/xmuli
 # Telegram:      https://t.me/xmuli
 # CSDN Bolg:     https://blog.csdn.net/qq_33154343
-# My Blog:       https://xmuli.tech
+# My Blog:       https://ifmet.cn
 #-------------------------------------------------
 
 QT       += core gui network multimedia

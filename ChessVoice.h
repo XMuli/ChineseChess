@@ -2,7 +2,6 @@
 #define CHESSVOICE_H
 
 #include <QObject>
-
 #include <QSound>
 
 class ChessVoice : public QObject
@@ -21,9 +20,7 @@ public:
     void voiceSelect(); //选棋音效
     void voiceMove();   //移动音效
     void voiceEat();    //吃子音效
-
-signals:
-
+	
 };
 
 #endif // CHESSVOICE_H

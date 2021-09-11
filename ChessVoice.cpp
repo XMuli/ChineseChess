@@ -1,7 +1,5 @@
 #include "ChessVoice.h"
 
-
-
 ChessVoice::ChessVoice(QObject *parent) : QObject(parent)
 {
 

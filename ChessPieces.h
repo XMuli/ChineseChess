@@ -4,7 +4,7 @@
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * github:  https://github.com/xmuli
- * blogs:   https://xmuli.tech
+ * blogs:   https://ifmet.cn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@ public:
     ~ChessPieces();
 
     void init(int id);  //初始化
-    //void rotate();   //轮转函数
     QString getnName();    //棋子对应的汉字
 
     enum m_emTYPE{JIANG, SHI, XIANG, MA, CHE, PAO, BING};
