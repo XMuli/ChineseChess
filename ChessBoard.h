@@ -59,6 +59,7 @@
 #include <QtGlobal>
 #include "AboutAuthor.h"
 #include "ChessVoice.h"
+#include "ChessStep.h"
 
 namespace Ui {
 class ChessBoard;
@@ -74,6 +75,10 @@ public:
 
     bool isRed(int id);
     bool isDead(int id);
+    void killStone(int id);     //吃子
+    void reliveStone(int id);   //死者苏生
+    void moveStone(int moveid, int row, int col);   //移动棋子
+    bool sameColor(int moveId, int killId);  //棋子是否同色
     int getStoneId(int row, int col);
     // 车、炮的功能辅助函数   判断两个点是否在一个直线上面,且返回直线之间的棋子个数
     int  getStoneCountAtLine(int row1, int col1, int row2, int col2);
@@ -103,15 +108,21 @@ public:
 
     void init();
 
+    void saveStep(int moveid, int killid, int row, int col, QVector<ChessStep*>& steps);     //保存步数
+
+    void backOne();     //悔棋一子
+    void back(ChessStep* step);  //悔棋到指定步数
+    virtual void back();    //悔棋
+
     ChessPieces m_ChessPieces[32];  //所有棋子
-    ChessVoice chessvoice;  //下棋音效
+    QVector<ChessStep*> m_ChessSteps; // 悔棋步数
     ChessVoice m_Chessvoice;  //下棋音效
     int m_nR;          //棋子半径
     int m_nOffSet;     //距离界面的边距
     int m_nD;          //间距为50px
     int m_nSelectID;   //选中棋子[-1:选棋子 || 非-1:走棋子]
     int m_nCheckedID;    //将要被击杀的棋子ID
-    bool m_bIsRed;     //是否是红棋
+    bool m_bIsRed;     //是否是红方回合
     bool m_bIsTcpServer;
     bool m_bIsOver; //是否已经游戏结束
 

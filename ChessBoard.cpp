@@ -66,6 +66,36 @@ bool ChessBoard:: isRed(int id)
     return m_ChessPieces[id].m_bRed;
 }
 
+void ChessBoard:: killStone(int id)
+{
+    if(id== -1)
+        return;
+    m_ChessPieces[id].m_bDead= true;
+}
+
+void ChessBoard:: reliveStone(int id)
+{
+    if(id== -1)
+        return;
+    m_ChessPieces[id].m_bDead= false;
+}
+
+void ChessBoard:: moveStone(int moveid, int row, int col)
+{
+    m_ChessPieces[moveid].m_nRow= row;
+    m_ChessPieces[moveid].m_nCol= col;
+
+    m_bIsRed= !m_bIsRed;   //换边
+}
+
+bool ChessBoard::sameColor(int moveId,int killId)
+{
+    if(moveId== -1 || killId== -1)
+        return false;
+
+    return isRed(moveId)== isRed(killId);
+}
+
 bool ChessBoard::isDead(int id)
 {
     if(id == -1)
@@ -586,6 +616,44 @@ bool ChessBoard::canMoveBING(int moveId, int killId, int row, int col)
     }
 
     return true;
+}
+
+void ChessBoard::saveStep(int moveid, int killid, int row, int col, QVector<ChessStep*>& steps)
+{
+    ChessStep* step = new ChessStep;
+    step->m_nColFrom = m_ChessPieces[moveid].m_nCol;
+    step->m_nnColTo = col;
+    step->m_nRowFrom = m_ChessPieces[moveid].m_nRow;
+    step->m_nRowTo = row;
+    step->m_nMoveID = moveid;
+    step->m_nKillID = killid;
+
+    steps.append(step);
+}
+
+void ChessBoard::backOne()
+{
+    if (this->m_ChessSteps.size() == 0) {
+        return;
+    }
+
+    ChessStep* step = this->m_ChessSteps.last();
+    m_ChessSteps.removeLast();
+    back(step);
+
+    update();
+    delete step;
+}
+
+void ChessBoard::back(ChessStep* step)
+{
+    reliveStone(step->m_nKillID);
+    moveStone(step->m_nMoveID, step->m_nRowFrom, step->m_nColFrom);
+}
+
+void ChessBoard::back()
+{
+    backOne();
 }
 
 //刷新时间
