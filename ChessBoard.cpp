@@ -115,15 +115,6 @@ int ChessBoard::getStoneCountAtLine(int row1, int col1, int row2, int col2)
 
 void ChessBoard::whoWin()  //谁胜谁负
 {
-    if (hongMenFeast() && m_nSelectID == -1) // 刚执棋落子完成，出现对将
-    {
-        reset();
-        if (m_bIsRed) // 红方赢
-            winMessageBox("提示", "本局结束，红方胜利.");
-        else
-            winMessageBox("提示", "本局结束，黑方胜利.");
-    }
-
     if(m_ChessPieces[4].m_bDead == true && m_ChessPieces[20].m_bDead == false)
     {
         reset();
@@ -274,7 +265,9 @@ bool ChessBoard::hongMenFeast()
         for (int row = rowBlack + 1; row < rowRed ; ++row) {
             if (havePieces(row, colBlack))
                 bColEmpty = false;  // 将之间有棋子；非此列为空
-        }
+        } 
+    } else {
+        bColEmpty = false;
     }
 
     return bColEmpty;
@@ -367,7 +360,15 @@ void ChessBoard::mousePressEvent(QMouseEvent *ev)
     if(0<=i && i<32)
         m_nCheckedID = i;  //选中的棋子的ID
 
+    bool newbIsRed = m_bIsRed;
     clickPieces(m_nCheckedID, row, col);
+
+    // 刚执棋落子完成，出现对将
+    if (hongMenFeast() && m_nSelectID == -1 && newbIsRed != m_bIsRed)
+    {
+        winMessageBox("提示", "可将军，直接取胜");
+        // TODO: 可将军，直接提示直接取胜的音效
+    }
 
     update();
     whoWin();
