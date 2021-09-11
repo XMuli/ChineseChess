@@ -105,6 +105,7 @@ public:
 
     ChessPieces m_ChessPieces[32];  //所有棋子
     ChessVoice chessvoice;  //下棋音效
+    ChessVoice m_Chessvoice;  //下棋音效
     int m_nR;          //棋子半径
     int m_nOffSet;     //距离界面的边距
     int m_nD;          //间距为50px
