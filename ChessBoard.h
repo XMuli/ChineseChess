@@ -94,12 +94,14 @@ private:
     void winMessageBox(QString title, QString msg);
 
 public:
+    //视图相关
     QPoint center(int row, int col);         //象棋的棋盘的坐标转换成界面坐标
     QPoint center(int id);
     virtual void paintEvent(QPaintEvent *);      //绘画棋盘
     void drawChessPieces(QPainter& painter, int id);  //绘画单个具体的棋子
-    virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
-    virtual void clickPieces(int checkedID, int& row, int& col);
+    void drawLastStep(QPainter &painter, QVector<ChessStep*>& steps);   //绘制上次移动棋子的起止位置
+//    virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
+//    virtual void clickPieces(int checkedID, int& row, int& col);
 
     //象棋移动的规则[将  士  象  马  车  炮  兵]
     bool canMove(int moveId, int killId, int row, int col);
@@ -110,9 +112,17 @@ public:
     bool canMoveCHE(int moveId, int killId, int row, int col);
     bool canMovePAO(int moveId, int killId, int row, int col);
     bool canMoveBING(int moveId, int killId, int row, int col);
+    bool canSelect(int id);     //是否允许红方或黑方选棋
 
     void init();
 
+    //移动相关
+    virtual void mouseReleaseEvent(QMouseEvent *ev); // 鼠标释放事件
+    void click(QPoint pt);  //点击转换像素
+    virtual void clickPieces(int id, int row, int col);   //点击选棋
+    void trySelectStone(int id);    //尝试选棋
+    void tryMoveStone(int killid, int row, int col);    //尝试移动
+    void doMoveStone(int moveid, int killid, int row, int col);   //执行移动棋子
     void saveStep(int moveid, int killid, int row, int col, QVector<ChessStep*>& steps);     //保存步数
 
     void backOne();     //悔棋一子
@@ -137,6 +147,8 @@ private slots:
     void on_pushButton_reset_clicked();
     void on_pushButton_about_clicked();
     void on_pushButton_restart_clicked();
+
+    void on_pushButton_back_clicked();
 
 private:
     Ui::ChessBoard *ui;

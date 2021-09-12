@@ -51,3 +51,9 @@ void ChessVoice:: voiceEat()
     if(m_eat!= nullptr)
         this->m_eat->play();
 }
+
+void ChessVoice:: voiceBack()
+{
+    if(m_back!= nullptr)
+        this->m_back->play();
+}

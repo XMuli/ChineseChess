@@ -34,11 +34,14 @@ public:
     QSound *m_select =new QSound(":/sound/selectChess.wav",this);
     QSound *m_move =new QSound(":/sound/moveChess.wav",this);
     QSound *m_eat =new QSound(":/sound/eatChess.wav",this);
+    QSound *m_back =new QSound("",this);
+    //缺少 悔棋音效的文件
 
     void voiceWin();    //胜利音效
     void voiceSelect(); //选棋音效
     void voiceMove();   //移动音效
     void voiceEat();    //吃子音效
+    void voiceBack();   //悔棋音效
 	
 };
 

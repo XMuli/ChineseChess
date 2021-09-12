@@ -151,6 +151,13 @@ border-image: url(:/images/b.jpg);
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_back">
+         <property name="text">
+          <string>悔棋</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -207,7 +214,7 @@ border-image: url(:/images/b.jpg);
      <x>0</x>
      <y>0</y>
      <width>1156</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
