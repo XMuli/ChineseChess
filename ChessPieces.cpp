@@ -79,28 +79,47 @@ void ChessPieces::init(int id)
     m_bDead = false;
 }
 
-QString ChessPieces::getnName()
+QString ChessPieces::getnName(bool isRedSide)
 {
-    //enum m_emTYPE{JIANG, SHI, XIANG, MA, CHE, PAO, BING};
-    switch(m_emType)
-    {
-    case CHE:
-        return "车";
-    case MA:
-        return "马";
-    case PAO:
-        return "炮";
-    case BING:
-        return "兵";
-    case JIANG:
-        return "将";
-    case SHI:
-        return "士";
-    case XIANG:
-        return "相";
-    default:
-        return "显示出错";
+    if(isRedSide){
+        switch (m_emType) {
+        case CHE:
+            return "車";
+        case MA:
+            return "馬";
+        case PAO:
+            return "砲";
+        case BING:
+            return "兵";
+        case JIANG:
+            return "帥";
+        case SHI:
+            return "仕";
+        case XIANG:
+            return "相";
+        default:
+            return "null";
+        }
     }
-
+    else{
+        switch (m_emType) {
+        case CHE:
+            return "車";
+        case MA:
+            return "馬";
+        case PAO:
+            return "炮";
+        case BING:
+            return "卒";
+        case JIANG:
+            return "將";
+        case SHI:
+            return "士";
+        case XIANG:
+            return "象";
+        default:
+            return "null";
+        }
+    }
     return "ERROR";
 }

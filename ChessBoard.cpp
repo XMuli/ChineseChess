@@ -279,7 +279,7 @@ void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具�
     else
         painter.setPen(QColor(255, 0, 0));
 
-    painter.drawText(rect, m_ChessPieces[id].getnName(), QTextOption(Qt::AlignCenter));  //绘画圆形里面的汉字
+    painter.drawText(rect, m_ChessPieces[id].getnName(m_ChessPieces[id].m_bRed), QTextOption(Qt::AlignCenter));  //绘画圆形里面的汉字
 }
 
 void ChessBoard:: drawLastStep(QPainter &painter,QVector<ChessStep*>& steps)
