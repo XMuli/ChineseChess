@@ -317,7 +317,7 @@ bool ChessBoard::hongMenFeast()
         for (int row = rowBlack + 1; row < rowRed ; ++row) {
             if (havePieces(row, colBlack))
                 bColEmpty = false;  // 将之间有棋子；非此列为空
-        } 
+        }
     } else {
         bColEmpty = false;
     }
@@ -369,8 +369,40 @@ QPoint ChessBoard::getRealPoint(QPoint pt)
 
     ret.setX(pt.x() / double(side) * 960.0);
     ret.setY(pt.y() / double(side) * 960.0);
-    
+
     return ret;
+}
+
+bool ChessBoard::isGeneral()
+{
+    int generalId;
+    if(m_bIsRed)
+    {
+        generalId=20;
+        int generalRow=m_ChessPieces[generalId].m_nRow;
+        int generalCol=m_ChessPieces[generalId].m_nCol;
+        for(int i=0; i<15; i++)
+        {
+            if(canMove(i,generalId,generalRow,generalCol) && m_ChessPieces[i].m_bDead==false)
+            {
+                return true;
+            }
+        }
+    }
+    else
+    {
+        generalId=4;
+        int generalRow=m_ChessPieces[generalId].m_nRow;
+        int generalCol=m_ChessPieces[generalId].m_nCol;
+        for(int i=15; i<32; i++)
+        {
+            if(canMove(i,generalId,generalRow,generalCol) && m_ChessPieces[i].m_bDead==false)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 //鼠标按下事件
@@ -471,6 +503,7 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
     //1.确定是选择其它棋子还是走棋
     //2.是否需要使用到canMoveXXX()来做限制
     //3.罗列出所有情况，和需要的得到的结果值 ==>  然后进行中间的逻辑层判断※不要受到别人的代码框架的束缚※
+
         if(isRed(moveId) == m_ChessPieces[killId].m_bRed)  //选择其它棋子，返回false
         {
             if(killId == -1)  //其中有一个特殊情况，黑+m_ChessPieces[-1].m_bRed ==> 也需要判断能否
@@ -745,6 +778,9 @@ void ChessBoard::doMoveStone(int moveid, int killid, int row, int col)
 
     killStone(killid);
     moveStone(moveid, row, col);
+    if(isGeneral())
+        m_Chessvoice.voiceGeneral();
+
     whoWin();
     if(killid== -1)
         m_Chessvoice.voiceMove(); //移动音效
@@ -767,7 +803,7 @@ void ChessBoard::saveStep(int moveid, int killid, int row, int col, QVector<Ches
 
 void ChessBoard::backOne()
 {
-    if (this->m_ChessSteps.size() == 0) {
+    if (this->m_ChessSteps.size() == 0 || m_bIsOver) {
         return;
     }
 
@@ -777,6 +813,7 @@ void ChessBoard::backOne()
 
     update();
     delete step;
+    m_Chessvoice.voiceBack();
 }
 
 void ChessBoard::back(ChessStep* step)
@@ -845,5 +882,4 @@ void ChessBoard::on_pushButton_back_clicked()
 {
     back();
     update();
-    m_Chessvoice.voiceBack();
 }

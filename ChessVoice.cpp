@@ -57,3 +57,9 @@ void ChessVoice:: voiceBack()
     if(m_back!= nullptr)
         this->m_back->play();
 }
+
+void ChessVoice:: voiceGeneral()
+{
+    if(m_general!= nullptr)
+        this->m_general->play();
+}
