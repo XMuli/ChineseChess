@@ -31,7 +31,7 @@ public:
     ~ChessPieces();
 
     void init(int id);  //初始化
-    QString getnName();    //棋子对应的汉字
+    QString getnName(bool isRedSide);    //棋子对应的汉字
 
     enum m_emTYPE{JIANG, SHI, XIANG, MA, CHE, PAO, BING};
 

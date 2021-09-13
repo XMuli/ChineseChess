@@ -11,5 +11,7 @@
         <file>sound/selectChess.wav</file>
         <file>sound/WinSound.wav</file>
         <file>sound/eatChess.wav</file>
+        <file>sound/generalSound.wav</file>
+        <file>sound/backChess.wav</file>
     </qresource>
 </RCC>
