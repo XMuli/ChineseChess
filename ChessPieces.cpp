@@ -84,11 +84,11 @@ QString ChessPieces::getnName(bool isRedSide)
     if(isRedSide){
         switch (m_emType) {
         case CHE:
-            return "車";
+            return "俥";
         case MA:
-            return "馬";
+            return "傌";
         case PAO:
-            return "砲";
+            return "炮";
         case BING:
             return "兵";
         case JIANG:
@@ -108,7 +108,7 @@ QString ChessPieces::getnName(bool isRedSide)
         case MA:
             return "馬";
         case PAO:
-            return "炮";
+            return "砲";
         case BING:
             return "卒";
         case JIANG:
