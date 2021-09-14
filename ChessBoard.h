@@ -141,6 +141,7 @@ public:
     bool m_bIsRed;     //是否是红方回合
     bool m_bIsTcpServer;
     bool m_bIsOver; //是否已经游戏结束
+    bool m_bIsShowStep; //是否显示步数
 
 private slots:
     void updateTime();
@@ -148,8 +149,8 @@ private slots:
     void on_pushButton_reset_clicked();
     void on_pushButton_about_clicked();
     void on_pushButton_restart_clicked();
-
     void on_pushButton_back_clicked();
+    void on_pushButton_showStep_clicked();
 
 private:
     Ui::ChessBoard *ui;
