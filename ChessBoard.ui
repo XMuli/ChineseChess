@@ -158,6 +158,13 @@ border-image: url(:/images/b.jpg);
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_showStep">
+         <property name="text">
+          <string>显示/隐藏步数</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
