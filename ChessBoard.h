@@ -86,7 +86,7 @@ public:
     bool isChecked(QPoint pt, int& row, int& col);   //是否选中该枚棋子。pt为输入参数; row， col为输出参数
     int relation(int row1, int col1, int row2, int col2);    //计算选中的棋子的位置和要移动的位置之间的位置关系
     QPoint getRealPoint(QPoint pt);  // 使mouseMoveEvent取得的坐标同Painter的坐标一致
-    bool isGeneral();   //是否将军
+    bool isGeneral();    //校验将移动后位置是否将死
 
 private:
     bool hongMenFeast();                     // 鸿门宴：对将

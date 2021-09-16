@@ -148,13 +148,13 @@ int ChessBoard::getStoneCountAtLine(int row1, int col1, int row2, int col2)
 
 void ChessBoard::whoWin()  //谁胜谁负
 {
-    if(m_ChessPieces[4].m_bDead == true && m_ChessPieces[20].m_bDead == false)
+    if(m_ChessPieces[4].m_bDead && !m_ChessPieces[20].m_bDead)
     {
         reset();
         winMessageBox("提示", "本局结束，红方胜利.");
     }
 
-    if(m_ChessPieces[4].m_bDead == false && m_ChessPieces[20].m_bDead == true)
+    if(!m_ChessPieces[4].m_bDead && m_ChessPieces[20].m_bDead)
     {
         reset();
         winMessageBox("提示", "本局结束，黑方胜利.");
@@ -375,33 +375,23 @@ QPoint ChessBoard::getRealPoint(QPoint pt)
     return ret;
 }
 
-bool ChessBoard::isGeneral()
+bool ChessBoard:: isGeneral()
 {
-    int generalId=20;
-    if(m_bIsRed)
-    {
-        generalId=20;
-        int generalRow= m_ChessPieces[generalId].m_nRow;    //当前回合方的将军row
-        int generalCol= m_ChessPieces[generalId].m_nCol;    //当前回合方的将军col
-        for(int i=0; i<16; ++i)
-        {
-            if(canMove(i,generalId,generalRow,generalCol) && m_ChessPieces[i].m_bDead== false)
-            {
-                return true;
-            }
-        }
-    }
-    else
-    {
+    int generalId=20;   //当前回合方将军id
+    if(!m_bIsRed)
         generalId=4;
-        int generalRow= m_ChessPieces[generalId].m_nRow;
-        int generalCol= m_ChessPieces[generalId].m_nCol;
-        for(int i=15; i<32; ++i)
+
+    int row= m_ChessPieces[generalId].m_nRow;    //当前回合方的将军row
+    int col= m_ChessPieces[generalId].m_nCol;    //当前回合方的将军col
+
+    for(int i=0; i<32; ++i)
+    {
+        if(i>=16&& m_bIsRed)    //红方时采用黑子0-15 黑方时采用红子16-32
+            break;
+
+        if(canMove(i,generalId,row,col) && !m_ChessPieces[i].m_bDead)   //依次遍历存活子能否移动到指定坐标
         {
-            if(canMove(i,generalId,generalRow,generalCol) && m_ChessPieces[i].m_bDead== false)
-            {
-                return true;
-            }
+            return true;
         }
     }
     return false;
@@ -439,7 +429,7 @@ bool ChessBoard::isGeneral()
 
 //    for(i = 0; i <= 31; i++)
 //    {
-//        if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && m_ChessPieces[i].m_bDead == false)
+//        if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && !m_ChessPieces[i].m_bDead)
 //            break;
 //    }
 
@@ -821,14 +811,15 @@ void ChessBoard::doMoveStone(int moveid, int killid, int row, int col)
 
     killStone(killid);
     moveStone(moveid, row, col);
-    if(isGeneral())
-        m_Chessvoice.voiceGeneral();
-
     whoWin();
+
     if(killid== -1)
         m_Chessvoice.voiceMove(); //移动音效
     else
         m_Chessvoice.voiceEat(); //吃子音效
+
+    if(isGeneral())
+        m_Chessvoice.voiceGeneral();    //将军音效
 }
 
 void ChessBoard::saveStep(int moveid, int killid, int row, int col, QVector<ChessStep*>& steps)
