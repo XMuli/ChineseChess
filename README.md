@@ -34,7 +34,11 @@
 
 ④ Battle timing
 
-⑤ About the work information
+⑤ Repent (multiple moves possible)
+
+⑥ track of chess moves
+
+⑦ About the work information
 
 <br>
 
