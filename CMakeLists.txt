@@ -51,7 +51,6 @@ qt5_wrap_cpp(MOC_SRCS ChessBoard.h
     MachineGame.h
     NetworkGame.h
     ChooseMainWindow.h
-    SelectGameMode.h
     AboutAuthor.h)
 qt5_wrap_ui(UI_HEADERS AboutAuthor.ui
         ChessBoard.ui)
@@ -65,7 +64,6 @@ set(SRCS_FILES main.cpp
     MachineGame.cpp
     NetworkGame.cpp
     ChooseMainWindow.cpp
-    SelectGameMode.cpp
     AboutAuthor.cpp)
 
 # 指定生成目标
