@@ -26,19 +26,20 @@
 #include "ChessBoard.h"
 #include "MachineGame.h"
 #include "NetworkGame.h"
+#include "ChessBoard.h"
 
-class ChooseMainWindow : public QWidget
+class ChooseMainWindow : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ChooseMainWindow(int nChooseGame, QWidget *parent = 0);
+    explicit ChooseMainWindow(QWidget *parent = nullptr);
     ~ChooseMainWindow();
 
-    int m_nChooseGame;
+    QPushButton* m_buttons[4];
 
-    ChessBoard* m_p1;
-    MachineGame* m_p2;
-    NetworkGame* m_p3;
+    ChessBoard* m_p1= NULL;
+    MachineGame* m_p2= NULL;
+    NetworkGame* m_p3= NULL;
 };
 
 #endif // CHOOSEMAINWINDOW_H

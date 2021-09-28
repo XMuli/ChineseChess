@@ -39,14 +39,16 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    SelectGameMode dlg;
-    dlg.setWindowTitle("选择游戏方式");
-    dlg.setFixedSize(200,120);
-    dlg.setWindowIcon(QIcon(":/images/chess.svg"));
-    if(dlg.exec() != QDialog::Accepted)
-        return 0;
+//    SelectGameMode dlg;
+//    dlg.setWindowTitle("选择游戏方式");
+//    dlg.setFixedSize(200,120);
+//    dlg.setWindowIcon(QIcon(":/images/chess.svg"));
+//    if(dlg.exec() != QDialog::Accepted)
+//        return 0;
 
-    ChooseMainWindow wnd(dlg.m_nSelect);
+//    ChooseMainWindow wnd(dlg.m_nSelect);
+    ChooseMainWindow c;
+    c.show();
 
     return a.exec();
 }

@@ -19,24 +19,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://touwoyimuli.github.io/>.
  */
-#ifndef SELECTGAMEMODE_H
-#define SELECTGAMEMODE_H
+//#ifndef SELECTGAMEMODE_H
+//#define SELECTGAMEMODE_H
 
-#include <QDialog>
-#include <QPushButton>
+//#include <QDialog>
+//#include <QPushButton>
 
-class SelectGameMode : public QDialog
-{
-    Q_OBJECT
-public:
-    explicit SelectGameMode(QWidget *parent = 0);
-    ~SelectGameMode();
+//class SelectGameMode : public QDialog
+//{
+//    Q_OBJECT
+//public:
+//    explicit SelectGameMode(QWidget *parent = 0);
+//    ~SelectGameMode();
 
-    QPushButton* m_buttons[4];
-    int m_nSelect;
+//    QPushButton* m_buttons[4];
+//    int m_nSelect;
 
-public slots:
-    void slotClicked();
-};
+//public slots:
+//    void slotClicked();
+//};
 
-#endif // SELECTGAMEMODE_H
+//#endif // SELECTGAMEMODE_H

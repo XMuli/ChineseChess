@@ -923,3 +923,8 @@ void ChessBoard::on_pushButton_showStep_clicked()
     m_bIsShowStep=!m_bIsShowStep;
     update();
 }
+
+void ChessBoard::on_pushButton_toMenu_clicked()
+{
+    emit this->toMenu();
+}

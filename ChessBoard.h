@@ -60,6 +60,7 @@
 #include "AboutAuthor.h"
 #include "ChessVoice.h"
 #include "ChessStep.h"
+#include "SelectGameMode.h"
 
 namespace Ui {
 class ChessBoard;
@@ -151,6 +152,7 @@ private slots:
     void on_pushButton_restart_clicked();
     void on_pushButton_back_clicked();
     void on_pushButton_showStep_clicked();
+    void on_pushButton_toMenu_clicked();
 
 private:
     Ui::ChessBoard *ui;
@@ -159,6 +161,9 @@ private:
     QTime * m_timeRecord;  //记录时间
     bool m_bIsStart;        //记录是否已经开始计时
     AboutAuthor* m_pAbout;
+
+signals:
+    void toMenu();
 };
 
 #endif // CHESSBOARD_H
