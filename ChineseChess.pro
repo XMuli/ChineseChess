@@ -31,7 +31,6 @@ SOURCES += main.cpp\
     MachineGame.cpp \
     NetworkGame.cpp \
     ChooseMainWindow.cpp \
-    SelectGameMode.cpp \
     AboutAuthor.cpp
 
 HEADERS  += ChessBoard.h \
@@ -41,7 +40,6 @@ HEADERS  += ChessBoard.h \
     MachineGame.h \
     NetworkGame.h \
     ChooseMainWindow.h \
-    SelectGameMode.h \
     AboutAuthor.h
 
 FORMS    += ChessBoard.ui \

@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://touwoyimuli.github.io/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
  */
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
@@ -49,7 +49,6 @@
 
 #include <QMainWindow>
 #include <QFrame>
-#include "ChessPieces.h"
 #include <QPainter>
 #include <QPoint>
 #include <QMouseEvent>
@@ -57,10 +56,10 @@
 #include <QTime>
 #include <QMessageBox>
 #include <QtGlobal>
+#include "ChessPieces.h"
 #include "AboutAuthor.h"
 #include "ChessVoice.h"
 #include "ChessStep.h"
-#include "SelectGameMode.h"
 
 namespace Ui {
 class ChessBoard;

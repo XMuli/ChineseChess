@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://touwoyimuli.github.io/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
  */
 #include "ChooseMainWindow.h"
 
@@ -42,13 +42,13 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
     /*游戏方式一: 自己和自己下棋【同一台PC机器】*/
     connect(m_buttons[0], &QPushButton::clicked,[=](){
         this->hide();
-        m_p1 = new ChessBoard();
-        m_p1->setWindowTitle("玩家自己对战");
-        m_p1->show();
+        m_pAgainstYourself = new ChessBoard();
+        m_pAgainstYourself->setWindowTitle("玩家自己对战");
+        m_pAgainstYourself->show();
 
         //返回主窗口
-        connect(m_p1,&ChessBoard::toMenu,[=](){
-            m_p1->close();
+        connect(m_pAgainstYourself,&ChessBoard::toMenu,[=](){
+            m_pAgainstYourself->close();
             this->show();
         });
     });
@@ -57,13 +57,13 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
     connect(m_buttons[1], &QPushButton::clicked,[=](){
         this->hide();
 
-        m_p2 = new MachineGame();
-        m_p2->setWindowTitle("玩家和AI对战");
-        m_p2->show();
+        m_pMachineGame = new MachineGame();
+        m_pMachineGame->setWindowTitle("玩家和AI对战");
+        m_pMachineGame->show();
 
         //返回主窗口
-        connect(m_p2,&ChessBoard::toMenu,[=](){
-            m_p2->close();
+        connect(m_pMachineGame,&ChessBoard::toMenu,[=](){
+            m_pMachineGame->close();
             this->show();
         });
     });
@@ -78,13 +78,13 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
         if(ret == QMessageBox::Yes)
             bServer = true;
 
-        m_p3 = new NetworkGame(bServer);
-        m_p3->setWindowTitle("双人网络对战");
-        m_p3->show();
+        m_pNetworkGame = new NetworkGame(bServer);
+        m_pNetworkGame->setWindowTitle("双人网络对战");
+        m_pNetworkGame->show();
 
         //返回主窗口
-        connect(m_p3,&ChessBoard::toMenu,[=](){
-            m_p3->close();
+        connect(m_pNetworkGame,&ChessBoard::toMenu,[=](){
+            m_pNetworkGame->close();
             this->show();
         });
     });

@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://touwoyimuli.github.io/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
  */
 #ifndef CHOOSEMAINWINDOW_H
 #define CHOOSEMAINWINDOW_H
@@ -35,11 +35,11 @@ public:
     explicit ChooseMainWindow(QWidget *parent = nullptr);
     ~ChooseMainWindow();
 
-    QPushButton* m_buttons[4];
-
-    ChessBoard* m_p1= NULL;
-    MachineGame* m_p2= NULL;
-    NetworkGame* m_p3= NULL;
+private:
+    QPushButton* m_buttons[3];
+    ChessBoard* m_pAgainstYourself;
+    MachineGame* m_pMachineGame;
+    NetworkGame* m_pNetworkGame;
 };
 
 #endif // CHOOSEMAINWINDOW_H
