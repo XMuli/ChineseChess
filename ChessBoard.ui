@@ -165,6 +165,13 @@ border-image: url(:/images/b.jpg);
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_toMenu">
+         <property name="text">
+          <string>返回主菜单</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
