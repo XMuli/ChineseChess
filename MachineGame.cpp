@@ -148,6 +148,7 @@ void MachineGame::mousePressEvent(QMouseEvent *ev)
 
     m_nCheckedID = -1;
 
+    //TODO Fix (升级 Qt6): https://github.com/xmuli/chinessChess/issues/23
     int i =0;
     for( ; i < 32; i++)
     {
