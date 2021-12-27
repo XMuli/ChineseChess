@@ -48,4 +48,5 @@ FORMS    += ChessBoard.ui \
 RESOURCES += \
     chooseresource.qrc
 
+RC_FILE = res.rc
 

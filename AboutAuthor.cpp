@@ -29,7 +29,6 @@ AboutAuthor::AboutAuthor(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutAuthor)
 {
-
     this->setWindowIcon(QIcon(":/images/chess.svg"));
     ui->setupUi(this);
 
