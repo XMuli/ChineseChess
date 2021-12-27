@@ -37,8 +37,12 @@ public:
     explicit AboutAuthor(QWidget *parent = 0);
     ~AboutAuthor();
 
+protected:
+    virtual void paintEvent(QPaintEvent *event) override;
+
 private:
     Ui::AboutAuthor *ui;
+    QWidget * QDialog;
 };
 
 #endif // ABOUTAUTHOR_H

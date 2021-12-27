@@ -148,14 +148,17 @@ Thanks for the contributions submitted by the friends 🥳🥳:
       </th>
          <th align="center" style="width: 80px;">
         <a href="https://github.com/kira-yamatoo">
-          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210911163133.png" width="50px"><br>
+          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20211227232947.png" width="50px"><br>
           <sub>kirayamatoo</sub>
+      </th>
+         <th align="center" style="width: 80px;">
+        <a href="https://github.com/hmsjy2017">
+          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210911163133.png" width="50px"><br>
+          <sub>hmsjy2017</sub>
         </a>
     </tr>
   </thead>
 </table>
-
-
 
 <br>
 
