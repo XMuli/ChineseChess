@@ -81,6 +81,28 @@
 
 <br>
 
+## 更新(2022.01.01 v6.0)
+
+### 功能 
+
+- 添加悔棋功能，无限制悔棋
+- 显示下棋轨迹，当前执手
+- 重新开始游戏，点击重开
+- 代码逻辑优化，新增注释
+- 下棋界面更新，使用古象棋棋字
+- 更新关于程序，添加贡献者姓名
+- Linux ARM64 deb 蓝莓派支持： [apt.raspbian-addons.org](https://apt.raspbian-addons.org/debian/pool/main/c/chinesechess/)
+
+<br>
+
+### 演示
+
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/ChineChess.gif" width="90%"/>
+
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20211229011429.png" width="90%"/>
+
+<br>
+
 ## 开发教程：
 
 - [项目实战：Qt5／C++：QT象棋【初版】](https://blog.csdn.net/qq_33154343/article/details/80931400) 
@@ -146,12 +168,12 @@
       </th>
          <th align="center" style="width: 80px;">
         <a href="https://github.com/kira-yamatoo">
-          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20211227232947.png" width="50px"><br>
+          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210911163133.png" width="50px"><br>
           <sub>kirayamatoo</sub>
       </th>
          <th align="center" style="width: 80px;">
         <a href="https://github.com/hmsjy2017">
-          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210911163133.png" width="50px"><br>
+          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20211227232947.png" width="50px"><br>
           <sub>hmsjy2017</sub>
         </a>
     </tr>
@@ -160,7 +182,7 @@
 
 <br>
 
-若是帮助到了你，<font color=#FE7207  size=4 face="幼圆">可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，方便抬手之间，相当点个赞，</font>手有余香。
+若是帮助到了你，<font color=#FE7207  size=4 face="幼圆">可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，方便抬手之间，相当点个赞，</font>手有余香；其次才是一份冰的快乐水。
 
 <br>
 

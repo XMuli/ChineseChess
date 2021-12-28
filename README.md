@@ -79,6 +79,28 @@
 
 <br>
 
+## Update (2022.01.01)
+
+### Features  v6.0
+
+- Add regret function, unlimited regret
+- Show move track, current move
+- Restart game, click to restart
+- Code logic optimization, new comments
+- Update chess interface, use ancient chess characters
+- Update about program, add contributor name
+- Linux ARM64 deb Blueberry Pi support: [apt.raspbian-addons.org](https://apt.raspbian-addons.org/debian/pool/main/c/chinesechess/)
+
+<br>
+
+### Show
+
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/ChineChess.gif" width="90%"/>
+
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20211229011429.png" width="90%"/>
+
+<br>
+
 ## Development tutorial：
 
 - [Project actual combat: Qt5/C++: QT chess [Basic version]](https://blog.csdn.net/qq_33154343/article/details/80931400) 
@@ -148,12 +170,12 @@ Thanks for the contributions submitted by the friends 🥳🥳:
       </th>
          <th align="center" style="width: 80px;">
         <a href="https://github.com/kira-yamatoo">
-          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20211227232947.png" width="50px"><br>
+          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210911163133.png" width="50px"><br>
           <sub>kirayamatoo</sub>
       </th>
          <th align="center" style="width: 80px;">
         <a href="https://github.com/hmsjy2017">
-          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210911163133.png" width="50px"><br>
+          <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20211227232947.png" width="50px"><br>
           <sub>hmsjy2017</sub>
         </a>
     </tr>
@@ -162,7 +184,7 @@ Thanks for the contributions submitted by the friends 🥳🥳:
 
 <br>
 
-If it helped you, <font color=#FE7207 size=4 face="幼圆"> can click on the project’s  <img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>  **Star** and <img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height ="18" width="18"/> **Fork**’s two icons are convenient for raising your hands. It’s quite a thumbs-up.</font> There is a fragrance in your hand.
+If it helped you, <font color=#FE7207 size=4 face="幼圆"> can click on the project’s  <img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>  **Star** and <img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height ="18" width="18"/> **Fork**’s two icons are convenient for raising your hands. It’s quite a thumbs-up.</font> There is a fragrance in your hand；The next best thing is to buy me a cold Coke.
 
 <br>
 
