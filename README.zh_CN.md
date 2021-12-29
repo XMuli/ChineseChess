@@ -126,7 +126,10 @@
 - git
 - make
 - g++
-- qt5-default
+- qtbase5-dev
+- qtchooser
+- qt5-qmake
+- qtbase5-dev-tools
 - qtmultimedia5-dev
 
 ## 构建：
@@ -136,7 +139,7 @@
    以 Debian 和 Ubuntu 为例，执行:
    
    ```bash
-   $ sudo apt install -y git make g++ qt5-default qtmultimedia5-dev
+   $ sudo apt install -y git make g++ qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools qtmultimedia5-dev
    ```
    
 2. 运行命令:
