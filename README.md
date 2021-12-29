@@ -128,7 +128,10 @@ In addition, the source code summary is accompanied by detailed code comments fo
 - git
 - make
 - g++
-- qt5-default
+- qtbase5-dev
+- qtchooser
+- qt5-qmake
+- qtbase5-dev-tools
 - qtmultimedia5-dev
 
 ## Build:
@@ -138,9 +141,9 @@ In addition, the source code summary is accompanied by detailed code comments fo
    For Debian and Ubuntu, run:
    
    ```bash
-   $ sudo apt install -y git make g++ qt5-default qtmultimedia5-dev
+   $ sudo apt install -y git make g++ qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools qtmultimedia5-dev
    ```
-
+   
 2. Run the command::
 
    ```bash
