@@ -91,7 +91,7 @@
 - 代码逻辑优化，新增注释
 - 下棋界面更新，使用古象棋棋字
 - 更新关于程序，添加贡献者姓名
-- Linux ARM64 deb 蓝莓派支持： [apt.raspbian-addons.org](https://apt.raspbian-addons.org/debian/pool/main/c/chinesechess/)
+- Linux ARM64 deb 树莓派支持： [apt.raspbian-addons.org](https://apt.raspbian-addons.org/debian/pool/main/c/chinesechess/)
 
 <br>
 
