@@ -89,7 +89,7 @@
 - Code logic optimization, new comments
 - Update chess interface, use ancient chess characters
 - Update about program, add contributor name
-- Linux ARM64 deb Blueberry Pi support: [apt.raspbian-addons.org](https://apt.raspbian-addons.org/debian/pool/main/c/chinesechess/)
+- Linux ARM64 deb Raspberry Pi support: [apt.raspbian-addons.org](https://apt.raspbian-addons.org/debian/pool/main/c/chinesechess/)
 
 <br>
 
@@ -117,9 +117,29 @@ In addition, the source code summary is accompanied by detailed code comments fo
 
 <br>
 
+## Dependencies:
+
+### Runtime
+
+- libqt5multimedia5
+
+### Build
+
+- git
+- make
+- g++
+- qt5-default
+- qtmultimedia5-dev
+
 ## Build:
 
-1. Install Qt （Qt >= 5.9.0）
+1. Install Qt （Qt >= 5.9.0）and other dependencies 
+   
+   For Debian and Ubuntu, run:
+   
+   ```bash
+   $ sudo apt install -y git make g++ qt5-default qtmultimedia5-dev
+   ```
 
 2. Run the command::
 

@@ -91,7 +91,7 @@
 - 代码逻辑优化，新增注释
 - 下棋界面更新，使用古象棋棋字
 - 更新关于程序，添加贡献者姓名
-- Linux ARM64 deb 蓝莓派支持： [apt.raspbian-addons.org](https://apt.raspbian-addons.org/debian/pool/main/c/chinesechess/)
+- Linux ARM64 deb 树莓派支持： [apt.raspbian-addons.org](https://apt.raspbian-addons.org/debian/pool/main/c/chinesechess/)
 
 <br>
 
@@ -115,10 +115,30 @@
 
 <br>
 
+## 依赖：
+
+### 运行
+
+- libqt5multimedia5
+
+### 构建
+
+- git
+- make
+- g++
+- qt5-default
+- qtmultimedia5-dev
+
 ## 构建：
 
-1. 安装 Qt （Qt >= 5.9.0）
+1. 安装 Qt （Qt >= 5.9.0）和其他依赖
 
+   以 Debian 和 Ubuntu 为例，执行:
+   
+   ```bash
+   $ sudo apt install -y git make g++ qt5-default qtmultimedia5-dev
+   ```
+   
 2. 运行命令:
 
    ```bash
@@ -195,4 +215,3 @@
 ## 协议：
 
 该项目基于 `GNU General Public License v3.0` 协议进行分发和使用。 有关更多信息，请参阅[协议文件](/LICENSE)。
-
