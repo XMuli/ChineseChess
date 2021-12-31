@@ -123,17 +123,6 @@ In addition, the source code summary is accompanied by detailed code comments fo
 
 - libqt5multimedia5
 
-### Build
-
-- git
-- make
-- g++
-- qtbase5-dev
-- qtchooser
-- qt5-qmake
-- qtbase5-dev-tools
-- qtmultimedia5-dev
-
 ## Build:
 
 1. Install Qt （Qt >= 5.9.0）and other dependencies 
