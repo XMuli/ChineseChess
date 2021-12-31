@@ -89,7 +89,7 @@
 - Code logic optimization, new comments
 - Update chess interface, use ancient chess characters
 - Update about program, add contributor name
-- Linux ARM64 deb Raspberry Pi support: [apt.raspbian-addons.org](https://apt.raspbian-addons.org/debian/pool/main/c/chinesechess/)
+- Linux ARM Raspberry Pi support: [apt.raspbian-addons.org](https://apt.raspbian-addons.org/debian/pool/main/c/chinesechess/), both 32 and 64-bit
 
 <br>
 
