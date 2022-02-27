@@ -3,19 +3,15 @@
 <div align=center>
 <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/logo.svg" height="240" width="240" />
 </div>
-
-
-
-
 <br>
 
 ## 项目介绍
 
 <p align="right"><br><a href="README.md">English</a> | <a href="README.zh_CN.md">简体中文</a></p>
 
-![](https://img.shields.io/badge/language-c++-orange.svg) ![](https://img.shields.io/badge/language-Qt-orange.svg) ![](https://img.shields.io/github/license/xmuli/chinessChess) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/xmuli/chinessChess)
+![](https://img.shields.io/github/license/XMuli/chinessChess) ![](https://img.shields.io/github/v/release/XMuli/chinessChess?style=flat&color=birightgreen) ![](https://img.shields.io/badge/powered%20by-XMuli-ff69b4)  ![](https://img.shields.io/github/stars/XMuli/chinessChess?style=social) ![](https://img.shields.io/github/forks/XMuli/chinessChess?style=social&label=Fork)
 
-![macos-badge](https://github.com/xmuli/chinessChess/workflows/MacOS/badge.svg)  ![win-badge](https://github.com/xmuli/chinessChess/workflows/Windows/badge.svg)  ![ubuntu-badge](https://github.com/xmuli/chinessChess/workflows/Ubuntu/badge.svg)  ![GitHub All Releases](https://img.shields.io/github/downloads/xmuli/chinessChess/total)  ![GitHub stars](https://img.shields.io/github/stars/xmuli/chinessChess?style=social) ![GitHub forks](https://img.shields.io/github/forks/xmuli/chinessChess?style=social) 
+![](https://img.shields.io/github/workflow/status/XMuli/chinessChess/Windows?style=flat&logo=windows) ![](https://img.shields.io/github/workflow/status/XMuli/chinessChess/MacOS?style=flat&logo=apple) ![](https://img.shields.io/github/workflow/status/XMuli/chinessChess/Ubuntu?style=flat&logo=linux) ![](https://img.shields.io/github/languages/code-size/XMuli/chinessChess)  ![](https://img.shields.io/github/downloads/XMuli/chinessChess/total)
 
 <br>
 
@@ -166,9 +162,9 @@
 <table frame=void>
     <tr>
       <th align="center" style="width: 80px;">
-        <a href="https://github.com/xmuli">
+        <a href="https://github.com/XMuli">
           <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/20201101220931.png" width="50px"><br>            
-          <sub>xmuli</sub>
+          <sub>XMuli</sub>
         </a>
       </th>        
       <th align="center" style="width: 80px;">
@@ -199,9 +195,16 @@
           <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20211227232947.png" width="50px"><br>
           <sub>hmsjy2017</sub>
         </a>
-    </tr>
+     </tr>
+         <th align="center" style="width: 80px;">
+        <a href="https://github.com/ryanfortner">
+          <img src="https://cdn.jsdelivr.net/gh/XMuli/xmuliPic@pic/2022/71036629.png" width="50px"><br>
+          <sub>ryanfortner</sub>
+        </a>
+     </tr>
   </thead>
 </table>
+
 
 <br>
 
