@@ -1,72 +1,134 @@
-# windows.yml
-name: Windows
+name: windows
 on: 
   # push代码时触发workflow
   push:
-    # 忽略README.md
-    paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
-  # pull_request时触发workflow
+    paths:
+      - 'CMakeLists.txt'
+      - 'src/**'
   pull_request:
-    # 忽略README.md
-    paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
+    paths:
+      - 'CMakeLists.txt'
+      - 'src/**'
 jobs:
   build:
     name: Build
-    # 运行平台， windows-latest目前是windows server 2019
-    runs-on: windows-latest
+    # 运行平台， windows-latest目前是windows server 2022
+    # 参考文档 https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md
+    runs-on: windows-2019
     strategy:
       # 矩阵配置
       matrix:
-        qt_ver: [5.12.9]
-        qt_target: [desktop]
-        # mingw用不了
-        # qt_arch: [win64_msvc2017_64, win32_msvc2017, win32_mingw53,win32_mingw73]
-        qt_arch: [win64_msvc2017_64, win32_msvc2017]
-        # 从矩阵中除外的配置
-        exclude: 
-          # 不存在5.9.8-win32_msvc2017的版本
-          - qt_ver: 5.9.8
-            qt_arch: win32_msvc2017
-          # mingw用不了
-          # - qt_ver: 5.9.8
-          #   qt_arch: win32_mingw73
-          # - qt_ver: 5.12.6
-          #   qt_arch: win32_mingw53
-        # 额外设置msvc_arch
         include:
-          - qt_arch: win64_msvc2017_64
-            msvc_arch: x64
-          - qt_arch: win32_msvc2017
+          # 5.12.11 参考 https://mirrors.cloud.tencent.com/qt/online/qtsdkrepository/windows_x86/desktop/qt5_51211/            
+          - qt_ver: 5.12.11
+            qt_arch: win32_msvc2017
             msvc_arch: x86
+            qt_arch_install: msvc2017
+          - qt_ver: 5.12.11           
+            qt_arch: win64_msvc2017_64
+            msvc_arch: x64
+            qt_arch_install: msvc2017_64
+    env:
+      targetName: chinessChess
+      targetOS: windows
     # 步骤
     steps:
-      # 安装Qt
+      # - name: Cache Qt  # 使用缓存安装Qt模块
+      #   id: cache-qt
+      #   uses: actions/cache@v1  # not v2! 参见 https://github.com/jurplel/install-qt-action
+      #   with:
+      #     path: ../Qt
+      #     key: ${{ runner.os }}-QtCache
+
       - name: Install Qt
-        # 使用外部action。这个action专门用来安装Qt
-        uses: jurplel/install-qt-action@v2.13.0
+        # if: steps.cache-qt.outputs.cache-hit != 'true'
+        uses: jurplel/install-qt-action@v2
         with:
-          # Version of Qt to install
           version: ${{ matrix.qt_ver }}
-          # Target platform for build
-          target: ${{ matrix.qt_target }}
-          # Architecture for Windows/Android
-          arch: ${{ matrix.qt_arch }}
-      # 拉取代码
-      - name: Checkout
-        uses: actions/checkout@v2.3.4
+          # cached: ${{ steps.cache-qt.outputs.cache-hit }}
+
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      # 编译msvc
-      - name: build-msvc
-        shell: cmd
-        env:
-          vc_arch: ${{ matrix.msvc_arch }}
+          
+      - name: pull 3rdparty code
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %vc_arch%
-          cd src
-          qmake
-          nmake
+          cd ${{github.workspace}}
+          git submodule init
+          git submodule update
+
+      - name: msvc-build
+        id: msvc-build
+        shell: cmd
+        run: |
+          cd ${{ github.workspace }}
+          mkdir bin
+          mkdir build
+
+          cd build
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.msvc_arch }}
+
+          if "${{ matrix.msvc_arch }}" == "x86" (
+            echo "1111111111------------"
+            cmake -G "Visual Studio 16 2019" -A Win32 ..
+            devenv "${{ env.targetName }}.sln" /Build "Release|Win32"
+          ) else (
+            echo "2222222222------------"
+            cmake -G "Visual Studio 16 2019" -A x64 ..
+            devenv "${{ env.targetName }}.sln" /Build "Release|x64"
+          )
+          
+          cd ${{ github.workspace }}/bin/Release
+          echo "333333333333333------------------a3"
+          chdir
+          dir
+     
+      - name: NameVersion
+        id: NameVersion
+        if: startsWith(github.event.ref, 'refs/tags/')
+        shell: pwsh
+        run: |
+          $systemInfo="${{ env.targetOS }}-${{ matrix.msvc_arch }}"
+          $productVersion="${{ github.ref }}".substring("refs/tags/v".length)
+          $productName="${{ env.targetName }}-$productVersion-beta-$systemInfo"
+
+          echo "systemInfo=$systemInfo" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "productVersion=$productVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "productName=$productName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      # tag打为.zip包 
+      - name: Package
+        id: Package      
+        if: startsWith(github.event.ref, 'refs/tags/')
+        shell: pwsh
+        run: |
+          Copy-Item -Path build/bin/Release/* -Destination bin/
+          dir bin
+          echo "--------------------------1"
+          windeployqt bin/${{ env.targetName }}.exe
+          
+          dir bin
+          echo "--------------------------2"
+
+          Compress-Archive -Path ${{ github.workspace }}/bin/* -Destination ${{ env.productName }}.zip
+          
+          dir
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: ${{ env.productName }}.zip
+    
+      # tag上传Release
+      - name: uploadRelease
+        if: startsWith(github.event.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.upload_release }}
+        with:
+          draft: false
+          prerelease: false
+          files: |
+            ${{ env.productName }}.zip
+          tag: ${{ github.ref }}
+          overwrite: true 
