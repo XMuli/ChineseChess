@@ -18,7 +18,7 @@
 # CMake 最低版本号要求
 cmake_minimum_required (VERSION 2.8)
 # 项目信息
-project (chinessChess)
+project (ChineseChess)
 
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

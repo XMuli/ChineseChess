@@ -29,7 +29,7 @@ jobs:
             msvc_arch: x64
             qt_arch_install: msvc2017_64
     env:
-      targetName: chinessChess
+      targetName: ChineseChess
       targetOS: windows
     # 步骤
     steps:
