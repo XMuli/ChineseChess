@@ -10,18 +10,11 @@ public:
     ChessState() = default;
     ChessState(std::vector<ChessPieces> pieces):chessPieces(pieces){}
 
-    ChessState suggestedNextState(){
-        return ChessState();
-    }
-    bool hasNext(){
-        return true;
-    }
-    void playout(){}
-    bool result(){return true;}
-    std::vector<ChessState> getAllPossibleNextState(){
-        std::vector<ChessState> v;
-        return v;
-    }
+    ChessState suggestedNextState();
+    bool hasNext();
+    void playout();
+    bool result();
+    std::vector<ChessState> getAllPossibleNextState();
 
 private:
     //all chess pieces, contains position infos

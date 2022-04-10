@@ -23,6 +23,9 @@
 #include <QApplication>
 #include <chrono>
 #include <thread>
+#include "Node.h"
+#include "MonteCarloTree.h"
+#include "ChessState.h"
 
 MachineGame::MachineGame()
 {
