@@ -22,6 +22,11 @@
 #ifndef CHESSSTEP_H
 #define CHESSSTEP_H
 
+#include "QString"
+#include "QStringBuilder"
+
+using namespace std;
+
 class ChessStep
 {
 
@@ -35,6 +40,12 @@ public:
     int m_nColFrom;  //原位置的列
     int m_nRowTo;    //目的位置的行
     int m_nnColTo;   //目的位置的列
+
+    std::string toString(){
+        return QString("%1d %2d %3d %4d %5d %6d")
+                .arg(m_nMoveID,m_nRowFrom,m_nRowTo,m_nColFrom,m_nnColTo)
+                .toStdString();
+    }
 };
 
 #endif // CHESSSTEP_H

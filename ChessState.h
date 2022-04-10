@@ -9,6 +9,7 @@ class ChessState
 public:
     ChessState() = default;
     ChessState(std::vector<ChessPieces> pieces):chessPieces(pieces){}
+    ChessState(ChessPieces pieces[]);
 
     ChessState suggestedNextState();
     bool hasNext();

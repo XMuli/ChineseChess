@@ -1,5 +1,8 @@
 #include "ChessRuleProvider.h"
 #include <stdexcept>
+#include "myLog.h"
+//using namespace myLog;
+
 
 ChessRuleProvider::ChessRuleProvider(ChessPieces pieces[])
 {
@@ -18,7 +21,12 @@ ChessRuleProvider::ChessRuleProvider(std::vector<ChessPieces> pieces)
     }
 }
 
-void ChessRuleProvider::getAllPossibleMoveStep(QVector<ChessStep *> &steps)
+void ChessRuleProvider::getAllPossibleSteps(QVector<ChessStep>& steps){
+    getAllPossibleMoveStepAndKill(steps);
+    getAllPossibleMoveStepAndNoKill(steps);
+}
+
+void ChessRuleProvider::getAllPossibleMoveStepAndKill(QVector<ChessStep> &steps)
 {
     for(int id = 0; id<16; id++)   //存在的黑棋， 能否走到这些盘棋盘里面的格子
     {
@@ -45,6 +53,37 @@ void ChessRuleProvider::getAllPossibleMoveStep(QVector<ChessStep *> &steps)
         }
     }
 }
+
+void ChessRuleProvider::getAllPossibleMoveStepAndNoKill(QVector<ChessStep> &steps)
+{
+    for(int id = 0; id<16; id++)   //存在的黑棋， 能否走到这些盘棋盘里面的格子
+    {
+        if(m_ChessPieces[id].m_bDead)
+            continue;
+
+        for(int row=0; row<10; row++)
+        {
+            for(int col=0; col<9; col++)
+            {
+
+                int i = 0;
+                for(; i <= 31; i++)
+                {
+                    if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && m_ChessPieces[i].m_bDead == false)
+                        break;
+                }
+
+                if(id < 16 && i == 32)
+                {
+                    if(canMove(id, -1, row, col))
+                        saveStep(id, -1, row, col, steps);
+                }
+            }
+        }
+    }
+}
+
+
 
 
 //总的移动规则
@@ -304,15 +343,15 @@ bool ChessRuleProvider::isDead(int id)
     return m_ChessPieces[id].m_bDead;
 }
 
-void ChessRuleProvider::saveStep(int moveid, int killid, int row, int col, QVector<ChessStep*>& steps)
+void ChessRuleProvider::saveStep(int moveid, int killid, int row, int col, QVector<ChessStep>& steps)
 {
-    ChessStep* step = new ChessStep;
-    step->m_nColFrom = m_ChessPieces[moveid].m_nCol;
-    step->m_nnColTo = col;
-    step->m_nRowFrom = m_ChessPieces[moveid].m_nRow;
-    step->m_nRowTo = row;
-    step->m_nMoveID = moveid;
-    step->m_nKillID = killid;
+    ChessStep step;
+    step.m_nColFrom = m_ChessPieces[moveid].m_nCol;
+    step.m_nnColTo = col;
+    step.m_nRowFrom = m_ChessPieces[moveid].m_nRow;
+    step.m_nRowTo = row;
+    step.m_nMoveID = moveid;
+    step.m_nKillID = killid;
 
     steps.append(step);
 }

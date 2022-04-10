@@ -24,9 +24,9 @@
 #include <iostream>
 #include <string>
 #include "myLog.h"
+#include "ChessState.h"
 
 using namespace std;
-using namespace myLog;
 
 ChessBoard::ChessBoard(QWidget *parent) :
     QMainWindow(parent),
@@ -396,7 +396,12 @@ bool ChessBoard:: isGeneral()
         if(i>=16&& m_bIsRed)    //红方时采用黑子0-15 黑方时采用红子16-32
             break;
 
-        if(canMove(i,generalId,row,col) && !m_ChessPieces[i].m_bDead)   //依次遍历存活子能否移动到指定坐标
+        bool selfCanMove = canMove(i,generalId,row,col);
+
+        ChessState state(this->m_ChessPieces);
+        myLog::print(std::to_string(state.getAllPossibleNextState().size()));
+
+        if(selfCanMove && !m_ChessPieces[i].m_bDead)   //依次遍历存活子能否移动到指定坐标
         {
             return true;
         }

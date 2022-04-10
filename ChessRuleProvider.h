@@ -4,8 +4,7 @@
 #include "ChessStep.h"
 #include <vector>
 #include <QVector>
-
-using namespace std;
+#include "myLog.h"
 
 class ChessRuleProvider
 {
@@ -13,7 +12,9 @@ public:
     ChessRuleProvider(ChessPieces pieces[]);
     ChessRuleProvider(std::vector<ChessPieces> pieces);
     bool canMove(int moveId, int killId, int row, int col);
-    void getAllPossibleMoveStep(QVector<ChessStep*>& steps);
+    void getAllPossibleSteps(QVector<ChessStep>& steps);
+    void getAllPossibleMoveStepAndKill(QVector<ChessStep>& steps);
+    void getAllPossibleMoveStepAndNoKill(QVector<ChessStep>& steps);
 
 private:
     ChessPieces m_ChessPieces[32];
@@ -32,7 +33,7 @@ private:
     int getStoneId(int row, int col);
     int  getStoneCountAtLine(int row1, int col1, int row2, int col2);
     bool isDead(int id);
-    void saveStep(int moveid, int killid, int row, int col, QVector<ChessStep*>& steps);
+    void saveStep(int moveid, int killid, int row, int col, QVector<ChessStep>& steps);
 
 };
 

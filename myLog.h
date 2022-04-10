@@ -1,12 +1,19 @@
 #ifndef MYLOG_H
 #define MYLOG_H
+
 #include <string>
 #include <iostream>
+#include <QVector>
+#include <ChessStep.h>
+
 using namespace std;
-namespace myLog {
-    static int i = 0;
-    void print(std::string s){
-        std::cout<< s << i++ << endl;
+static int i = 0;
+
+class myLog {
+public:
+    static void print(std::string s){
+        std::cout<< s<< " " << i++ << endl;
     }
-}
+
+};
 #endif // MYLOG_H
