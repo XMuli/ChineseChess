@@ -21,6 +21,16 @@
  */
 #include "ChessBoard.h"
 #include "ui_ChessBoard.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+namespace myLog {
+    static int i = 0;
+    void print(string s){
+        std::cout<< s << i++ << endl;
+    }
+}
 
 ChessBoard::ChessBoard(QWidget *parent) :
     QMainWindow(parent),
@@ -208,6 +218,7 @@ QPoint ChessBoard::center(int id)
 
 void ChessBoard::paintEvent(QPaintEvent *)
 {
+    myLog::print("paint event");
     QPainter painter(this);
     int side = qMin(int((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), ui->label->height());
     painter.scale(side / 960.0, side / 960.0);

@@ -47,6 +47,9 @@ public:
     ChessStep* getBestMove();   //获得最好的移动步骤
 
     void machineChooseAndMovePieces(); //机器 黑方时间: 进行选棋+下棋
+
+private:
+    void move(ChessStep* step);
 };
 
 #endif // MACHINEGAME_H

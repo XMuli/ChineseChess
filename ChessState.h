@@ -7,7 +7,8 @@
 class ChessState
 {
 public:
-    ChessState();
+    ChessState() = default;
+    ChessState(std::vector<ChessPieces> pieces):chessPieces(pieces){}
 
     ChessState suggestedNextState(){
         return ChessState();
@@ -17,14 +18,14 @@ public:
     }
     void playout(){}
     bool result(){return true;}
-    vector<ChessState> getAllPossibleNextState(){
-        vector<ChessState> v;
+    std::vector<ChessState> getAllPossibleNextState(){
+        std::vector<ChessState> v;
         return v;
     }
 
 private:
     //all chess pieces, contains position infos
-    ChessPieces m_ChessPieces[32];
+    std::vector<ChessPieces> chessPieces;
 };
 
 #endif // CHESSSTATE_H

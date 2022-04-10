@@ -20,6 +20,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
  */
 #include "MachineGame.h"
+#include <QApplication>
+#include <chrono>
+#include <thread>
 
 MachineGame::MachineGame()
 {
@@ -160,20 +163,6 @@ void MachineGame::mousePressEvent(QMouseEvent *ev)
         m_nCheckedID = i;
 
     clickPieces(m_nCheckedID, row, col);
-
-    if(m_bIsRed) //红方玩家时间
-    {
-        chooseOrMovePieces(i, row, col);
-
-        if(!m_bIsRed) //黑方紧接着进行游戏
-        {
-            machineChooseAndMovePieces();
-            //ToDo: 机器 黑方时间
-        }
-    }
-
-
-
 }
 
 void MachineGame::clickPieces(int checkedID, int &row, int &col)
@@ -181,6 +170,7 @@ void MachineGame::clickPieces(int checkedID, int &row, int &col)
     if(m_bIsRed) //红方玩家时间
     {
         chooseOrMovePieces(checkedID, row, col);
+        qApp->processEvents();
 
         if(!m_bIsRed) //黑方紧接着进行游戏
             machineChooseAndMovePieces();
@@ -291,8 +281,12 @@ ChessStep* MachineGame::getBestMove()
 
 void MachineGame::machineChooseAndMovePieces()
 {
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     ChessStep* step = getBestMove();
+    move(step);
+}
 
+void MachineGame::move(ChessStep* step){
     if(step->m_nKillID == -1)  //黑棋没有可以击杀的红棋子，只好走能够走的过程中最后一步棋
     {
         m_ChessPieces[step->m_nMoveID].m_nRow = step->m_nRowTo;
@@ -309,3 +303,5 @@ void MachineGame::machineChooseAndMovePieces()
 
     m_bIsRed = !m_bIsRed;
 }
+
+
