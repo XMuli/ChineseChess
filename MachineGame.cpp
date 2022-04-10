@@ -143,7 +143,7 @@ void MachineGame::mousePressEvent(QMouseEvent *ev)
         return;
 
     int row, col;
-    if(!isChecked(ev->pos(), row, col))
+    if(!isSelected(ev->pos(), row, col))
         return;
 
     m_nCheckedID = -1;

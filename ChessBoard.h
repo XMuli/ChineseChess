@@ -83,7 +83,7 @@ public:
     // 车、炮的功能辅助函数   判断两个点是否在一个直线上面,且返回直线之间的棋子个数
     int  getStoneCountAtLine(int row1, int col1, int row2, int col2);
     void whoWin();  //谁胜谁负
-    bool isChecked(QPoint pt, int& row, int& col);   //是否选中该枚棋子。pt为输入参数; row， col为输出参数
+    bool isSelected(QPoint pt, int& row, int& col);   //是否选中该枚棋子。pt为输入参数; row， col为输出参数
     int relation(int row1, int col1, int row2, int col2);    //计算选中的棋子的位置和要移动的位置之间的位置关系
     QPoint getRealPoint(QPoint pt);  // 使mouseMoveEvent取得的坐标同Painter的坐标一致
     bool isGeneral();    //校验将移动后位置是否将死
@@ -101,8 +101,6 @@ public:
     virtual void paintEvent(QPaintEvent *);      //绘画棋盘
     void drawChessPieces(QPainter& painter, int id);  //绘画单个具体的棋子
     void drawLastStep(QPainter &painter, QVector<ChessStep*>& steps);   //绘制上次移动棋子的起止位置
-//    virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
-//    virtual void clickPieces(int checkedID, int& row, int& col);
 
     //象棋移动的规则[将  士  象  马  车  炮  兵]
     bool canMove(int moveId, int killId, int row, int col);
