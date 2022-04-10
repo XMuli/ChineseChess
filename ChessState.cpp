@@ -4,6 +4,8 @@
 #include <random>
 #include "myLog.h"
 
+#define VALUE_MAX 10000
+
 using namespace std;
 namespace ChessStateHelper {
     void move(ChessPiece &piece,ChessStep step){
@@ -48,9 +50,14 @@ namespace ChessStateHelper {
         return ChessState(newPieces,!state->currentTurn);
     }
 
+    // should alwasy return positive number
     int value(ChessState state){
-        //evaluate state
-        return 0;
+        // if current states favors black, we go negative, positive for red
+        int value = 0;
+
+
+        // if current turn is red, then we return value otherwise negative for black
+        return state.currentTurn?value:-value;
     }
 }
 
@@ -62,8 +69,8 @@ ChessState::ChessState(ChessPiece pieces[],bool currentTurn){
 }
 
 ChessState::ChessState(vector<ChessPiece> pieces,bool currentTurn){
-    for(auto &pieces: pieces){
-        this->chessPieces.push_back(pieces);
+    for(auto &piece: pieces){
+        this->chessPieces.push_back(piece);
     }
     this->currentTurn = currentTurn;
 }
