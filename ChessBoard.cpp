@@ -23,14 +23,10 @@
 #include "ui_ChessBoard.h"
 #include <iostream>
 #include <string>
+#include "myLog.h"
 
 using namespace std;
-namespace myLog {
-    static int i = 0;
-    void print(string s){
-        std::cout<< s << i++ << endl;
-    }
-}
+using namespace myLog;
 
 ChessBoard::ChessBoard(QWidget *parent) :
     QMainWindow(parent),

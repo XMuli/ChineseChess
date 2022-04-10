@@ -26,6 +26,7 @@ TEMPLATE = app
 SOURCES += main.cpp\
     ChessBoard.cpp \
     ChessPieces.cpp \
+    ChessRuleProvider.cpp \
     ChessState.cpp \
     ChessStep.cpp \
     ChessVoice.cpp \
@@ -36,6 +37,7 @@ SOURCES += main.cpp\
 
 HEADERS  += ChessBoard.h \
     ChessPieces.h \
+    ChessRuleProvider.h \
     ChessState.h \
     ChessStep.h \
     ChessVoice.h \
@@ -44,7 +46,8 @@ HEADERS  += ChessBoard.h \
     NetworkGame.h \
     ChooseMainWindow.h \
     AboutAuthor.h \
-    Node.h
+    Node.h \
+    myLog.h
 
 FORMS    += ChessBoard.ui \
     AboutAuthor.ui

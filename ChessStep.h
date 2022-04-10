@@ -22,13 +22,11 @@
 #ifndef CHESSSTEP_H
 #define CHESSSTEP_H
 
-#include <QObject>
-
-class ChessStep : public QObject
+class ChessStep
 {
-    Q_OBJECT
+
 public:
-    explicit ChessStep(QObject *parent = 0);
+    explicit ChessStep();
     ~ChessStep();
 
     int m_nMoveID;   //移动棋子ID

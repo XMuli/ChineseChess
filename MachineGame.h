@@ -25,6 +25,7 @@
 #include "ChessBoard.h"
 #include "ChessStep.h"
 #include <QVector>
+#include "ChessState.h"
 
 class MachineGame : public ChessBoard
 {
@@ -41,15 +42,15 @@ public:
     virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
     void clickPieces(int checkedID, int& row, int& col);
 
-    void fakeMove(ChessStep* step);  //假装移动棋子
-    void unFakeMove(ChessStep* step);  //撤回先前假装移动棋子的步骤
-    int calcScore();  //计算最好的局面分
+    int calcScore();
     ChessStep* getBestMove();   //获得最好的移动步骤
+
 
     void machineChooseAndMovePieces(); //机器 黑方时间: 进行选棋+下棋
 
 private:
     void move(ChessStep* step);
+    ChessStep* getStepFromState(ChessState state);
 };
 
 #endif // MACHINEGAME_H

@@ -177,31 +177,15 @@ void MachineGame::clickPieces(int checkedID, int &row, int &col)
 
         if(!m_bIsRed) //黑方紧接着进行游戏
             machineChooseAndMovePieces();
-            //ToDo: 机器 黑方时间
     }
 }
 
-//假装移动棋子
-void MachineGame::fakeMove(ChessStep *step)
-{
-     if(step->m_nKillID != -1)
-         m_ChessPieces[step->m_nKillID].m_bDead = true;
-
-     m_ChessPieces[step->m_nMoveID].m_nRow = step->m_nRowTo;
-     m_ChessPieces[step->m_nMoveID].m_nCol = step->m_nnColTo;
-     m_bIsRed = !m_bIsRed;
+ChessStep* MachineGame::getStepFromState(ChessState state){
+    // TODO
+    return nullptr;
 }
 
-//撤回先前假装移动棋子的步骤
-void MachineGame::unFakeMove(ChessStep *step)
-{
-    if(step->m_nKillID != -1)
-        m_ChessPieces[step->m_nKillID].m_bDead = false;
 
-    m_ChessPieces[step->m_nMoveID].m_nRow = step->m_nRowFrom;
-    m_ChessPieces[step->m_nMoveID].m_nCol = step->m_nColFrom;
-    m_bIsRed = !m_bIsRed;
-}
 
 //计算最好的局面分
 int MachineGame::calcScore()
@@ -232,54 +216,18 @@ int MachineGame::calcScore()
 
 
 //获得最好的移动步骤
-//第一此玩了一把，发现我居然下不赢自己写的算法。哭了哭了哭了555555........
 ChessStep* MachineGame::getBestMove()
 {
-    int maxScore = -10000;
-    ChessStep* retStep = NULL;
-
-    //------------------------
-    //有可击杀的红棋子就走击杀红棋子最优的一步
-    // 1.看看有那些步骤可以走
-    QVector<ChessStep*> steps;
-    getAllPossibleMoveStep(steps);   // 黑棋吃红棋的所有可能的步骤
-
-    //------------------------
-    //没有可击杀的红棋子就走最后的一步
-    QVector<ChessStep*> stepsAndNoKill;
-    getAllPossibleMoveStepAndNoKill(stepsAndNoKill);   // 黑棋移动所有可能的步骤(不吃红棋子)
-
-    //2.试着走一下
-    for(QVector<ChessStep*>::iterator it = steps.begin(); it!=steps.end(); it++)
-    {
-        ChessStep* step = *it;
-        fakeMove(step);
-        int score = calcScore();   //3.计算最好的局面分
-        unFakeMove(step);
-
-        if(score > maxScore)
-        {
-            maxScore = score;
-            retStep = step;
-        }
+    std::vector<ChessPieces> vec;
+    for(auto i = 0;i<32;++i){
+        vec.push_back(m_ChessPieces[i]);
     }
 
-    if(retStep != NULL)
-        return retStep;
+    MonteCarloTree<ChessState> mct(vec);
 
-    //2.试着走一下
-    //从这种不击杀红棋子，只是单纯移动黑棋steps里面，随机抽选一种进行下棋
-    int nStepsCount = stepsAndNoKill.count();
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime())); //随机数种子, 0~MAX
-    int temp =qrand()% nStepsCount;
-    QVector<ChessStep*>::iterator it = stepsAndNoKill.begin();
-    retStep = it[temp];
+    auto bestState = mct.search();
 
-    if(retStep == NULL)
-        whoWin();
-
-    //4.取最好的结果作为参考
-    return retStep;
+    return this->getStepFromState(bestState);
 }
 
 void MachineGame::machineChooseAndMovePieces()
