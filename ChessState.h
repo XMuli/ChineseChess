@@ -4,22 +4,28 @@
 #include <vector>
 #include <ChessPieces.h>
 
+#define BLACK false
+#define RED true
+
 class ChessState
 {
 public:
     ChessState() = default;
-    ChessState(std::vector<ChessPieces> pieces):chessPieces(pieces){}
-    ChessState(ChessPieces pieces[]);
+    ChessState(std::vector<ChessPiece> pieces,bool currentTurn = BLACK);
+    ChessState(ChessPiece pieces[],bool currentTurn = BLACK);
+    std::vector<ChessPiece> getChessPieces(){
+        return this->chessPieces;
+    }
 
     ChessState suggestedNextState();
-    bool hasNext();
-    void playout();
-    bool result();
+    bool playoutUntilEnd();
     std::vector<ChessState> getAllPossibleNextState();
+    bool currentTurn = BLACK;
 
 private:
     //all chess pieces, contains position infos
-    std::vector<ChessPieces> chessPieces;
+    std::vector<ChessPiece> chessPieces;
+
 };
 
 #endif // CHESSSTATE_H

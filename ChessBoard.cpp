@@ -303,7 +303,7 @@ void ChessBoard:: drawLastStep(QPainter &painter,QVector<ChessStep*>& steps)
     painter.setPen(Qt::black);
     painter.drawRect(rectFrom);
 
-    QPoint stepTo = center(steps.last()->m_nRowTo,steps.last()->m_nnColTo);
+    QPoint stepTo = center(steps.last()->m_nRowTo,steps.last()->m_nColTo);
     QRect rectTo(stepTo.x()-m_nR, stepTo.y()-m_nR, m_nD, m_nD);
     painter.setBrush(QColor(0,0,0,30));
     painter.setPen(Qt::black);
@@ -423,25 +423,25 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
 
     switch (m_ChessPieces[moveId].m_emType)
     {
-    case ChessPieces::JIANG:
+    case ChessPiece::JIANG:
         return canMoveJIANG(moveId, killId, row, col);
 
-    case ChessPieces::SHI:
+    case ChessPiece::SHI:
         return canMoveSHI(moveId, killId, row, col);
 
-    case ChessPieces::XIANG:
+    case ChessPiece::XIANG:
         return canMoveXIANG(moveId, killId, row, col);
 
-    case ChessPieces::MA:
+    case ChessPiece::MA:
         return canMoveMA(moveId, killId, row, col);
 
-    case ChessPieces::CHE:
+    case ChessPiece::CHE:
         return canMoveCHE(moveId, killId, row, col);
 
-    case ChessPieces::PAO:
+    case ChessPiece::PAO:
         return canMovePAO(moveId, killId, row, col);
 
-    case ChessPieces::BING:
+    case ChessPiece::BING:
         return canMoveBING(moveId, killId, row, col);
 
     default: break;
@@ -688,7 +688,7 @@ void ChessBoard::saveStep(int moveid, int killid, int row, int col, QVector<Ches
 {
     ChessStep* step = new ChessStep;
     step->m_nColFrom = m_ChessPieces[moveid].m_nCol;
-    step->m_nnColTo = col;
+    step->m_nColTo = col;
     step->m_nRowFrom = m_ChessPieces[moveid].m_nRow;
     step->m_nRowTo = row;
     step->m_nMoveID = moveid;

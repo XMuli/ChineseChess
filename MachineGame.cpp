@@ -27,6 +27,17 @@
 #include "MonteCarloTree.h"
 #include "ChessState.h"
 
+namespace MachineGameHelper{
+    bool isSamePieceAndDifferentPos(ChessPiece a,ChessPiece b){
+        if ((a.m_emType == b.m_emType) && (a.m_bRed == b.m_bRed)){
+            if(a.m_nRow != b.m_nRow || a.m_nCol!=b.m_nCol){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 MachineGame::MachineGame()
 {
 }
@@ -73,20 +84,20 @@ void MachineGame::chooseOrMovePieces(int tempID, int& row, int& col)
     update();
 }
 
-void MachineGame::saveStep(int selectID, int checkedID, int row, int col, QVector<ChessStep *> &steps)
+void MachineGame::saveStep(int selectID, int checkedID, int row, int col, QVector<ChessStep> &steps)
 {
-    ChessStep* step = new ChessStep;
-    step->m_nRowFrom = m_ChessPieces[selectID].m_nRow;
-    step->m_nColFrom = m_ChessPieces[selectID].m_nCol;
-    step->m_nRowTo = row;
-    step->m_nnColTo = col;
-    step->m_nMoveID = selectID;
-    step->m_nKillID = checkedID;
+    ChessStep step;
+    step.m_nRowFrom = m_ChessPieces[selectID].m_nRow;
+    step.m_nColFrom = m_ChessPieces[selectID].m_nCol;
+    step.m_nRowTo = row;
+    step.m_nColTo = col;
+    step.m_nMoveID = selectID;
+    step.m_nKillID = checkedID;
 
     steps.append(step);
 }
 
-void MachineGame::getAllPossibleMoveStep(QVector<ChessStep *> &steps)
+void MachineGame::getAllPossibleMoveStep(QVector<ChessStep> &steps)
 {
     for(int id = 0; id<16; id++)   //存在的黑棋， 能否走到这些盘棋盘里面的格子
     {
@@ -114,7 +125,7 @@ void MachineGame::getAllPossibleMoveStep(QVector<ChessStep *> &steps)
     }
 }
 
-void MachineGame::getAllPossibleMoveStepAndNoKill(QVector<ChessStep *> &steps)
+void MachineGame::getAllPossibleMoveStepAndNoKill(QVector<ChessStep> &steps)
 {
     for(int id = 0; id<16; id++)   //存在的黑棋， 能否走到这些盘棋盘里面的格子
     {
@@ -180,9 +191,29 @@ void MachineGame::clickPieces(int checkedID, int &row, int &col)
     }
 }
 
-ChessStep* MachineGame::getStepFromState(ChessState state){
-    // TODO
-    return nullptr;
+ChessStep MachineGame::getStepFromState(ChessState state){
+    ChessStep res;
+    for(auto &pieceInState:state.getChessPieces()){
+        for (int i = 0; i < 32; ++i) {
+            auto pieceInGame = this->m_ChessPieces[i];
+            bool flag = MachineGameHelper::isSamePieceAndDifferentPos(pieceInState,pieceInGame);
+            if(flag){
+                res.m_nColFrom = pieceInGame.m_nCol;
+                res.m_nRowFrom = pieceInGame.m_nRow;
+
+                res.m_nColTo = pieceInGame.m_nCol;
+                res.m_nRowTo = pieceInGame.m_nRow;
+
+                res.m_nMoveID = pieceInGame.m_nID;
+
+                //TODO: killID should be assigned if kill happend
+//                res.m_nKillID =
+            }
+
+
+        }
+    }
+    return res;
 }
 
 
@@ -216,9 +247,9 @@ int MachineGame::calcScore()
 
 
 //获得最好的移动步骤
-ChessStep* MachineGame::getBestMove()
+ChessStep MachineGame::getBestMove()
 {
-    std::vector<ChessPieces> vec;
+    std::vector<ChessPiece> vec;
     for(auto i = 0;i<32;++i){
         vec.push_back(m_ChessPieces[i]);
     }
@@ -232,23 +263,22 @@ ChessStep* MachineGame::getBestMove()
 
 void MachineGame::machineChooseAndMovePieces()
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    ChessStep* step = getBestMove();
+    ChessStep step = getBestMove();
     move(step);
 }
 
-void MachineGame::move(ChessStep* step){
-    if(step->m_nKillID == -1)  //黑棋没有可以击杀的红棋子，只好走能够走的过程中最后一步棋
+void MachineGame::move(ChessStep step){
+    if(step.m_nKillID == -1)  //黑棋没有可以击杀的红棋子，只好走能够走的过程中最后一步棋
     {
-        m_ChessPieces[step->m_nMoveID].m_nRow = step->m_nRowTo;
-        m_ChessPieces[step->m_nMoveID].m_nCol = step->m_nnColTo;
+        m_ChessPieces[step.m_nMoveID].m_nRow = step.m_nRowTo;
+        m_ChessPieces[step.m_nMoveID].m_nCol = step.m_nColTo;
 
     }
     else //黑棋有可以击杀的红棋子，故击杀红棋子
     {
-        m_ChessPieces[step->m_nKillID].m_bDead = true;
-        m_ChessPieces[step->m_nMoveID].m_nRow = m_ChessPieces[step->m_nKillID].m_nRow;
-        m_ChessPieces[step->m_nMoveID].m_nCol = m_ChessPieces[step->m_nKillID].m_nCol;
+        m_ChessPieces[step.m_nKillID].m_bDead = true;
+        m_ChessPieces[step.m_nMoveID].m_nRow = m_ChessPieces[step.m_nKillID].m_nRow;
+        m_ChessPieces[step.m_nMoveID].m_nCol = m_ChessPieces[step.m_nKillID].m_nCol;
         m_nSelectID = -1;
     }
 

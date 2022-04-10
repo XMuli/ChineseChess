@@ -24,11 +24,11 @@
 
 #include <QString>
 
-class ChessPieces
+class ChessPiece
 {
 public:
-    ChessPieces();
-    ~ChessPieces();
+    ChessPiece();
+    ~ChessPiece();
 
     void init(int id);  //初始化
     QString getnName(bool isRedSide);    //棋子对应的汉字

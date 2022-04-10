@@ -3,11 +3,6 @@
 
 #include "Node.h"
 
-namespace utils {
-    bool hasTimeLeft(){
-        return true;
-    }
-}
 
 template<class T>
 class MonteCarloTree{
@@ -24,7 +19,7 @@ public:
     }
 
     T search(){
-        while(utils::hasTimeLeft()){
+        while(this->hasTimeLeft()){
             Node<T>* leaf = this->root->select();
             Node<T>* child = leaf->expand();
             bool result = child->simulate();
@@ -34,6 +29,10 @@ public:
     }
 
 private:
+    int iterateTime = 0;
+    bool hasTimeLeft(){
+        return ++iterateTime<50;
+    }
     Node<T> *root;
 };
 

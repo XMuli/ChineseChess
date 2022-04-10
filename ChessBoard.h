@@ -128,7 +128,7 @@ public:
     void back(ChessStep* step);  //悔棋到指定步数
     virtual void back();    //悔棋
 
-    ChessPieces m_ChessPieces[32];  //所有棋子
+    ChessPiece m_ChessPieces[32];  //所有棋子
     QVector<ChessStep*> m_ChessSteps; // 悔棋步数
     ChessVoice m_Chessvoice;  //下棋音效
     int m_nR;          //棋子半径

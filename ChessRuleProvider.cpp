@@ -1,17 +1,18 @@
 #include "ChessRuleProvider.h"
 #include <stdexcept>
 #include "myLog.h"
+#include <stdexcept>
 //using namespace myLog;
 
 
-ChessRuleProvider::ChessRuleProvider(ChessPieces pieces[])
+ChessRuleProvider::ChessRuleProvider(ChessPiece pieces[])
 {
     for(int i = 0; i<32 ;i++){
         this->m_ChessPieces[i] = pieces[i];
     }
 }
 
-ChessRuleProvider::ChessRuleProvider(std::vector<ChessPieces> pieces)
+ChessRuleProvider::ChessRuleProvider(std::vector<ChessPiece> pieces)
 {
     if(pieces.size()<32){
         throw std::invalid_argument( "not enough pieces");
@@ -83,7 +84,26 @@ void ChessRuleProvider::getAllPossibleMoveStepAndNoKill(QVector<ChessStep> &step
     }
 }
 
+bool ChessRuleProvider::isGameEnd(){
+    for (int i = 0; i < TOTALNUM; ++i) {
+        ChessPiece piece = this->m_ChessPieces[i];
+        if(piece.m_emType == ChessPiece::JIANG && piece.m_bDead == true){
+            return true;
+        }
+    }
+    return false;
+}
 
+bool ChessRuleProvider::whoWins(){
+    for (int i = 0; i < TOTALNUM; ++i) {
+        ChessPiece piece = this->m_ChessPieces[i];
+        if(piece.m_emType == ChessPiece::JIANG && piece.m_bDead == true){
+            // if the JIANG of red is dead, then black wins, otherwise red wins
+            return piece.m_bRed?BLACK:RED;
+        }
+    }
+    throw std::invalid_argument("nobody wins yet");
+}
 
 
 //总的移动规则
@@ -97,25 +117,25 @@ bool ChessRuleProvider::canMove(int moveId, int killId, int row, int col)
 
     switch (m_ChessPieces[moveId].m_emType)
     {
-    case ChessPieces::JIANG:
+    case ChessPiece::JIANG:
         return canMoveJIANG(moveId, killId, row, col);
 
-    case ChessPieces::SHI:
+    case ChessPiece::SHI:
         return canMoveSHI(moveId, killId, row, col);
 
-    case ChessPieces::XIANG:
+    case ChessPiece::XIANG:
         return canMoveXIANG(moveId, killId, row, col);
 
-    case ChessPieces::MA:
+    case ChessPiece::MA:
         return canMoveMA(moveId, killId, row, col);
 
-    case ChessPieces::CHE:
+    case ChessPiece::CHE:
         return canMoveCHE(moveId, killId, row, col);
 
-    case ChessPieces::PAO:
+    case ChessPiece::PAO:
         return canMovePAO(moveId, killId, row, col);
 
-    case ChessPieces::BING:
+    case ChessPiece::BING:
         return canMoveBING(moveId, killId, row, col);
 
     default: break;
@@ -347,7 +367,7 @@ void ChessRuleProvider::saveStep(int moveid, int killid, int row, int col, QVect
 {
     ChessStep step;
     step.m_nColFrom = m_ChessPieces[moveid].m_nCol;
-    step.m_nnColTo = col;
+    step.m_nColTo = col;
     step.m_nRowFrom = m_ChessPieces[moveid].m_nRow;
     step.m_nRowTo = row;
     step.m_nMoveID = moveid;

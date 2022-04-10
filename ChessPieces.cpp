@@ -26,40 +26,40 @@ struct POS
 {
     int t_nRow;
     int t_nCol;
-    ChessPieces::m_emTYPE t_emType;
+    ChessPiece::m_emTYPE t_emType;
 };
 
 //定义基础的16棋子[预定作为上方使用，黑棋使用]
 POS tPos[16]= {
-              {0, 0, ChessPieces::CHE},
-              {0, 1, ChessPieces::MA},
-              {0, 2, ChessPieces::XIANG},
-              {0, 3, ChessPieces::SHI},
-              {0, 4, ChessPieces::JIANG},
-              {0, 5, ChessPieces::SHI},
-              {0, 6, ChessPieces::XIANG},
-              {0, 7, ChessPieces::MA},
-              {0, 8, ChessPieces::CHE},
+              {0, 0, ChessPiece::CHE},
+              {0, 1, ChessPiece::MA},
+              {0, 2, ChessPiece::XIANG},
+              {0, 3, ChessPiece::SHI},
+              {0, 4, ChessPiece::JIANG},
+              {0, 5, ChessPiece::SHI},
+              {0, 6, ChessPiece::XIANG},
+              {0, 7, ChessPiece::MA},
+              {0, 8, ChessPiece::CHE},
 
-              {2, 1, ChessPieces::PAO},
-              {2, 7, ChessPieces::PAO},
-              {3, 0, ChessPieces::BING},
-              {3, 2, ChessPieces::BING},
-              {3, 4, ChessPieces::BING},
-              {3, 6, ChessPieces::BING},
-              {3, 8, ChessPieces::BING}
+              {2, 1, ChessPiece::PAO},
+              {2, 7, ChessPiece::PAO},
+              {3, 0, ChessPiece::BING},
+              {3, 2, ChessPiece::BING},
+              {3, 4, ChessPiece::BING},
+              {3, 6, ChessPiece::BING},
+              {3, 8, ChessPiece::BING}
               };
 
-ChessPieces::ChessPieces()
+ChessPiece::ChessPiece()
 {
 }
 
-ChessPieces::~ChessPieces()
+ChessPiece::~ChessPiece()
 {
 }
 
 //初始化  对每一个棋子进行检验判断而后赋相应的值
-void ChessPieces::init(int id)
+void ChessPiece::init(int id)
 {
     if(id <16)
     {
@@ -79,7 +79,7 @@ void ChessPieces::init(int id)
     m_bDead = false;
 }
 
-QString ChessPieces::getnName(bool isRedSide)
+QString ChessPiece::getnName(bool isRedSide)
 {
     if(isRedSide){
         switch (m_emType) {

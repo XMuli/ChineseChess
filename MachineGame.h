@@ -35,22 +35,22 @@ public:
 
     void chooseOrMovePieces(int tempID, int& row, int& col); //辅助函： 选棋或移动棋子
 
-    void saveStep(int moveID, int checkedID, int row, int col, QVector<ChessStep*>& steps);  //保存棋子步骤
-    void getAllPossibleMoveStep(QVector<ChessStep*>& steps);  //获得所有可能的移动步骤(击杀)
-    void getAllPossibleMoveStepAndNoKill(QVector<ChessStep*>& steps);  //获得所有可能的移动步骤(不击杀)
+    void saveStep(int moveID, int checkedID, int row, int col, QVector<ChessStep>& steps);  //保存棋子步骤
+    void getAllPossibleMoveStep(QVector<ChessStep>& steps);  //获得所有可能的移动步骤(击杀)
+    void getAllPossibleMoveStepAndNoKill(QVector<ChessStep>& steps);  //获得所有可能的移动步骤(不击杀)
 
     virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
     void clickPieces(int checkedID, int& row, int& col);
 
     int calcScore();
-    ChessStep* getBestMove();   //获得最好的移动步骤
+    ChessStep getBestMove();   //获得最好的移动步骤
 
 
     void machineChooseAndMovePieces(); //机器 黑方时间: 进行选棋+下棋
 
 private:
-    void move(ChessStep* step);
-    ChessStep* getStepFromState(ChessState state);
+    void move(ChessStep step);
+    ChessStep getStepFromState(ChessState state);
 };
 
 #endif // MACHINEGAME_H

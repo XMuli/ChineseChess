@@ -5,19 +5,22 @@
 #include <vector>
 #include <QVector>
 #include "myLog.h"
-
+#include "ChessState.h"
+#define TOTALNUM 32
 class ChessRuleProvider
 {
 public:
-    ChessRuleProvider(ChessPieces pieces[]);
-    ChessRuleProvider(std::vector<ChessPieces> pieces);
+    ChessRuleProvider(ChessPiece pieces[]);
+    ChessRuleProvider(std::vector<ChessPiece> pieces);
     bool canMove(int moveId, int killId, int row, int col);
     void getAllPossibleSteps(QVector<ChessStep>& steps);
     void getAllPossibleMoveStepAndKill(QVector<ChessStep>& steps);
     void getAllPossibleMoveStepAndNoKill(QVector<ChessStep>& steps);
+    bool isGameEnd();
+    bool whoWins();
 
 private:
-    ChessPieces m_ChessPieces[32];
+    ChessPiece m_ChessPieces[32];
 
     bool canMoveJIANG(int moveId, int killId, int row, int col);
     bool canMoveSHI(int moveId, int killId, int row, int col);

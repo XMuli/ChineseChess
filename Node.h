@@ -4,6 +4,9 @@
 #include <math.h>
 #include <limits>
 
+#define BLACK false
+#define RED true
+
 using namespace std;
 
 template<class T>
@@ -15,10 +18,9 @@ public:
     int numWined = 0;
     Node<T>* parent;
     vector<Node*> children;
-    bool redOrBlack;
 
     Node<T>() = default;
-    Node<T>(T s,Node<T>* p,bool r):state(s),parent(p),redOrBlack(r){}
+    Node<T>(T s,Node<T>* p):state(s),parent(p){}
     ~Node(){
         for(auto node:children){
             delete node;
@@ -45,12 +47,7 @@ public:
     }
 
     bool simulate(){
-        // has problem, the playout should not change the state itself,
-        //it should simulate
-        while(this->state.hasNext()){
-            this->state.playout();
-        }
-        return this->state.result();
+        return this->state.playoutUntilEnd();
     }
 
     void backPropagate(bool result){
@@ -59,9 +56,9 @@ public:
             return;
         }
 
-        if(redOrBlack&&result){
+        if(state.currentTurn&&result){
             this->numWined +=1;
-        }else if(!redOrBlack && !result){
+        }else if(!state.currentTurn && !result){
             this->numWined +=1;
         }
         this->numPlayed += 1;
@@ -109,12 +106,12 @@ private:
     void generateChildren(){
         vector<T> states = this->state.getAllPossibleNextState();
         for (auto s:states){
-            children.push_back(new Node(s,this,!this->redOrBlack));
+            children.push_back(new Node(s,this));
         }
     }
 
     Node<T>* expandPolicy(){
-        // expand randomly for now
+        // expand randomly for now, should have some sort of policy to avoid bad node
        for(auto n:this->children){
            if(n->numPlayed == 0){
                return n;
