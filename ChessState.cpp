@@ -25,13 +25,13 @@ namespace ChessStateHelper {
     }
 
     // generate a vector of possible chess steps
-    std::vector<ChessStep> generateSteps(std::vector<ChessPiece> pieces){
+    std::vector<ChessStep> generateSteps(std::vector<ChessPiece> pieces,bool redOrBlack){
 
         ChessRuleProvider chessRuleProvider(pieces);
-        QVector<ChessStep> qsteps;
-        chessRuleProvider.getAllPossibleSteps(qsteps);
+        std::vector<ChessStep> steps;
+        chessRuleProvider.getAllPossibleSteps(steps,redOrBlack);
 
-        return qsteps.toStdVector();
+        return steps;
     }
 
     ChessState generateStateFromMove(ChessState* state,ChessStep step){
@@ -93,7 +93,7 @@ std::vector<ChessState> ChessState::getAllPossibleNextState(){
     std::vector<ChessState> allPossibleState;
 
     // for all chess pieces, find it's possible move, for each possible move generate a state
-    std::vector<ChessStep> steps = ChessStateHelper::generateSteps(this->chessPieces);
+    std::vector<ChessStep> steps = ChessStateHelper::generateSteps(this->chessPieces,this->currentTurn);
     for(ChessStep &step:steps){
         ChessState newState = ChessStateHelper::generateStateFromMove(this,step);
         allPossibleState.push_back(newState);

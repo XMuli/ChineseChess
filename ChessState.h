@@ -13,6 +13,7 @@ public:
     ChessState() = default;
     ChessState(std::vector<ChessPiece> pieces,bool currentTurn = BLACK);
     ChessState(ChessPiece pieces[],bool currentTurn = BLACK);
+
     std::vector<ChessPiece> getChessPieces(){
         return this->chessPieces;
     }
