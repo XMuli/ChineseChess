@@ -67,7 +67,7 @@ void ChessBoard::init()
 
 bool ChessBoard:: isRed(int id)
 {
-    return m_ChessPieces[id].m_bRed;
+    return m_ChessPieces[id].isRed;
 }
 
 
@@ -75,20 +75,20 @@ void ChessBoard:: killStone(int id)
 {
     if(id== -1)
         return;
-    m_ChessPieces[id].m_bDead= true;
+    m_ChessPieces[id].isDead= true;
 }
 
 void ChessBoard:: reliveStone(int id)
 {
     if(id== -1)
         return;
-    m_ChessPieces[id].m_bDead= false;
+    m_ChessPieces[id].isDead= false;
 }
 
 void ChessBoard:: moveStone(int moveid, int row, int col)
 {
-    m_ChessPieces[moveid].m_nRow= row;
-    m_ChessPieces[moveid].m_nCol= col;
+    m_ChessPieces[moveid].row= row;
+    m_ChessPieces[moveid].col= col;
 
     m_bIsRed= !m_bIsRed;   //换边
 }
@@ -106,14 +106,14 @@ bool ChessBoard::isDead(int id)
     if(id == -1)
         return true;
 
-    return m_ChessPieces[id].m_bDead;
+    return m_ChessPieces[id].isDead;
 }
 
 int ChessBoard::getStoneId(int row, int col)
 {
     for(int i=0; i<32; ++i)
     {
-        if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && !isDead(i))
+        if(m_ChessPieces[i].row == row && m_ChessPieces[i].col == col && !isDead(i))
             return i;
     }
 
@@ -154,13 +154,13 @@ int ChessBoard::getStoneCountAtLine(int row1, int col1, int row2, int col2)
 
 void ChessBoard::whoWin()  //谁胜谁负
 {
-    if(m_ChessPieces[4].m_bDead && !m_ChessPieces[20].m_bDead)
+    if(m_ChessPieces[4].isDead && !m_ChessPieces[20].isDead)
     {
         reset();
         winMessageBox("提示", "本局结束，红方胜利.");
     }
 
-    if(!m_ChessPieces[4].m_bDead && m_ChessPieces[20].m_bDead)
+    if(!m_ChessPieces[4].isDead && m_ChessPieces[20].isDead)
     {
         reset();
         winMessageBox("提示", "本局结束，黑方胜利.");
@@ -209,7 +209,7 @@ QPoint ChessBoard::center(int row, int col)
 //重载:坐标转换
 QPoint ChessBoard::center(int id)
 {
-    return center(m_ChessPieces[id].m_nRow, m_ChessPieces[id].m_nCol);
+    return center(m_ChessPieces[id].row, m_ChessPieces[id].col);
 }
 
 void ChessBoard::paintEvent(QPaintEvent *)
@@ -268,7 +268,7 @@ void ChessBoard::paintEvent(QPaintEvent *)
 
 void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具体的棋子
 {
-    if(m_ChessPieces[id].m_bDead)
+    if(m_ChessPieces[id].isDead)
         return;
 
     QPoint temp = center(id);
@@ -288,7 +288,7 @@ void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具�
     else
         painter.setPen(QColor(255, 0, 0));
 
-    painter.drawText(rect, m_ChessPieces[id].getnName(m_ChessPieces[id].m_bRed), QTextOption(Qt::AlignCenter));  //绘画圆形里面的汉字
+    painter.drawText(rect, m_ChessPieces[id].getnName(m_ChessPieces[id].isRed), QTextOption(Qt::AlignCenter));  //绘画圆形里面的汉字
 }
 
 void ChessBoard:: drawLastStep(QPainter &painter,QVector<ChessStep*>& steps)
@@ -313,13 +313,13 @@ void ChessBoard:: drawLastStep(QPainter &painter,QVector<ChessStep*>& steps)
 // true 产生"对将" 情景了；false 无"对将"情况
 bool ChessBoard::hongMenFeast()
 {
-    if (m_ChessPieces[4].m_bDead || m_ChessPieces[20].m_bDead)
+    if (m_ChessPieces[4].isDead || m_ChessPieces[20].isDead)
         return false;
 
-    int colBlack = m_ChessPieces[4].m_nCol;
-    int colRed = m_ChessPieces[20].m_nCol;
-    int rowBlack = m_ChessPieces[4].m_nRow;
-    int rowRed = m_ChessPieces[20].m_nRow;
+    int colBlack = m_ChessPieces[4].col;
+    int colRed = m_ChessPieces[20].col;
+    int rowBlack = m_ChessPieces[4].row;
+    int rowRed = m_ChessPieces[20].row;
 
     bool bColEmpty = true;
     if (colBlack == colRed){
@@ -388,8 +388,8 @@ bool ChessBoard:: isGeneral()
     if(!m_bIsRed)
         generalId=4;
 
-    int row= m_ChessPieces[generalId].m_nRow;    //当前回合方的将军row
-    int col= m_ChessPieces[generalId].m_nCol;    //当前回合方的将军col
+    int row= m_ChessPieces[generalId].row;    //当前回合方的将军row
+    int col= m_ChessPieces[generalId].col;    //当前回合方的将军col
 
     for(int i=0; i<32; ++i)
     {
@@ -401,7 +401,7 @@ bool ChessBoard:: isGeneral()
         ChessState state(this->m_ChessPieces);
         myLog::print(std::to_string(state.getAllPossibleNextState().size()));
 
-        if(selfCanMove && !m_ChessPieces[i].m_bDead)   //依次遍历存活子能否移动到指定坐标
+        if(selfCanMove && !m_ChessPieces[i].isDead)   //依次遍历存活子能否移动到指定坐标
         {
             return true;
         }
@@ -421,7 +421,7 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
         return false;
     }
 
-    switch (m_ChessPieces[moveId].m_emType)
+    switch (m_ChessPieces[moveId].type)
     {
     case ChessPiece::JIANG:
         return canMoveJIANG(moveId, killId, row, col);
@@ -453,7 +453,7 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
 bool ChessBoard::canMoveJIANG(int moveId, int killId, int row, int col)
 {
     //对将的情况
-    if (killId != -1 && m_ChessPieces[killId].m_emType == m_ChessPieces->JIANG)
+    if (killId != -1 && m_ChessPieces[killId].type == m_ChessPieces->JIANG)
         return canMoveCHE(moveId, killId, row, col );
 
     if(isRed(moveId)) //红 将
@@ -465,7 +465,7 @@ bool ChessBoard::canMoveJIANG(int moveId, int killId, int row, int col)
         if(row > 2 || col < 3 || col > 5) return false;
     }
 
-    int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
+    int d=relation(m_ChessPieces[moveId].row, m_ChessPieces[moveId].col, row, col);
     if(d == 1 || d == 10)
         return true;
 
@@ -484,7 +484,7 @@ bool ChessBoard::canMoveSHI(int moveId, int killId, int row, int col)
         if(row > 2 || col < 3 || col > 5) return false;
     }
 
-    int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
+    int d=relation(m_ChessPieces[moveId].row, m_ChessPieces[moveId].col, row, col);
     if(d == 11)
         return true;
 
@@ -494,12 +494,12 @@ bool ChessBoard::canMoveSHI(int moveId, int killId, int row, int col)
 bool ChessBoard::canMoveXIANG(int moveId, int killId, int row, int col)
 {
     Q_UNUSED(killId);
-    int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
+    int d=relation(m_ChessPieces[moveId].row, m_ChessPieces[moveId].col, row, col);
     if(d!= 22)
         return false;
 
-    int row_eye= (m_ChessPieces[moveId].m_nRow+ row)/ 2;
-    int col_eye= (m_ChessPieces[moveId].m_nCol+ col)/ 2;
+    int row_eye= (m_ChessPieces[moveId].row+ row)/ 2;
+    int col_eye= (m_ChessPieces[moveId].col+ col)/ 2;
 
     //堵象眼
     if(getStoneId(row_eye,col_eye)!= -1)
@@ -523,19 +523,19 @@ bool ChessBoard::canMoveXIANG(int moveId, int killId, int row, int col)
 bool ChessBoard::canMoveMA(int moveId, int killId, int row, int col)
 {
     Q_UNUSED(killId);
-    int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
+    int d=relation(m_ChessPieces[moveId].row, m_ChessPieces[moveId].col, row, col);
     if(d!=12 && d!=21)
         return false;
 
     //蹩马脚
     if(d==12)
     {
-        if(getStoneId(m_ChessPieces[moveId].m_nRow, (m_ChessPieces[moveId].m_nCol+ col) /2) != -1)
+        if(getStoneId(m_ChessPieces[moveId].row, (m_ChessPieces[moveId].col+ col) /2) != -1)
             return false;
     }
     else
     {
-        if(getStoneId((m_ChessPieces[moveId].m_nRow+ row) /2 ,m_ChessPieces[moveId].m_nCol) != -1)
+        if(getStoneId((m_ChessPieces[moveId].row+ row) /2 ,m_ChessPieces[moveId].col) != -1)
             return false;
     }
 
@@ -545,7 +545,7 @@ bool ChessBoard::canMoveMA(int moveId, int killId, int row, int col)
 bool ChessBoard::canMoveCHE(int moveId, int killId, int row, int col)
 {
     Q_UNUSED(killId);
-    int ret = getStoneCountAtLine(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
+    int ret = getStoneCountAtLine(m_ChessPieces[moveId].row, m_ChessPieces[moveId].col, row, col);
     if(ret == 0)
         return true;
 
@@ -554,7 +554,7 @@ bool ChessBoard::canMoveCHE(int moveId, int killId, int row, int col)
 
 bool ChessBoard::canMovePAO(int moveId, int killId, int row, int col)
 {
-    int ret = getStoneCountAtLine(row, col, m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol);
+    int ret = getStoneCountAtLine(row, col, m_ChessPieces[moveId].row, m_ChessPieces[moveId].col);
     if(killId != -1)
     {
         if(ret == 1)
@@ -571,25 +571,25 @@ bool ChessBoard::canMovePAO(int moveId, int killId, int row, int col)
 bool ChessBoard::canMoveBING(int moveId, int killId, int row, int col)
 {
     Q_UNUSED(killId);
-    int d=relation(m_ChessPieces[moveId].m_nRow, m_ChessPieces[moveId].m_nCol, row, col);
+    int d=relation(m_ChessPieces[moveId].row, m_ChessPieces[moveId].col, row, col);
     if(d!= 1 && d!= 10)
         return false;
 
     if(isRed(moveId))   //红
     {
         //兵卒不可后退
-        if(row> m_ChessPieces[moveId].m_nRow)
+        if(row> m_ChessPieces[moveId].row)
             return false;
 
         //兵卒没过河不可横着走
-        if(m_ChessPieces[moveId].m_nRow>= 5 && m_ChessPieces[moveId].m_nRow== row)
+        if(m_ChessPieces[moveId].row>= 5 && m_ChessPieces[moveId].row== row)
             return false;
     }
     else    //黑
     {
-        if(row< m_ChessPieces[moveId].m_nRow)
+        if(row< m_ChessPieces[moveId].row)
             return false;
-        if(m_ChessPieces[moveId].m_nRow<= 4 && m_ChessPieces[moveId].m_nRow== row)
+        if(m_ChessPieces[moveId].row<= 4 && m_ChessPieces[moveId].row== row)
             return false;
     }
 
@@ -598,7 +598,7 @@ bool ChessBoard::canMoveBING(int moveId, int killId, int row, int col)
 
 bool ChessBoard:: canSelect(int id)
 {
-    return m_bIsRed== m_ChessPieces[id].m_bRed;
+    return m_bIsRed== m_ChessPieces[id].isRed;
 }
 
 void ChessBoard::mouseReleaseEvent(QMouseEvent *ev)
@@ -687,9 +687,9 @@ void ChessBoard::doMoveStone(int moveid, int killid, int row, int col)
 void ChessBoard::saveStep(int moveid, int killid, int row, int col, QVector<ChessStep*>& steps)
 {
     ChessStep* step = new ChessStep;
-    step->m_nColFrom = m_ChessPieces[moveid].m_nCol;
+    step->m_nColFrom = m_ChessPieces[moveid].col;
     step->m_nColTo = col;
-    step->m_nRowFrom = m_ChessPieces[moveid].m_nRow;
+    step->m_nRowFrom = m_ChessPieces[moveid].row;
     step->m_nRowTo = row;
     step->m_nMoveID = moveid;
     step->m_nKillID = killid;

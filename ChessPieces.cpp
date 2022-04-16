@@ -26,7 +26,7 @@ struct POS
 {
     int t_nRow;
     int t_nCol;
-    ChessPiece::m_emTYPE t_emType;
+    ChessPiece::CHESS_TYPE t_emType;
 };
 
 //定义基础的16棋子[预定作为上方使用，黑棋使用]
@@ -63,26 +63,26 @@ void ChessPiece::init(int id)
 {
     if(id <16)
     {
-        m_nRow = tPos[id].t_nRow;
-        m_nCol = tPos[id].t_nCol;
-        m_emType = tPos[id].t_emType;
-        m_bRed = false;
+        row = tPos[id].t_nRow;
+        col = tPos[id].t_nCol;
+        type = tPos[id].t_emType;
+        isRed = false;
     }
     else
     {
-        m_nRow = 9-tPos[id-16].t_nRow;
-        m_nCol = 8-tPos[id-16].t_nCol;
-        m_emType = tPos[id-16].t_emType;
-        m_bRed = true;
+        row = 9-tPos[id-16].t_nRow;
+        col = 8-tPos[id-16].t_nCol;
+        type = tPos[id-16].t_emType;
+        isRed = true;
     }
 
-    m_bDead = false;
+    isDead = false;
 }
 
 QString ChessPiece::getnName(bool isRedSide)
 {
     if(isRedSide){
-        switch (m_emType) {
+        switch (type) {
         case CHE:
             return "俥";
         case MA:
@@ -102,7 +102,7 @@ QString ChessPiece::getnName(bool isRedSide)
         }
     }
     else{
-        switch (m_emType) {
+        switch (type) {
         case CHE:
             return "車";
         case MA:

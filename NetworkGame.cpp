@@ -87,7 +87,7 @@ void NetworkGame::clickPieces(int checkedID, int &row, int &col)
         //选棋[非下棋]这一步过程，使得其无法选择中黑棋
         if(m_nSelectID == -1 && m_nCheckedID != -1 )
         {
-            if(m_bIsTcpServer != m_ChessPieces[checkedID].m_bRed )
+            if(m_bIsTcpServer != m_ChessPieces[checkedID].isRed )
                 return ;
         }
     }
@@ -96,7 +96,7 @@ void NetworkGame::clickPieces(int checkedID, int &row, int &col)
         //选棋[非下棋]这一步过程，使得其无法选择中红棋
         if(m_nSelectID == -1 && m_nCheckedID != -1)
         {
-            if(m_bIsTcpServer != m_ChessPieces[checkedID].m_bRed )
+            if(m_bIsTcpServer != m_ChessPieces[checkedID].isRed )
                 return ;
         }
     }
