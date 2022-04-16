@@ -34,16 +34,16 @@ public:
     explicit ChessStep();
     ~ChessStep();
 
-    int m_nMoveID;   //移动棋子ID
-    int m_nKillID;   //将要被击杀的棋子ID
-    int m_nRowFrom;  //原位置的行
-    int m_nColFrom;  //原位置的列
-    int m_nRowTo;    //目的位置的行
-    int m_nColTo;   //目的位置的列
+    int moveId;   //移动棋子ID
+    int killId;   //将要被击杀的棋子ID
+    int fromRow;  //原位置的行
+    int fromCol;  //原位置的列
+    int toRow;    //目的位置的行
+    int toCol;   //目的位置的列
 
     std::string toString(){
         return QString("%1d %2d %3d %4d %5d %6d")
-                .arg(m_nMoveID,m_nRowFrom,m_nRowTo,m_nColFrom,m_nColTo)
+                .arg(moveId,fromRow,toRow,fromCol,toCol)
                 .toStdString();
     }
 };

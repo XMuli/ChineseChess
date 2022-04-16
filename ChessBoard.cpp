@@ -297,13 +297,13 @@ void ChessBoard:: drawLastStep(QPainter &painter,QVector<ChessStep*>& steps)
         return;
     }
 
-    QPoint stepFrom = center(steps.last()->m_nRowFrom,steps.last()->m_nColFrom);
+    QPoint stepFrom = center(steps.last()->fromRow,steps.last()->fromCol);
     QRect rectFrom(stepFrom.x()-m_nR, stepFrom.y()-m_nR, m_nD, m_nD);
     painter.setBrush(QColor(0,0,0,50));
     painter.setPen(Qt::black);
     painter.drawRect(rectFrom);
 
-    QPoint stepTo = center(steps.last()->m_nRowTo,steps.last()->m_nColTo);
+    QPoint stepTo = center(steps.last()->toRow,steps.last()->toCol);
     QRect rectTo(stepTo.x()-m_nR, stepTo.y()-m_nR, m_nD, m_nD);
     painter.setBrush(QColor(0,0,0,30));
     painter.setPen(Qt::black);
@@ -687,12 +687,12 @@ void ChessBoard::doMoveStone(int moveid, int killid, int row, int col)
 void ChessBoard::saveStep(int moveid, int killid, int row, int col, QVector<ChessStep*>& steps)
 {
     ChessStep* step = new ChessStep;
-    step->m_nColFrom = m_ChessPieces[moveid].col;
-    step->m_nColTo = col;
-    step->m_nRowFrom = m_ChessPieces[moveid].row;
-    step->m_nRowTo = row;
-    step->m_nMoveID = moveid;
-    step->m_nKillID = killid;
+    step->fromCol = m_ChessPieces[moveid].col;
+    step->toCol = col;
+    step->fromRow = m_ChessPieces[moveid].row;
+    step->toRow = row;
+    step->moveId = moveid;
+    step->killId = killid;
 
     steps.append(step);
 }
@@ -714,8 +714,8 @@ void ChessBoard::backOne()
 
 void ChessBoard::back(ChessStep* step)
 {
-    reliveStone(step->m_nKillID);
-    moveStone(step->m_nMoveID, step->m_nRowFrom, step->m_nColFrom);
+    reliveStone(step->killId);
+    moveStone(step->moveId, step->fromRow, step->fromCol);
 }
 
 void ChessBoard::back()
