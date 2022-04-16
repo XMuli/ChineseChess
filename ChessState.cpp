@@ -11,29 +11,13 @@ using namespace std;
 
 
 std::vector<ChessState> ChessState::getAllPossibleNextState(){
-    std::vector<ChessState> allPossibleState;
-
-    // for all chess pieces, find it's possible move, for each possible move generate a state
-    std::vector<ChessStep> steps = ChessStateHelper::generateSteps(this->chessPieces,this->currentTurn);
-    for(ChessStep &step:steps){
-        ChessState newState = ChessStateHelper::generateStateFromMove(this,step);
-        allPossibleState.push_back(newState);
-    }
-
-    return allPossibleState;
+    std::vector<ChessState> res;
+    return res;
 }
 
 bool ChessState::playoutUntilEnd(){
-    ChessState playoutState(this->chessPieces);
-    ChessRuleProvider ruler(this->chessPieces);
-
-    while (!ruler.isGameEnd()) {
-        myLog::print("playing out ");
-        playoutState = playoutState.suggestedNextState();
-    }
-
-    ChessRuleProvider newRuler(playoutState.chessPieces);
-    return ruler.whoWins();
+    //TODO
+    return true;
 }
 
 
@@ -61,9 +45,13 @@ ChessState ChessState::suggestedNextState(){
     vector<ChessState> childrenStates = getAllPossibleNextState();
 
     foreach (auto& a, childrenStates) {
-        if(ChessStateHelper::value(a) > max){
+        if(value(a) > max){
             res = a;
         }
     }
     return res;
+}
+
+int ChessState::value(ChessState const &state){
+    return 0;
 }

@@ -37,7 +37,9 @@ SOURCES += main.cpp\
 
 HEADERS  += ChessBoard.h \
     ChessPieces.h \
+    ChessRuleProvider.fwd.h \
     ChessRuleProvider.h \
+    ChessState.fwd.h \
     ChessState.h \
     ChessStep.h \
     ChessVoice.h \
@@ -47,6 +49,7 @@ HEADERS  += ChessBoard.h \
     ChooseMainWindow.h \
     AboutAuthor.h \
     Node.h \
+    Rule.h \
     myLog.h
 
 FORMS    += ChessBoard.ui \

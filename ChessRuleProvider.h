@@ -1,15 +1,16 @@
 #ifndef CHESSRULEPROVIDER_H
 #define CHESSRULEPROVIDER_H
-#include "ChessPieces.h"
+
 #include "ChessStep.h"
 #include <vector>
-#include "myLog.h"
-#include "ChessState.h"
+#include "ChessState.fwd.h"
+#include "ChessRuleProvider.fwd.h"
 #define TOTALNUM 32
 
 class ChessRuleProvider
 {
 public:
+    ChessRuleProvider(){}
     std::vector<ChessState> getAllPossibleChildState(ChessState* state);
     bool isGameEnd(ChessState* state);
     bool whoWins(ChessState* state);

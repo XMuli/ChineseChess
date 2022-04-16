@@ -3,10 +3,11 @@
 
 #include <vector>
 #include <ChessPieces.h>
+#include "ChessState.fwd.h"
+#include "ChessRuleProvider.fwd.h"
 
 #define BLACK false
 #define RED true
-
 class ChessState
 {
 public:
@@ -26,6 +27,7 @@ private:
     //all chess pieces, contains position infos
     std::vector<ChessPiece> chessPieces;
     ChessState suggestedNextState();
+    int value(ChessState const &state);
 
 };
 

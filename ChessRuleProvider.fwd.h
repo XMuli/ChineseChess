@@ -1,0 +1,4 @@
+#ifndef CHESSRULEPROVIDER_FWD_H
+#define CHESSRULEPROVIDER_FWD_H
+class ChessRuleProvider;
+#endif // CHESSRULEPROVIDER_FWD_H

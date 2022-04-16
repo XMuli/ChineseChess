@@ -338,10 +338,10 @@ bool ChessBoard::hongMenFeast()
 bool ChessBoard::havePieces(int row, int col)
 {
     for (auto pieces : m_ChessPieces) {
-        if (pieces.m_bDead)
+        if (pieces.isDead)
             continue;
 
-        if (pieces.m_nRow == row && pieces.m_nCol == col)
+        if (pieces.row == row && pieces.col == col)
             return true;
     }
 
