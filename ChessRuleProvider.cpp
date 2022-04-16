@@ -1,5 +1,10 @@
 #include "ChessRuleProvider.h"
 
+namespace Rules{
+    std::vector<ChessStep> chessCheSteps(ChessPiece &che){
+
+    }
+}
 
 void ChessRuleProvider::getAllPossibleSteps(std::vector<ChessStep>& steps,bool currentTurn){
     std::vector<ChessPiece> toMove= getOneColorPiece(currentTurn == RED?RED:BLACK);
@@ -42,4 +47,13 @@ std::vector<ChessStep> ChessRuleProvider::getStepsForPiece(ChessPiece piece){
 
     return res;
 
+}
+
+bool ChessRuleProvider::isPosTaken(int row,int col){
+    for(auto &piece:this->chessPieces){
+        if(piece.m_nCol == col && piece.m_nRow == row && !piece.m_bDead ){
+            return true;
+        }
+    }
+    return false;
 }

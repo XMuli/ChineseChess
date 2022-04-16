@@ -31,6 +31,7 @@ public:
 private:
     int iterateTime = 0;
     bool hasTimeLeft(){
+        //TODO: resource wise condition should be applied
         return ++iterateTime<50;
     }
     Node<T> *root;

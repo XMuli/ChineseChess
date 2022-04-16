@@ -19,6 +19,7 @@ private:
     std::vector<ChessPiece> chessPieces;
     std::vector<ChessPiece> getOneColorPiece(bool color);
     std::vector<ChessStep> getStepsForPiece(ChessPiece piece);
+    bool isPosTaken(int row,int col);
 
 
 
