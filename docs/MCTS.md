@@ -20,4 +20,9 @@ Needed a State class as it's template class
   2. state.playoutUntilEnd() : returns true or false for who wins with play until ends
 
 ## class ChessState
-consist of a vector of pieces and a bool value for who's turn it is
+consist of a vector of pieces and a bool value for who's turn it is.
+1. state.getAllPossibleNextState() : 
+
+
+## class ChessRuleProvider
+1. for a given state, generate all it's child state

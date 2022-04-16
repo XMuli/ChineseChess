@@ -10,21 +10,9 @@
 class ChessRuleProvider
 {
 public:
-    ChessRuleProvider(std::vector<ChessPiece>& pieces):chessPieces(pieces){}
-    void getAllPossibleSteps(std::vector<ChessStep>& steps,bool currentTurn);
-    bool isGameEnd();
-    bool whoWins();
-
-private:
-    std::vector<ChessPiece> chessPieces;
-    std::vector<ChessPiece> getOneColorPiece(bool color);
-    std::vector<ChessStep> getStepsForPiece(ChessPiece piece);
-    bool isPosTaken(int row,int col);
-
-
-
-
-
+    std::vector<ChessState> getAllPossibleChildState(ChessState* state);
+    bool isGameEnd(ChessState* state);
+    bool whoWins(ChessState* state);
 };
 
 #endif // CHESSRULEPROVIDER_H

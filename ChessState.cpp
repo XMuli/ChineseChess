@@ -7,87 +7,8 @@
 #define VALUE_MAX 10000
 
 using namespace std;
-namespace ChessStateHelper {
-    void move(ChessPiece &piece,ChessStep step){
-        piece.m_nRow = step.m_nRowTo;
-        piece.m_nCol = step.m_nColTo;
-    }
-
-    int random(int min, int max) //range : [min, max]
-    {
-       static bool first = true;
-       if (first)
-       {
-          srand( time(NULL) ); //seeding for the first time only!
-          first = false;
-       }
-       return min + rand() % (( max + 1 ) - min);
-    }
-
-    // generate a vector of possible chess steps
-    std::vector<ChessStep> generateSteps(std::vector<ChessPiece> pieces,bool redOrBlack){
-
-        ChessRuleProvider chessRuleProvider(pieces);
-        std::vector<ChessStep> steps;
-        chessRuleProvider.getAllPossibleSteps(steps,redOrBlack);
-
-        return steps;
-    }
-
-    ChessState generateStateFromMove(ChessState* state,ChessStep step){
-        std::vector<ChessPiece> oldPieces = state->getChessPieces();
-        std::vector<ChessPiece> newPieces;
-        for(ChessPiece & oldPiece:oldPieces){
-            ChessPiece newpiece = oldPiece;
-            if(newpiece.m_nID == step.m_nMoveID){
-                ChessStateHelper::move(newpiece,step);
-            }
-            if(newpiece.m_nID == step.m_nKillID){
-                newpiece.m_bDead = true;
-            }
-            newPieces.push_back(newpiece);
-        }
-        return ChessState(newPieces,!state->currentTurn);
-    }
-
-    // should alwasy return positive number
-    int value(ChessState state){
-        // if current states favors black, we go negative, positive for red
-        int value = 0;
 
 
-        // if current turn is red, then we return value otherwise negative for black
-        return state.currentTurn?value:-value;
-    }
-}
-
-ChessState::ChessState(ChessPiece pieces[],bool currentTurn){
-    for(int i = 0; i<32 ;i++){
-        this->chessPieces.push_back(pieces[i]);
-    }
-    this->currentTurn = currentTurn;
-}
-
-ChessState::ChessState(vector<ChessPiece> pieces,bool currentTurn){
-    for(auto &piece: pieces){
-        this->chessPieces.push_back(piece);
-    }
-    this->currentTurn = currentTurn;
-}
-
-
-ChessState ChessState::suggestedNextState(){
-    int max = -1;
-    ChessState res;
-    vector<ChessState> childrenStates = getAllPossibleNextState();
-
-    foreach (auto& a, childrenStates) {
-        if(ChessStateHelper::value(a) > max){
-            res = a;
-        }
-    }
-    return res;
-}
 
 std::vector<ChessState> ChessState::getAllPossibleNextState(){
     std::vector<ChessState> allPossibleState;
@@ -113,4 +34,36 @@ bool ChessState::playoutUntilEnd(){
 
     ChessRuleProvider newRuler(playoutState.chessPieces);
     return ruler.whoWins();
+}
+
+
+// ---------------------------------------------------------------------constrctor
+
+ChessState::ChessState(ChessPiece pieces[],bool currentTurn){
+    for(int i = 0; i<32 ;i++){
+        this->chessPieces.push_back(pieces[i]);
+    }
+    this->currentTurn = currentTurn;
+}
+
+ChessState::ChessState(vector<ChessPiece> pieces,bool currentTurn){
+    for(auto &piece: pieces){
+        this->chessPieces.push_back(piece);
+    }
+    this->currentTurn = currentTurn;
+}
+
+//------------------------------------------------------------------------- private methods
+ChessState ChessState::suggestedNextState(){
+    // randomly for now
+    int max = -1;
+    ChessState res;
+    vector<ChessState> childrenStates = getAllPossibleNextState();
+
+    foreach (auto& a, childrenStates) {
+        if(ChessStateHelper::value(a) > max){
+            res = a;
+        }
+    }
+    return res;
 }
