@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     MachineGame.cpp \
     NetworkGame.cpp \
     ChooseMainWindow.cpp \
-    AboutAuthor.cpp
+    AboutAuthor.cpp \
+    Rule.cpp
 
 HEADERS  += ChessBoard.h \
     ChessPieces.h \
