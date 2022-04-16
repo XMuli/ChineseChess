@@ -7,6 +7,8 @@
 
 #define TOTAL_ROW 10
 #define TOTAL_COL 9
+#define RED_BORDER 5
+#define BLACK_BOREDR 4
 
 #include <vector>
 //------------------------------ helpers
@@ -14,10 +16,11 @@ namespace rule {
 
     ChessPiece getPieces(ChessState* state,bool redOrBlack,ChessPiece::CHESS_TYPE type);
     // step*() provides steps withou limitation, can go off bound, use with combined validator
-    std::vector<ChessStep> generateUnblockingSteps(ChessPiece const &pieces);
+    std::vector<ChessStep> generateUnblockingStepsForOnePiece(ChessPiece const &pieces);
 
-    bool valid(ChessStep &step,ChessState* state);
+    bool validStep(ChessStep &step,ChessState* state);
 
+    std::vector<ChessStep> generateSteps(ChessPiece const &pieces);
     namespace _helper {
 
             void stepJIANGorBING(ChessPiece const &pieces,std::vector<ChessStep> &result);
@@ -46,9 +49,15 @@ namespace rule {
 
             bool isEnemyPiece(ChessPiece& pieceA,ChessPiece& pieceB);
 
-            void handleKill(ChessStep &step,ChessPiece toMove,ChessPiece tokill);
+            void handleKill(ChessStep &step,ChessPiece *tokill);
 
-            void handleMove(ChessStep &step, ChessPiece toMove,int toRow, int toCol);
+            bool isInPalace(int row,int col);
+
+            bool isInHomeSide(ChessPiece& piece);
+
+            bool canMoveInState(ChessStep &step,ChessPiece& piece,ChessState* state);
+
+            bool numberOfPiecesInBetweenStep(ChessStep &step,ChessState* state);
 
 
         }

@@ -6,23 +6,26 @@
 using namespace rule;
 
 std::vector<ChessState> ChessRuleProvider::getAllPossibleChildState(ChessState* state){
-    std::vector<ChessStep> stepsToMove;
+    std::vector<ChessStep> stepsToMoveForAllPieces;
     // for all the pieces in current state that is moveable, generate it's possible steps
-    for(auto const &pieces:state->getChessPieces()){
-        if(pieces.isRed == state->currentTurn){
-            auto const &stepsForPiece = getSteps(pieces,state);
-            stepsToMove.insert(stepsToMove.end(),stepsForPiece.begin(),stepsForPiece.end());
+    for(auto const &piece:state->getChessPieces()){
+        if(piece.isRed == state->currentTurn){ // only move for the current turn
+
+            auto const &stepsForOnePiece = getValidStepsForPiece(piece,state);
+            stepsToMoveForAllPieces.insert(stepsToMoveForAllPieces.end(),stepsForOnePiece.begin(),stepsForOnePiece.end());
         }
     }
 
     // generate state for all possible steps
-    std::vector<ChessState> states;
-    for(auto const &step:stepsToMove){
-        auto const &stateForStep = getStates(step,state);
-        states.insert(states.end(),stateForStep.begin(),stateForStep.end());
+    std::vector<ChessState> resStates;
+    for(auto const &step:stepsToMoveForAllPieces){
+        auto const &resState = getState(step,state);
+        resStates.push_back(resState);
     }
 
-    return states;
+    //TODO: handle the kill steps
+
+    return resStates;
 }
 
 bool ChessRuleProvider::isGameEnd(ChessState* state){
@@ -34,19 +37,22 @@ bool ChessRuleProvider:: whoWins(ChessState* state){
 }
 
 // private
-std::vector<ChessStep> ChessRuleProvider::getSteps(ChessPiece const &pieces,ChessState *state){
-    std::vector<ChessStep> stpes = rule::generateUnblockingSteps(pieces);
+std::vector<ChessStep> ChessRuleProvider::getValidStepsForPiece(ChessPiece const &piece,ChessState *state){
+    // generate possible steps without dependency of the current state;
+    std::vector<ChessStep> stpes = rule::generateUnblockingStepsForOnePiece(piece);
+
+    // filter out invalid step
     std::vector<ChessStep> result;
     for(auto &step:stpes){
-        if(rule::valid(step,state)){
+        if(rule::validStep(step,state)){
             result.push_back(step);
         }
     }
     return result;
 }
 
-std::vector<ChessState> ChessRuleProvider::getStates(ChessStep const &step,ChessState *state){
-    std::vector<ChessState> result;
-
-    return result;
+// get one state from one step
+ChessState ChessRuleProvider::getState(ChessStep const &step,ChessState *state){
+    ChessState res(state->getChessPieces());
+    return res;
 }

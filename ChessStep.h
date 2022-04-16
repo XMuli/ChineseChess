@@ -47,8 +47,13 @@ public:
     int toCol;   //目的位置的列
 
     std::string toString(){
-        return QString("%1d %2d %3d %4d %5d %6d")
-                .arg(moveId,fromRow,toRow,fromCol,toCol)
+        return QString("%1 %2 %3 %4 %5 %6")
+                .arg(moveId)
+                .arg(killId)
+                .arg(fromRow)
+                .arg(fromCol)
+                .arg(toRow)
+                .arg(toCol)
                 .toStdString();
     }
 };

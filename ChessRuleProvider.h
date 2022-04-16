@@ -17,8 +17,8 @@ public:
     bool whoWins(ChessState* state);
 
 private:
-    std::vector<ChessStep> getSteps(ChessPiece const &pieces,ChessState *state);
-    std::vector<ChessState> getStates(ChessStep const &step,ChessState *state);
+    std::vector<ChessStep> getValidStepsForPiece(ChessPiece const &pieces,ChessState *state);
+    ChessState getState(ChessStep const &step,ChessState *state);
 
 };
 
