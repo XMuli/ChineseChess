@@ -11,6 +11,11 @@
 #include <vector>
 //------------------------------ helpers
 namespace rule {
+
+    ChessPiece getPieces(ChessState* state,bool redOrBlack,ChessPiece::CHESS_TYPE type){
+        return ChessPiece();
+    }
+
     // step*() provides steps withou limitation, can go off bound, use with combined validator
     void stepJIANGorBING(ChessPiece const &pieces,std::vector<ChessStep> &result){
         if(pieces.type != ChessPiece::JIANG || pieces.type != ChessPiece::BING ){
@@ -174,19 +179,19 @@ namespace rule {
     }
 
     bool validateJIANG(ChessStep &step,ChessState* state){
-
+        return true;
     }
 
     bool validateBING(ChessStep &step,ChessState* state){
-
+        return true;
     }
 
     bool validatePAO(ChessStep &step,ChessState* state){
-
+        return true;
     }
 
     bool validateCHE(ChessStep &step,ChessState* state){
-
+        return true;
     }
 
     bool valid(ChessStep &step,ChessState* state){
@@ -197,6 +202,8 @@ namespace rule {
         if(step.toRow >= TOTAL_ROW || step.toRow < 0){
             return false;
         }
+
+        return true;
 
 
     }

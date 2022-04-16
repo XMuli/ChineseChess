@@ -26,6 +26,8 @@
 #include "myLog.h"
 #include "ChessState.h"
 
+
+
 using namespace std;
 
 ChessBoard::ChessBoard(QWidget *parent) :
