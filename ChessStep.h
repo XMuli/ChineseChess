@@ -24,7 +24,7 @@
 
 #include "QString"
 #include "QStringBuilder"
-
+#include "ChessPieces.h"
 using namespace std;
 
 class ChessStep
@@ -33,6 +33,11 @@ class ChessStep
 public:
     explicit ChessStep();
     ~ChessStep();
+    ChessStep(ChessPiece const &piece){
+        this->moveId = piece.id;
+        this->fromCol = piece.col;
+        this->fromRow = piece.row;
+    }
 
     int moveId;   //移动棋子ID
     int killId;   //将要被击杀的棋子ID
