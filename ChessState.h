@@ -19,6 +19,8 @@ public:
     std::vector<ChessPiece> getChessPieces(){
         return this->chessPieces;
     }
+    ChessPiece getPiece(int id);
+    ChessPiece* getPieceByPos(int row,int col);
 
     bool playoutUntilEnd();
     std::vector<ChessState> getAllPossibleNextState();

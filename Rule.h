@@ -42,6 +42,14 @@ namespace rule {
 
             bool validateMA(ChessStep &step,ChessState* state);
 
+            bool isPositionOccupied(int row,int col,ChessState* state);
+
+            bool isEnemyPiece(ChessPiece& pieceA,ChessPiece& pieceB);
+
+            void handleKill(ChessStep &step,ChessPiece toMove,ChessPiece tokill);
+
+            void handleMove(ChessStep &step, ChessPiece toMove,int toRow, int toCol);
+
 
         }
 

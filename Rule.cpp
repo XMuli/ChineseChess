@@ -30,13 +30,31 @@ namespace rule {
 
 
 
-//        switch (control) {
-//        case value:
+        switch (state->getPiece(step.moveId).type) {
+        case ChessPiece::JIANG:
+            return _helper::validateJIANG(step,state);
 
-//            break;
-//        default:
-//            break;
-//        }
+        case ChessPiece::BING:
+            return _helper::validateJIANG(step,state);
+
+        case ChessPiece::SHI:
+            return _helper::validateJIANG(step,state);
+
+        case ChessPiece::XIANG:
+            return _helper::validateJIANG(step,state);
+
+        case ChessPiece::CHE:
+            return _helper::validateJIANG(step,state);
+
+        case ChessPiece::MA:
+            return _helper::validateJIANG(step,state);
+
+        case ChessPiece::PAO:
+            return _helper::validateJIANG(step,state);
+
+        default:
+            break;
+        }
 
 
     }
@@ -47,6 +65,23 @@ namespace rule {
 namespace rule {
     namespace _helper {
         bool validateJIANG(ChessStep &step,ChessState* state){
+            ChessPiece piece = state->getPiece(step.moveId);
+
+            if(piece.type != ChessPiece::JIANG){
+                throw "invalid parameter";
+            }
+
+            if(isPositionOccupied(step.toRow,step.toCol,state)){
+                ChessPiece* pieceHoldsPos = state->getPieceByPos(step.toRow,step.toCol);
+                if(isEnemyPiece(piece,*pieceHoldsPos)){
+                    handleKill(step,piece,*pieceHoldsPos);
+                    return true;
+                }else{
+                    // a pos is taken by alias pieces, cannot move
+                    return false;
+                }
+            }
+
             return true;
         }
 
@@ -68,6 +103,31 @@ namespace rule {
 
         bool validateMA(ChessStep &step,ChessState* state){
             return true;
+        }
+
+        bool isPositionOccupied(int row,int col,ChessState* state){
+            ChessPiece* piece = state->getPieceByPos(row,col);
+            if (piece == nullptr){
+                return false;
+            }
+            return !piece->isDead;
+        }
+
+        bool isEnemyPiece(ChessPiece& pieceA,ChessPiece& pieceB){
+            return pieceA.isRed == pieceB.isRed;
+        }
+
+        void handleKill(ChessStep &step,ChessPiece toMove,ChessPiece tokill){
+            step.killId = tokill.id;
+            handleMove(step,toMove,tokill.row,tokill.col);
+        }
+
+        void handleMove(ChessStep &step, ChessPiece toMove,int toRow, int toCol){
+            step.moveId = toMove.id;
+            step.fromCol = toMove.col;
+            step.fromRow = toMove.row;
+            step.toCol = toCol;
+            step.toRow = toRow;
         }
     }
     namespace _helper {

@@ -10,6 +10,7 @@ using namespace std;
 
 
 
+// Core funciton
 std::vector<ChessState> ChessState::getAllPossibleNextState(){
     std::vector<ChessState> res;
     return res;
@@ -20,6 +21,24 @@ bool ChessState::playoutUntilEnd(){
     return true;
 }
 
+//----------------------------------------------------------------------helpers
+ChessPiece ChessState::getPiece(int id){
+    for(auto& p:chessPieces){
+        if (p.id == id){
+            return p;
+        }
+    }
+    throw "exception";
+}
+
+ChessPiece* ChessState::getPieceByPos(int row,int col){
+    for(auto& p:chessPieces){
+        if (p.row == row && p.col == col){
+            return &p;
+        }
+    }
+    return nullptr;
+}
 
 // ---------------------------------------------------------------------constrctor
 

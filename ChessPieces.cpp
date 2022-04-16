@@ -66,6 +66,7 @@ void ChessPiece::init(int id)
         row = tPos[id].t_nRow;
         col = tPos[id].t_nCol;
         type = tPos[id].t_emType;
+        this->id = id;
         isRed = false;
     }
     else
@@ -73,6 +74,7 @@ void ChessPiece::init(int id)
         row = 9-tPos[id-16].t_nRow;
         col = 8-tPos[id-16].t_nCol;
         type = tPos[id-16].t_emType;
+        this->id = id;
         isRed = true;
     }
 
