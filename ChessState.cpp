@@ -12,8 +12,8 @@ using namespace std;
 
 // Core funciton
 std::vector<ChessState> ChessState::getAllPossibleNextState(){
-    std::vector<ChessState> res;
-    return res;
+    ChessRuleProvider ruler;
+    return ruler.getAllPossibleChildState(this);;
 }
 
 bool ChessState::playoutUntilEnd(){
@@ -22,7 +22,7 @@ bool ChessState::playoutUntilEnd(){
 }
 
 //----------------------------------------------------------------------helpers
-ChessPiece ChessState::getPiece(int id){
+ChessPiece ChessState::getPieceById(int id){
     for(auto& p:chessPieces){
         if (p.id == id){
             return p;
@@ -38,6 +38,31 @@ ChessPiece* ChessState::getPieceByPos(int row,int col){
         }
     }
     return nullptr;
+}
+void ChessState::print(){
+    for(auto& p:chessPieces){
+        std::cout<< p.type <<" is at "<<p.row<<":"<<p.col << std::endl;
+    }
+
+     std::cout<<"================================== "<< std::endl;
+}
+
+void ChessState::move(ChessStep const &step){
+    for(auto& p:chessPieces){
+        if (p.id == step.moveId){
+            if(p.row!=step.fromRow || p.col!=step.fromCol){
+                throw "step contains wrong info";
+            }
+            p.row = step.toRow;
+            p.col = step.toCol;
+        }
+        if(p.id == step.killId){
+            if(p.row!=step.toRow || p.col!=step.toCol){
+                throw "step contains wrong info";
+            }
+            p.isDead = true;
+        }
+    }
 }
 
 // ---------------------------------------------------------------------constrctor

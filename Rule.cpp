@@ -1,5 +1,5 @@
 #include "Rule.h"
-
+#include <iostream>
 
 namespace rule {
 
@@ -15,6 +15,8 @@ namespace rule {
         _helper::stepSHI(pieces,result);
         _helper::stepXIANG(pieces,result);
         _helper::stepMA(pieces,result);
+
+//        std::cout<<"generated "<< result.size() << " steps for piece at  " << pieces.row << ":"<<pieces.col<< std::endl;
         return result;
     }
 
@@ -29,7 +31,11 @@ namespace rule {
             return false;
         }
 
-        switch (state->getPiece(step.moveId).type) {
+        if(step.fromCol == step.toCol && step.fromRow == step.toRow){
+            return false;
+        }
+
+        switch (state->getPieceById(step.moveId).type) {
         case ChessPiece::JIANG:
             return _helper::validateJIANG(step,state);
 
@@ -66,29 +72,36 @@ namespace rule {
     namespace _helper {
     // validate functions ONLY validate for non-denpendcy steps, not random steps
         bool validateJIANG(ChessStep &step,ChessState* state){
-            ChessPiece piece = state->getPiece(step.moveId);
+            ChessPiece piece = state->getPieceById(step.moveId);
 
             if(piece.type != ChessPiece::JIANG){
                 throw "invalid parameter";
             }
 
-            // if not in palace, we don't remove
-            if(!isInPalace(step.toCol,step.toRow)){
+            // if not in palace, we don't move
+            if(!isInPalace(step.toRow,step.toCol)){
                 return false;
             }
 
-            return canMoveInState(step,piece,state);
+            return !isDestinationTakenByAlly(step,piece,state);
         }
 
         bool validateBING(ChessStep &step,ChessState* state){
-            ChessPiece piece = state->getPiece(step.moveId);
+            ChessPiece piece = state->getPieceById(step.moveId);
 
             if(piece.type != ChessPiece::BING){
                 throw "invalid parameter";
             }
 
-            // cannot go back
-            if(step.fromRow < step.toRow){
+            // cannot go back as red
+            if(piece.isRed &&
+                    step.fromRow < step.toRow){
+                return false;
+            }
+
+             // cannot go back as black
+            if(!piece.isRed &&
+                    step.fromRow > step.toRow){
                 return false;
             }
 
@@ -97,17 +110,30 @@ namespace rule {
                 return false;
             }
 
-            return canMoveInState(step,piece,state);
+            return !isDestinationTakenByAlly(step,piece,state);
         }
 
         bool validatePAO(ChessStep &step,ChessState* state){
+            ChessPiece piece = state->getPieceById(step.moveId);
+            if(piece.type != ChessPiece::PAO){
+                throw "invalid parameter";
+            }
+
             int numInBetween = numberOfPiecesInBetweenStep(step,state);
 
-            if(numInBetween == 0){
+            if(isDestinationTakenByAlly(step,piece,state)){
+                return false;
+            }
+
+            // if there's nothing in between destination, and position is not occupied, it is valid
+            if(numInBetween == 0 && !isPositionOccupied(step.toRow,step.toCol,state)){
                 return true;
             }
 
-            if(numInBetween == 1 && isPositionOccupied(step.toRow,step.toCol,state)){
+            // if there's exactly one pieces beteween start pos to end pos, and the end pos is occupied by an enemy
+            // then it is valid by kill the enemy
+            if(numInBetween == 1 && isPositionOccupied(step.toRow,step.toCol,state)&&
+                    !isDestinationTakenByAlly(step,piece,state)){
                 return true;
             }
 
@@ -115,13 +141,24 @@ namespace rule {
         }
 
         bool validateCHE(ChessStep &step,ChessState* state){
+            ChessPiece piece = state->getPieceById(step.moveId);
+            if(piece.type != ChessPiece::CHE){
+                throw "invalid parameter";
+            }
+
             if(numberOfPiecesInBetweenStep(step,state)!=0){
                 return false;
             }
-            return true;
+            return !isDestinationTakenByAlly(step,piece,state);
         }
 
-        bool validateXAING(ChessStep &step,ChessState* state){
+        bool validateXIANG(ChessStep &step,ChessState* state){
+
+            ChessPiece piece = state->getPieceById(step.moveId);
+            if(piece.type != ChessPiece::XIANG){
+                throw "invalid parameter";
+            }
+
             // moving over border
             if(step.fromRow >= RED_BORDER && step.toRow <RED_BORDER){
                 return false;
@@ -133,37 +170,59 @@ namespace rule {
 
             int eyeRow,eyeCol;
 
-            eyeCol == (stpe.toCol - stpe.fromCol)/2 + stpe.fromCol;
-            eyeRow == (stpe.toRow - stpe.fromRow)/2 + stpe.fromRow;
+            eyeCol = (step.toCol - step.fromCol)/2 + step.fromCol;
+            eyeRow = (step.toRow - step.fromRow)/2 + step.fromRow;
 
 
-            return isPositionOccupied(eyeRow,eyeCol,state);
+            if(isPositionOccupied(eyeRow,eyeCol,state)){
+                return false;
+            }
+
+            return !isDestinationTakenByAlly(step,piece,state);
         }
 
         bool validateMA(ChessStep &step,ChessState* state){
 
+            ChessPiece piece = state->getPieceById(step.moveId);
+            if(piece.type != ChessPiece::MA){
+                throw "invalid parameter";
+            }
+
             //moving to right
             if(step.toCol - step.fromCol == 2){
-                return isPositionOccupied(step.fromRow,step.fromCol+1,state);
+                return !isPositionOccupied(step.fromRow,step.fromCol+1,state);
             }
 
             //move to the left
             if(step.toCol - step.fromCol == -2){
-                return isPositionOccupied(step.fromRow,step.fromCol-1,state);
+                return !isPositionOccupied(step.fromRow,step.fromCol-1,state);
             }
 
             //  move to bottom
             if(step.toRow - step.fromRow == 2){
-                return isPositionOccupied(step.fromRow+1,step.fromCol,state);
+                return !isPositionOccupied(step.fromRow+1,step.fromCol,state);
             }
 
             // move to top
             if(step.toRow - step.fromRow == -2){
-                return isPositionOccupied(step.fromRow-1,step.fromCol,state);
+                return !isPositionOccupied(step.fromRow-1,step.fromCol,state);
             }
 
 
-            return false;
+            return !isDestinationTakenByAlly(step,piece,state);
+        }
+
+        bool validateSHI(ChessStep &step,ChessState* state){
+            ChessPiece piece = state->getPieceById(step.moveId);
+            if(piece.type != ChessPiece::SHI){
+                throw "invalid parameter";
+            }
+
+            if(!isInPalace(step.toRow,step.toCol)){
+                return false;
+            }
+
+            return !isDestinationTakenByAlly(step,piece,state);
         }
     }
     // helpers
@@ -177,7 +236,7 @@ namespace rule {
         }
 
         bool isEnemyPiece(ChessPiece& pieceA,ChessPiece& pieceB){
-            return pieceA.isRed == pieceB.isRed;
+            return pieceA.isRed != pieceB.isRed;
         }
 
         bool isInPalace(int row,int col){
@@ -194,20 +253,18 @@ namespace rule {
             return piece.row <= 4;
         }
 
-        bool canMoveInState(ChessStep &step,ChessPiece& piece,ChessState* state){
 
-            if(isPositionOccupied(step.toRow,step.toCol,state)){
+        bool isDestinationTakenByAlly(ChessStep &step,ChessPiece& piece,ChessState* state){
+
+            if(isPositionOccupied(step.toRow, step.toCol, state)){
                 ChessPiece* pieceHoldsPos = state->getPieceByPos(step.toRow,step.toCol);
-
-                if(isEnemyPiece(piece,*pieceHoldsPos)){
+                if(!isEnemyPiece(piece,*pieceHoldsPos)){
+                    //pos is occupied by alias
                     return true;
-                }else{
-                    // a pos is taken by alias pieces, cannot move
-                    return false;
                 }
             }
             // pos not taken
-            return true;
+            return false;
         }
 
         int numberOfPiecesInBetweenStep(ChessStep &step,ChessState* state){
@@ -216,20 +273,39 @@ namespace rule {
             }
 
             int count = 0;
+            int toCheckRow[] = {0,1,2,3,4,5,6,7,8,9};
+            int toCheckCol[] = {0,1,2,3,4,5,6,7,8};
 
             // if movine along the same row, see if there's anything in between from col to to col
             if(step.fromRow == step.toRow){
-                for(auto col = step.fromCol+1; col<step.toCol; col++){
-                    if(state->getPieceByPos(step.fromRow,col) !=nullptr){
-                        count++;
-                    }
+                toCheckCol[step.fromCol] = - 1;
+                toCheckCol[step.toCol] = - 1;
+                bool flag = false;
+                for(int col:toCheckCol){
+
+                   if(flag &&col != step.toCol && state->getPieceByPos(step.fromRow,col) !=nullptr){
+                       count++;
+                   }
+
+                   if(col == -1){
+                       flag = !flag;
+                   }
                 }
+
             }
 
             if(step.fromCol == step.toCol){
-                for(auto row = step.fromRow+1; row<step.toRow; row++){
-                    if(state->getPieceByPos(step.row,step.fromCol) !=nullptr){
+                toCheckRow[step.fromRow] = - 1;
+                toCheckRow[step.toRow] = - 1;
+                bool flag = false;
+                for(int row:toCheckRow){
+                    if(flag && row!= step.toRow && state->getPieceByPos(row,step.fromCol) != nullptr){
                         count++;
+                    }
+
+
+                    if(row == -1){
+                        flag = !flag;
                     }
                 }
             }
@@ -241,7 +317,7 @@ namespace rule {
     namespace _helper {
         // step*() provides steps withou limitation, can go off bound, use with combined validator
         void stepJIANGorBING(ChessPiece const &pieces,std::vector<ChessStep> &result){
-            if(pieces.type != ChessPiece::JIANG || pieces.type != ChessPiece::BING ){
+            if(!(pieces.type == ChessPiece::JIANG || pieces.type == ChessPiece::BING) ){
                 return;
             }
 
@@ -270,22 +346,24 @@ namespace rule {
         }
 
         void stepPAOorCHE(ChessPiece const &pieces,std::vector<ChessStep> &result){
-            if(pieces.type != ChessPiece::CHE || pieces.type != ChessPiece::PAO ){
+            if(!(pieces.type == ChessPiece::CHE || pieces.type == ChessPiece::PAO) ){
                 return;
             }
 
             for(int row = 0;row<TOTAL_ROW;row++){
-                for(int col = 0;col<TOTAL_COL;col++){
-                    // if the row is the same row, or the col is the same col but not the same spot
-                    if(row == pieces.row || col  == pieces.col
-                            && (row == pieces.row && col  == pieces.col )){
-                        ChessStep step(pieces);
-                        step.toRow = row;
-                        step.toCol = col;
-                        result.push_back(step);
-                    }
-                }
+                ChessStep step(pieces);
+                step.toRow = row;
+                step.toCol = pieces.col;
+                result.push_back(step);
             }
+
+            for(int col = 0;col<TOTAL_COL;col++){
+                ChessStep step(pieces);
+                step.toRow = pieces.row;
+                step.toCol = col;
+                result.push_back(step);
+            }
+
         }
 
         void stepSHI(ChessPiece const &pieces,std::vector<ChessStep> &result){

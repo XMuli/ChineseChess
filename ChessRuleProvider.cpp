@@ -9,10 +9,17 @@ std::vector<ChessState> ChessRuleProvider::getAllPossibleChildState(ChessState* 
     std::vector<ChessStep> stepsToMoveForAllPieces;
     // for all the pieces in current state that is moveable, generate it's possible steps
     for(auto const &piece:state->getChessPieces()){
-        if(piece.isRed == state->currentTurn){ // only move for the current turn
-
+        if(piece.isRed == state->currentTurn && !piece.isDead){ // only move for the current turn
             auto const &stepsForOnePiece = getValidStepsForPiece(piece,state);
             stepsToMoveForAllPieces.insert(stepsToMoveForAllPieces.end(),stepsForOnePiece.begin(),stepsForOnePiece.end());
+        }
+    }
+
+    //handle the kill steps, the piece on destination must be enemy, because it is valid
+    for(auto &step:stepsToMoveForAllPieces){
+        ChessPiece* pieceOnDestination = state->getPieceByPos(step.toRow,step.toCol);
+        if(pieceOnDestination!=nullptr){
+            step.killId = pieceOnDestination->id;
         }
     }
 
@@ -23,7 +30,7 @@ std::vector<ChessState> ChessRuleProvider::getAllPossibleChildState(ChessState* 
         resStates.push_back(resState);
     }
 
-    //TODO: handle the kill steps
+
 
     return resStates;
 }
@@ -36,7 +43,7 @@ bool ChessRuleProvider:: whoWins(ChessState* state){
     return true;
 }
 
-// private
+// ----------------------------------------------------------------------------------- private
 std::vector<ChessStep> ChessRuleProvider::getValidStepsForPiece(ChessPiece const &piece,ChessState *state){
     // generate possible steps without dependency of the current state;
     std::vector<ChessStep> stpes = rule::generateUnblockingStepsForOnePiece(piece);
@@ -54,5 +61,6 @@ std::vector<ChessStep> ChessRuleProvider::getValidStepsForPiece(ChessPiece const
 // get one state from one step
 ChessState ChessRuleProvider::getState(ChessStep const &step,ChessState *state){
     ChessState res(state->getChessPieces());
+    res.move(step);
     return res;
 }

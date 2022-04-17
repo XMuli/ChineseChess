@@ -5,9 +5,11 @@
 #include <ChessPieces.h>
 #include "ChessState.fwd.h"
 #include "ChessRuleProvider.fwd.h"
-
+#include "ChessStep.h"
+#include <iostream>
 #define BLACK false
 #define RED true
+
 class ChessState
 {
 public:
@@ -19,11 +21,14 @@ public:
     std::vector<ChessPiece> getChessPieces(){
         return this->chessPieces;
     }
-    ChessPiece getPiece(int id);
+    ChessPiece getPieceById(int id);
     ChessPiece* getPieceByPos(int row,int col);
+    void move(ChessStep const &step);
+    void print();
 
     bool playoutUntilEnd();
     std::vector<ChessState> getAllPossibleNextState();
+
 
 private:
     //all chess pieces, contains position infos

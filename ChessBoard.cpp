@@ -25,6 +25,7 @@
 #include <string>
 #include "myLog.h"
 #include "ChessState.h"
+#include "ChessRuleProvider.h"
 
 
 
@@ -216,7 +217,6 @@ QPoint ChessBoard::center(int id)
 
 void ChessBoard::paintEvent(QPaintEvent *)
 {
-    myLog::print("paint event");
     QPainter painter(this);
     int side = qMin(int((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), ui->label->height());
     painter.scale(side / 960.0, side / 960.0);
@@ -400,9 +400,6 @@ bool ChessBoard:: isGeneral()
 
         bool selfCanMove = canMove(i,generalId,row,col);
 
-        ChessState state(this->m_ChessPieces);
-        myLog::print(std::to_string(state.getAllPossibleNextState().size()));
-
         if(selfCanMove && !m_ChessPieces[i].isDead)   //依次遍历存活子能否移动到指定坐标
         {
             return true;
@@ -422,6 +419,14 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
         update();
         return false;
     }
+
+    ChessState redState(this->m_ChessPieces,RED);
+    ChessState blackSstate(this->m_ChessPieces,BLACK);
+    ChessRuleProvider ruler;
+    auto redStates = ruler.getAllPossibleChildState(&redState);
+    auto blackStates = ruler.getAllPossibleChildState(&blackSstate);
+    std::cout<<"red generated states in total:"<<redStates.size()<<std::endl;
+    std::cout<<"black generated states in total:"<<blackStates.size()<<std::endl;
 
     switch (m_ChessPieces[moveId].type)
     {

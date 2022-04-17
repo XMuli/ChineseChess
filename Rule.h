@@ -41,9 +41,11 @@ namespace rule {
 
             bool validateCHE(ChessStep &step,ChessState* state);
 
-            bool validateXAING(ChessStep &step,ChessState* state);
+            bool validateXIANG(ChessStep &step,ChessState* state);
 
             bool validateMA(ChessStep &step,ChessState* state);
+
+            bool validateSHI(ChessStep &step,ChessState* state);
 
             bool isPositionOccupied(int row,int col,ChessState* state);
 
@@ -55,9 +57,9 @@ namespace rule {
 
             bool isInHomeSide(ChessPiece& piece);
 
-            bool canMoveInState(ChessStep &step,ChessPiece& piece,ChessState* state);
+            bool isDestinationTakenByAlly(ChessStep &step,ChessPiece& piece,ChessState* state);
 
-            bool numberOfPiecesInBetweenStep(ChessStep &step,ChessState* state);
+            int numberOfPiecesInBetweenStep(ChessStep &step,ChessState* state);
 
 
         }
