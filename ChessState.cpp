@@ -8,17 +8,44 @@
 
 using namespace std;
 
+namespace stateHelper {
+
+}
+
 
 
 // Core funciton
 std::vector<ChessState> ChessState::getAllPossibleNextState(){
-    ChessRuleProvider ruler;
-    return ruler.getAllPossibleChildState(this);;
+    return ruler.getAllPossibleChildState(this);
 }
 
 bool ChessState::playoutUntilEnd(){
-    //TODO
+    auto best = getBestChild();
+
+    while(!this->ruler.isGameEnd(&best)){
+        best = best.getBestChild();
+    }
+
     return true;
+}
+
+ChessState ChessState::getBestChild(){
+    auto children = getAllPossibleNextState();
+    int max = -VALUE_MAX;
+    ChessState best = children.at(0);
+
+    for(auto& child: children){
+        if(child.value() > max){
+            best = child;
+        }
+    }
+
+    return best;
+}
+
+int ChessState::value(){
+    // maxmize value for parent
+    return 0;
 }
 
 //----------------------------------------------------------------------helpers
@@ -82,20 +109,5 @@ ChessState::ChessState(vector<ChessPiece> pieces,bool currentTurn){
 }
 
 //------------------------------------------------------------------------- private methods
-ChessState ChessState::suggestedNextState(){
-    // randomly for now
-    int max = -1;
-    ChessState res;
-    vector<ChessState> childrenStates = getAllPossibleNextState();
 
-    foreach (auto& a, childrenStates) {
-        if(value(a) > max){
-            res = a;
-        }
-    }
-    return res;
-}
 
-int ChessState::value(ChessState const &state){
-    return 0;
-}

@@ -4,7 +4,7 @@
 #include <vector>
 #include <ChessPieces.h>
 #include "ChessState.fwd.h"
-#include "ChessRuleProvider.fwd.h"
+#include "ChessRuleProvider.h"
 #include "ChessStep.h"
 #include <iostream>
 #define BLACK false
@@ -25,16 +25,16 @@ public:
     ChessPiece* getPieceByPos(int row,int col);
     void move(ChessStep const &step);
     void print();
+    int value();
 
     bool playoutUntilEnd();
     std::vector<ChessState> getAllPossibleNextState();
-
+    ChessState getBestChild();
 
 private:
     //all chess pieces, contains position infos
     std::vector<ChessPiece> chessPieces;
-    ChessState suggestedNextState();
-    int value(ChessState const &state);
+    ChessRuleProvider ruler;
 
 };
 

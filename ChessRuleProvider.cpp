@@ -36,12 +36,21 @@ std::vector<ChessState> ChessRuleProvider::getAllPossibleChildState(ChessState* 
 }
 
 bool ChessRuleProvider::isGameEnd(ChessState* state){
-
-    return true;
+    for(auto &p:state->getChessPieces()){
+        if(p.type == ChessPiece::JIANG && p.isDead){
+            return true;
+        }
+    }
+    return false;
 }
 
 bool ChessRuleProvider:: whoWins(ChessState* state){
-    return true;
+    for(auto &p:state->getChessPieces()){
+        if(p.type == ChessPiece::JIANG && p.isDead){
+            return !p.isRed;
+        }
+    }
+    throw "nobody wins";
 }
 
 // ----------------------------------------------------------------------------------- private
