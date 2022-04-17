@@ -58,6 +58,11 @@ ChessPiece::~ChessPiece()
 {
 }
 
+bool selectPiece(ChessPiece* pi){
+    //helper function to choose pieces to start with
+    return true;
+}
+
 //初始化  对每一个棋子进行检验判断而后赋相应的值
 void ChessPiece::init(int id)
 {
@@ -78,7 +83,9 @@ void ChessPiece::init(int id)
         isRed = true;
     }
 
-    isDead = false;
+    if(selectPiece(this)){
+       isDead = false;
+    }
 }
 
 QString ChessPiece::getnName(bool isRedSide)

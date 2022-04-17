@@ -283,7 +283,7 @@ namespace rule {
                 bool flag = false;
                 for(int col:toCheckCol){
 
-                   if(flag &&col != step.toCol && state->getPieceByPos(step.fromRow,col) !=nullptr){
+                   if(flag &&col != step.toCol && isPositionOccupied(step.fromRow, col, state)){
                        count++;
                    }
 
@@ -299,7 +299,7 @@ namespace rule {
                 toCheckRow[step.toRow] = - 1;
                 bool flag = false;
                 for(int row:toCheckRow){
-                    if(flag && row!= step.toRow && state->getPieceByPos(row,step.fromCol) != nullptr){
+                    if(flag && row!= step.toRow && isPositionOccupied(row, step.fromCol, state)){
                         count++;
                     }
 
