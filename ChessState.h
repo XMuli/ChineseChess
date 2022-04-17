@@ -9,6 +9,8 @@
 #include <iostream>
 #define BLACK false
 #define RED true
+#define _UNCACHED 1;
+
 
 class ChessState
 {
@@ -32,6 +34,7 @@ public:
     ChessState getBestChild();
 
 private:
+    int cachedValue = 1;
     //all chess pieces, contains position infos
     std::vector<ChessPiece> chessPieces;
     ChessRuleProvider ruler;

@@ -2,6 +2,7 @@
 #define NODE_H
 #include <vector>
 #include <math.h>
+#include <float.h>
 #include <limits>
 
 #define BLACK false
@@ -18,9 +19,11 @@ public:
     int numWined = 0;
     Node<T>* parent;
     vector<Node*> children;
+    int layer = 0;
 
     Node<T>() = default;
     Node<T>(T s,Node<T>* p):state(s),parent(p){}
+    Node<T>(T s,Node<T>* p,int l):state(s),parent(p),layer(l){}
     ~Node(){
         for(auto node:children){
             delete node;
@@ -56,22 +59,25 @@ public:
             return;
         }
 
-        if(state.currentTurn&&result){
-            this->numWined +=1;
-        }else if(!state.currentTurn && !result){
+        if(state.currentTurn != result){
             this->numWined +=1;
         }
+
         this->numPlayed += 1;
 
         parent->backPropagate(result);
     }
 
     Node<T>* bestChild(){
-        Node* res = children[0];
-        for (int var = 0; var < children.size(); ++var) {
-            if(children[var]->numPlayed > res->numPlayed){
-                res = children[var];
+        Node* res = children.at(0);
+        for(auto* node:children){
+            std::cout<< "current node has layer:"<<node->layer
+                     <<" and numplayed="<<node->numPlayed
+                    << " and numWined="<<node->numWined<<std::endl;
+            if(res->numPlayed<node->numPlayed){
+                res = node;
             }
+
         }
         return res;
     }
@@ -79,49 +85,54 @@ public:
 private:
 
     Node<T>* selectPolicy(){
-        double max = -1;
+        long double max = -1;
         Node<T>* res = nullptr;
         for(auto node:this->children){
-            auto value =this->UCB(node);
+
             // if this node hasn't been played, select it;
-            if(value == std::numeric_limits<double>::max()){
+            if(node->numPlayed == 0){
                 return node;
             }
+
+            auto value = this->UCB(node);
             if(value>max){
                 max = value;
                 res = node;
             }
+
         }
         return res;
     }
 
-    double UCB(Node<T>* node){
+    long double UCB(Node<T>* node){
         if(numPlayed == 0){
             return std::numeric_limits<double>::max();
         }
-        return node->numWined/(double)node->numPlayed
-                + 1.141 *sqrt(log((double)node->parent->numPlayed)/(double)node->numPlayed);
+        return node->numWined/(double)node->numPlayed + 1.141 *sqrt(log((double)node->parent->numPlayed)/(double)node->numPlayed);
     }
 
     void generateChildren(){
         vector<T> states = this->state.getAllPossibleNextState();
         for (auto s:states){
-            children.push_back(new Node(s,this));
+            children.push_back(new Node(s,this,this->layer+1));
         }
     }
 
     Node<T>* expandPolicy(){
+        int maxValue = this->children[0]->state.value();
+        Node<T> *res = this->children[0];
         // expand randomly for now, should have some sort of policy to avoid bad node
-       for(auto n:this->children){
-           if(n->numPlayed == 0){
-               return n;
+       for(auto& node:this->children){
+           if(node->state.value() > maxValue){
+               res = node;
            }
+
        }
-       return this->children[0];
+       return res;
     }
 
     bool isLeaf(){
-        return numPlayed == 0;
+        return this->children.size()==0;
     }
 };
 

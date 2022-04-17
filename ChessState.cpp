@@ -3,36 +3,47 @@
 #include "ChessRuleProvider.h"
 #include <random>
 #include "myLog.h"
-
+#include "Rule.h"
 #define VALUE_MAX 50000
 
 using namespace std;
-
-namespace stateHelper {
-
-}
-
+using namespace rule;
 
 
 // Core funciton
 std::vector<ChessState> ChessState::getAllPossibleNextState(){
-    return ruler.getAllPossibleChildState(this);
+    auto states = ruler.getAllPossibleChildState(this);
+
+//    std::cout<<"============================================\n";
+//    this->print();
+//    std::cout<<"Children\n";
+//    for(auto& s:states){
+//        s.print();
+//    }
+//    std::cout<<"============================================\n";
+    return states;
 }
 
 bool ChessState::playoutUntilEnd(){
-    auto best = getBestChild();
+    auto best = *this;
 
     int played = 0;
+
+//    best.print();
+//    std::cout<<"find best start========================== the above is parent state"<<std::endl;
     while(!this->ruler.isGameEnd(&best)){
+
         best = best.getBestChild();
-        myLog::print("played ");
-        myLog::print(std::to_string(played));
-        if(played == 1000){
-            played += 1;
+//        best.print();
+//        std::cout<<played<<"th iteration done"<<std::endl;
+
+        if(played >= 5){
+            return rule::whoHasBetterChanceToWin(&best);
         }
+        played++;
     }
 
-    return true;
+    return ruler.whoWins(&best);
 }
 
 ChessState ChessState::getBestChild(){
@@ -43,6 +54,7 @@ ChessState ChessState::getBestChild(){
     for(auto& child: children){
         if(child.value() > max){
             best = child;
+            max = child.value();
         }
     }
 
@@ -50,19 +62,26 @@ ChessState ChessState::getBestChild(){
 }
 
 int ChessState::value(){
+    if(this->cachedValue != 1){
+        return cachedValue;
+    }
     // maxmize value for parent
     bool maxMizeValueFor = !this->currentTurn;
+
     int res = 0;
-    //if maxMizeValueFor JIANG under direct kill return - max_value
     for(auto& p:this->chessPieces){
+        if(p.isDead){
+            continue;
+        }
         if(p.isRed == maxMizeValueFor){
             res += p.value();
         }else{
             res -= p.value();
         }
     }
+    cachedValue = res;
 
-    return res;
+    return cachedValue;
 }
 
 //----------------------------------------------------------------------helpers
@@ -84,11 +103,16 @@ ChessPiece* ChessState::getPieceByPos(int row,int col){
     return nullptr;
 }
 void ChessState::print(){
+    string s = this->currentTurn?"RED turn  ":"BLACK turn  ";
+    s +="value = ";
+    s += std::to_string(this->value());
+    s +=" ";
     for(auto& p:chessPieces){
-        std::cout<< p.type <<" is at "<<p.row<<":"<<p.col << std::endl;
+        s+=p.toString();
+        s+=",";
     }
 
-     std::cout<<"================================== "<< std::endl;
+     std::cout<<s<< std::endl;
 }
 
 void ChessState::move(ChessStep const &step){
@@ -99,6 +123,9 @@ void ChessState::move(ChessStep const &step){
             }
             p.row = step.toRow;
             p.col = step.toCol;
+            if(step.killId == -1){
+                break;
+            }
         }
         if(p.id == step.killId){
             if(p.row!=step.toRow || p.col!=step.toCol){

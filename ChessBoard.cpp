@@ -420,13 +420,14 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
         return false;
     }
 
-    ChessState redState(this->m_ChessPieces,RED);
-    ChessState blackSstate(this->m_ChessPieces,BLACK);
-    ChessRuleProvider ruler;
-    auto redStates = ruler.getAllPossibleChildState(&redState);
-    auto blackStates = ruler.getAllPossibleChildState(&blackSstate);
-    std::cout<<"red generated states in total:"<<redStates.size()<<std::endl;
-    std::cout<<"black generated states in total:"<<blackStates.size()<<std::endl;
+    //testing
+//    ChessState redState(this->m_ChessPieces,RED);
+//    auto redStates = redState.getAllPossibleNextState();
+//    std::cout<<"red generated states in total:"<<redStates.size()<<std::endl;
+//    for(auto &state:redStates){
+//        state.print();
+//    }
+//    std::cout<<"================================================================="<<std::endl;
 
     switch (m_ChessPieces[moveId].type)
     {

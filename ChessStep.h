@@ -41,6 +41,7 @@ public:
 
     int moveId;   //移动棋子ID
     int killId = -1;   //将要被击杀的棋子ID
+
     int fromRow;  //原位置的行
     int fromCol;  //原位置的列
     int toRow;    //目的位置的行

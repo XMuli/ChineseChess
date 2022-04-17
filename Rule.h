@@ -21,6 +21,8 @@ namespace rule {
     bool validStep(ChessStep &step,ChessState* state);
 
     std::vector<ChessStep> generateSteps(ChessPiece const &pieces);
+
+    bool whoHasBetterChanceToWin(ChessState *state);
     namespace _helper {
 
             void stepJIANGorBING(ChessPiece const &pieces,std::vector<ChessStep> &result);

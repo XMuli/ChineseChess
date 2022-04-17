@@ -17,9 +17,6 @@ std::vector<ChessState> ChessRuleProvider::getAllPossibleChildState(ChessState* 
 
     //handle the kill steps, the piece on destination must be enemy, because it is valid
     for(auto &step:stepsToMoveForAllPieces){
-        if(step.killId < 0){
-            continue;
-        }
         ChessPiece* pieceOnDestination = state->getPieceByPos(step.toRow,step.toCol);
         if(pieceOnDestination!=nullptr){
             step.killId = pieceOnDestination->id;

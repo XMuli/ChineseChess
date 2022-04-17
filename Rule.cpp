@@ -65,6 +65,21 @@ namespace rule {
     }
 
 
+    bool whoHasBetterChanceToWin(ChessState *state){
+        int res = 0;
+        for(auto& p:state->getChessPieces()){
+            if(p.isDead){
+                continue;
+            }
+            if(p.isRed){
+                res += p.value();
+            }else{
+                res -= p.value();
+            }
+        }
+
+        return res>0;
+    }
 }
 
 namespace rule {

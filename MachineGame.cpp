@@ -254,7 +254,8 @@ ChessStep MachineGame::getBestMove()
         vec.push_back(m_ChessPieces[i]);
     }
 
-    MonteCarloTree<ChessState> mct(vec);
+    ChessState state(vec,BLACK);
+    MonteCarloTree<ChessState> mct(state);
 
     auto bestState = mct.search();
 
