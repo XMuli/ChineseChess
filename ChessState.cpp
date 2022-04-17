@@ -4,6 +4,7 @@
 #include <random>
 #include "myLog.h"
 #include "Rule.h"
+#include <algorithm>
 #define VALUE_MAX 50000
 
 using namespace std;
@@ -11,15 +12,17 @@ using namespace rule;
 
 
 // Core funciton
-std::vector<ChessState> ChessState::getAllPossibleNextState(){
+std::vector<ChessState> ChessState::getGoodPossibleNextStates(){
     auto states = ruler.getAllPossibleChildState(this);
 
 //    std::cout<<"============================================\n";
 //    this->print();
 //    std::cout<<"Children\n";
-//    for(auto& s:states){
-//        s.print();
-//    }
+    sort(states.begin(),states.end(),[](ChessState& a, ChessState& b){
+        return a.value() > b.value();
+    });
+
+    states.resize(10);
 //    std::cout<<"============================================\n";
     return states;
 }
@@ -47,7 +50,7 @@ bool ChessState::playoutUntilEnd(){
 }
 
 ChessState ChessState::getBestChild(){
-    auto children = getAllPossibleNextState();
+    auto children = getGoodPossibleNextStates();
     int max = -VALUE_MAX;
     ChessState best = children.at(0);
 

@@ -112,7 +112,7 @@ private:
     }
 
     void generateChildren(){
-        vector<T> states = this->state.getAllPossibleNextState();
+        vector<T> states = this->state.getGoodPossibleNextStates();
         for (auto s:states){
             children.push_back(new Node(s,this,this->layer+1));
         }

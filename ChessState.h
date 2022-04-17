@@ -30,7 +30,7 @@ public:
     int value();
 
     bool playoutUntilEnd();
-    std::vector<ChessState> getAllPossibleNextState();
+    std::vector<ChessState> getGoodPossibleNextStates();
     ChessState getBestChild();
 
 private:
