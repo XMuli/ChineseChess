@@ -20,7 +20,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/gpl-3.0.html>.
  */
 #include "ChessPieces.h"
-
+#include <map>
 //1、定义结构体tPOS
 struct POS
 {
@@ -49,6 +49,17 @@ POS tPos[16]= {
               {3, 6, ChessPiece::BING},
               {3, 8, ChessPiece::BING}
               };
+
+std::map<ChessPiece::CHESS_TYPE,int> valueMap = {
+    {ChessPiece::CHE,700},
+    {ChessPiece::MA,500},
+    {ChessPiece::PAO,400},
+    {ChessPiece::XIANG,300},
+    {ChessPiece::SHI,300},
+    {ChessPiece::JIANG,7000},
+    {ChessPiece::BING,200},
+};
+
 
 ChessPiece::ChessPiece()
 {
@@ -131,4 +142,11 @@ QString ChessPiece::getnName(bool isRedSide)
         }
     }
     return "ERROR";
+}
+
+int ChessPiece::value(){
+    if(this->isDead){
+        return 0;
+    }
+    return valueMap.at(this->type);
 }

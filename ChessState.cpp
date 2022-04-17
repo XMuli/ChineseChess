@@ -4,7 +4,7 @@
 #include <random>
 #include "myLog.h"
 
-#define VALUE_MAX 10000
+#define VALUE_MAX 50000
 
 using namespace std;
 
@@ -22,8 +22,14 @@ std::vector<ChessState> ChessState::getAllPossibleNextState(){
 bool ChessState::playoutUntilEnd(){
     auto best = getBestChild();
 
+    int played = 0;
     while(!this->ruler.isGameEnd(&best)){
         best = best.getBestChild();
+        myLog::print("played ");
+        myLog::print(std::to_string(played));
+        if(played == 1000){
+            played += 1;
+        }
     }
 
     return true;
@@ -45,7 +51,18 @@ ChessState ChessState::getBestChild(){
 
 int ChessState::value(){
     // maxmize value for parent
-    return 0;
+    bool maxMizeValueFor = !this->currentTurn;
+    int res = 0;
+    //if maxMizeValueFor JIANG under direct kill return - max_value
+    for(auto& p:this->chessPieces){
+        if(p.isRed == maxMizeValueFor){
+            res += p.value();
+        }else{
+            res -= p.value();
+        }
+    }
+
+    return res;
 }
 
 //----------------------------------------------------------------------helpers

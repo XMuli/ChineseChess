@@ -194,23 +194,23 @@ void MachineGame::clickPieces(int checkedID, int &row, int &col)
 ChessStep MachineGame::getStepFromState(ChessState state){
     ChessStep res;
     for(auto &pieceInState:state.getChessPieces()){
-        for (int i = 0; i < 32; ++i) {
-            auto pieceInGame = this->m_ChessPieces[i];
-            bool flag = MachineGameHelper::isSamePieceAndDifferentPos(pieceInState,pieceInGame);
-            if(flag){
-                res.fromCol = pieceInGame.col;
-                res.fromRow = pieceInGame.row;
+        for (auto &pieceInGame : this->m_ChessPieces) {
+           if(pieceInGame.id == pieceInState.id){
+               if(pieceInGame.row != pieceInState.row || pieceInGame.col != pieceInState.col){
+                   res.fromCol = pieceInGame.col;
+                   res.fromRow = pieceInGame.row;
 
-                res.toCol = pieceInGame.col;
-                res.toRow = pieceInGame.row;
+                   res.toCol = pieceInState.col;
+                   res.toRow = pieceInState.row;
 
-                res.moveId = pieceInGame.id;
-
-                //TODO: killID should be assigned if kill happend
-//                res.m_nKillID =
-            }
-
-
+                   res.moveId = pieceInGame.id;
+                   for (auto &possibleKilledPiece : this->m_ChessPieces){
+                       if(possibleKilledPiece.row == res.toRow && possibleKilledPiece.col == res.toCol ){
+                           res.killId = possibleKilledPiece.id;
+                       }
+                   }
+               }
+           }
         }
     }
     return res;
