@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     NetworkGame.cpp \
     ChooseMainWindow.cpp \
     AboutAuthor.cpp \
-    Rule.cpp
+    Rule.cpp \
+    stategenerator.cpp
 
 HEADERS  += ChessBoard.h \
     ChessPieces.h \
@@ -51,7 +52,8 @@ HEADERS  += ChessBoard.h \
     AboutAuthor.h \
     Node.h \
     Rule.h \
-    myLog.h
+    myLog.h \
+    stategenerator.h
 
 FORMS    += ChessBoard.ui \
     AboutAuthor.ui
