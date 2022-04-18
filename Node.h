@@ -72,6 +72,7 @@ public:
         Node* res = children.at(0);
         for(auto* node:children){
             std::cout<< "current node has layer:"<<node->layer
+                     << " is "<< (node->state.currentTurn == RED?"RED":"BLACK")
                      <<" and numplayed="<<node->numPlayed
                     << " and numWined="<<node->numWined<<std::endl;
             if(res->numPlayed<node->numPlayed){

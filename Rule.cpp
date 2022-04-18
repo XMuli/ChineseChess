@@ -3,11 +3,6 @@
 
 namespace rule {
 
-    ChessPiece getPieces(ChessState* state,bool redOrBlack,ChessPiece::CHESS_TYPE type){
-        return ChessPiece();
-    }
-
-
     std::vector<ChessStep> generateUnblockingStepsForOnePiece(ChessPiece const &pieces){
         std::vector<ChessStep> result;
         _helper::stepJIANGorBING(pieces,result);
@@ -34,6 +29,8 @@ namespace rule {
         if(step.fromCol == step.toCol && step.fromRow == step.toRow){
             return false;
         }
+
+
 
         switch (state->getPieceById(step.moveId).type) {
         case ChessPiece::JIANG:
@@ -271,16 +268,20 @@ namespace rule {
 
         bool isDestinationTakenByAlly(ChessStep &step,ChessPiece& piece,ChessState* state){
 
-            if(isPositionOccupied(step.toRow, step.toCol, state)){
-                ChessPiece* pieceHoldsPos = state->getPieceByPos(step.toRow,step.toCol);
-                if(!isEnemyPiece(piece,*pieceHoldsPos)){
-                    //pos is occupied by alias
-                    return true;
-                }
+            if(!isPositionOccupied(step.toRow, step.toCol, state)){
+                return false;
             }
+            ChessPiece* pieceHoldsPos = state->getPieceByPos(step.toRow,step.toCol);
+            if(isEnemyPiece(piece,*pieceHoldsPos)){
+                    //pos is occupied by alias
+                    return false;
+            }
+
             // pos not taken
-            return false;
-        }
+            return true;
+         }
+
+
 
         int numberOfPiecesInBetweenStep(ChessStep &step,ChessState* state){
             if (step.fromCol != step.toCol && step.fromRow!=step.toRow){

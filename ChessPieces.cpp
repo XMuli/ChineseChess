@@ -51,12 +51,12 @@ POS tPos[16]= {
               };
 
 std::map<ChessPiece::CHESS_TYPE,int> valueMap = {
-    {ChessPiece::CHE,700},
-    {ChessPiece::MA,500},
+    {ChessPiece::CHE,1000},
+    {ChessPiece::MA,600},
     {ChessPiece::PAO,400},
     {ChessPiece::XIANG,300},
     {ChessPiece::SHI,300},
-    {ChessPiece::JIANG,7000},
+    {ChessPiece::JIANG,10000},
     {ChessPiece::BING,200},
 };
 

@@ -6,6 +6,17 @@
 using namespace rule;
 
 std::vector<ChessState> ChessRuleProvider::getAllPossibleChildState(ChessState* state){
+    std::vector<ChessStep> stepsToMoveForAllPieces = getAllValidSteps(state);
+    // generate state for all possible steps
+    std::vector<ChessState> resStates;
+    for(auto const &step:stepsToMoveForAllPieces){
+        auto const &resState = getState(step,state);
+        resStates.push_back(resState);
+    }
+    return resStates;
+}
+
+std::vector<ChessStep> ChessRuleProvider::getAllValidSteps(ChessState* state){
     std::vector<ChessStep> stepsToMoveForAllPieces;
     // for all the pieces in current state that is moveable, generate it's possible steps
     for(auto const &piece:state->getChessPieces()){
@@ -23,14 +34,9 @@ std::vector<ChessState> ChessRuleProvider::getAllPossibleChildState(ChessState* 
         }
     }
 
-    // generate state for all possible steps
-    std::vector<ChessState> resStates;
-    for(auto const &step:stepsToMoveForAllPieces){
-        auto const &resState = getState(step,state);
-        resStates.push_back(resState);
-    }
-    return resStates;
+    return stepsToMoveForAllPieces;
 }
+
 
 bool ChessRuleProvider::isGameEnd(ChessState* state){
     for(auto &p:state->getChessPieces()){

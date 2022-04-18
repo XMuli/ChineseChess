@@ -15,15 +15,13 @@ using namespace rule;
 std::vector<ChessState> ChessState::getGoodPossibleNextStates(){
     auto states = ruler.getAllPossibleChildState(this);
 
-//    std::cout<<"============================================\n";
-//    this->print();
-//    std::cout<<"Children\n";
+
     sort(states.begin(),states.end(),[](ChessState& a, ChessState& b){
         return a.value() > b.value();
     });
 
-    states.resize(10);
-//    std::cout<<"============================================\n";
+    states.resize(states.size()/2);
+
     return states;
 }
 
@@ -32,15 +30,12 @@ bool ChessState::playoutUntilEnd(){
 
     int played = 0;
 
-//    best.print();
-//    std::cout<<"find best start========================== the above is parent state"<<std::endl;
+
     while(!this->ruler.isGameEnd(&best)){
 
         best = best.getBestChild();
-//        best.print();
-//        std::cout<<played<<"th iteration done"<<std::endl;
 
-        if(played >= 5){
+        if(played >= 15){
             return rule::whoHasBetterChanceToWin(&best);
         }
         played++;
@@ -49,19 +44,22 @@ bool ChessState::playoutUntilEnd(){
     return ruler.whoWins(&best);
 }
 
-ChessState ChessState::getBestChild(){
-    auto children = getGoodPossibleNextStates();
-    int max = -VALUE_MAX;
-    ChessState best = children.at(0);
 
-    for(auto& child: children){
-        if(child.value() > max){
-            best = child;
-            max = child.value();
+
+ChessState ChessState::getBestChild(){
+    auto steps = ruler.getAllValidSteps(this);
+
+    auto best = steps.at(0);
+    int bestValue = stepValue(best);
+    for(auto &step:steps){
+        auto value= stepValue(step);
+        if(value > bestValue){
+            best = step;
+            bestValue = value;
         }
     }
 
-    return best;
+    return ruler.getState(best,this);
 }
 
 int ChessState::value(){
@@ -69,22 +67,43 @@ int ChessState::value(){
         return cachedValue;
     }
     // maxmize value for parent
-    bool maxMizeValueFor = !this->currentTurn;
 
     int res = 0;
     for(auto& p:this->chessPieces){
-        if(p.isDead){
-            continue;
-        }
-        if(p.isRed == maxMizeValueFor){
+        if(p.isRed){
             res += p.value();
         }else{
             res -= p.value();
         }
     }
+
+    if(this->currentTurn == BLACK){
+        res = -res;
+    }
+
     cachedValue = res;
 
     return cachedValue;
+}
+
+int ChessState::stepValue(ChessStep &step){
+    int res = value();
+
+    if(step.killId != -1){
+        res += this->getPieceById(step.killId).value();
+    }
+
+    auto piece = getPieceById(step.moveId);
+    if(piece.type == ChessPiece::CHE){
+        res += 200;
+    }
+
+    if(piece.type == ChessPiece::MA){
+        res += 100;
+    }
+
+
+    return res;
 }
 
 //----------------------------------------------------------------------helpers

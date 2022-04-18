@@ -14,7 +14,6 @@
 //------------------------------ helpers
 namespace rule {
 
-    ChessPiece getPieces(ChessState* state,bool redOrBlack,ChessPiece::CHESS_TYPE type);
     // step*() provides steps withou limitation, can go off bound, use with combined validator
     std::vector<ChessStep> generateUnblockingStepsForOnePiece(ChessPiece const &pieces);
 

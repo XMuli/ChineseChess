@@ -13,12 +13,14 @@ class ChessRuleProvider
 public:
     ChessRuleProvider(){}
     std::vector<ChessState> getAllPossibleChildState(ChessState* state);
+    std::vector<ChessStep> getAllValidSteps(ChessState* state);
     bool isGameEnd(ChessState* state);
     bool whoWins(ChessState* state);
+    ChessState getState(ChessStep const &step,ChessState *state);
+
 
 private:
     std::vector<ChessStep> getValidStepsForPiece(ChessPiece const &pieces,ChessState *state);
-    ChessState getState(ChessStep const &step,ChessState *state);
 
 };
 

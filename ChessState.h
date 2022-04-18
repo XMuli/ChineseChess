@@ -31,9 +31,11 @@ public:
 
     bool playoutUntilEnd();
     std::vector<ChessState> getGoodPossibleNextStates();
-    ChessState getBestChild();
+
 
 private:
+    int stepValue(ChessStep &step);
+    ChessState getBestChild();
     int cachedValue = 1;
     //all chess pieces, contains position infos
     std::vector<ChessPiece> chessPieces;
