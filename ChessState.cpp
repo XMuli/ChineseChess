@@ -5,6 +5,7 @@
 #include "myLog.h"
 #include "Rule.h"
 #include <algorithm>
+#include "Config.h"
 #define VALUE_MAX 50000
 
 using namespace std;
@@ -20,7 +21,7 @@ std::vector<ChessState> ChessState::getGoodPossibleNextStates(){
         return a.value() > b.value();
     });
 
-    states.resize(states.size()/2);
+    states.resize((int)(states.size()*Config::proportion_of_child_to_expand));
 
     return states;
 }
@@ -35,7 +36,7 @@ bool ChessState::playoutUntilEnd(){
 
         best = best.getBestChild();
 
-        if(played >= 15){
+        if(played >= Config::Max_playout_depth){
             return rule::whoHasBetterChanceToWin(&best);
         }
         played++;
@@ -62,6 +63,7 @@ ChessState ChessState::getBestChild(){
     return ruler.getState(best,this);
 }
 
+// value such that maximize parent's advantage
 int ChessState::value(){
     if(this->cachedValue != 1){
         return cachedValue;
@@ -70,15 +72,11 @@ int ChessState::value(){
 
     int res = 0;
     for(auto& p:this->chessPieces){
-        if(p.isRed){
+        if(p.isRed == !this->currentTurn){
             res += p.value();
         }else{
             res -= p.value();
         }
-    }
-
-    if(this->currentTurn == BLACK){
-        res = -res;
     }
 
     cachedValue = res;
@@ -86,21 +84,22 @@ int ChessState::value(){
     return cachedValue;
 }
 
+// value fpr a certain step in current state
 int ChessState::stepValue(ChessStep &step){
-    int res = value();
+    int res = -value();
 
     if(step.killId != -1){
-        res += this->getPieceById(step.killId).value();
+        res += this->getPieceById(step.killId).value()*Config::kill_reward_scalar;
     }
 
-    auto piece = getPieceById(step.moveId);
-    if(piece.type == ChessPiece::CHE){
-        res += 200;
-    }
+//    auto piece = getPieceById(step.moveId);
+//    if(piece.type == ChessPiece::CHE){
+//        res += 200;
+//    }
 
-    if(piece.type == ChessPiece::MA){
-        res += 100;
-    }
+//    if(piece.type == ChessPiece::MA){
+//        res += 100;
+//    }
 
 
     return res;

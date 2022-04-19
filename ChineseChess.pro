@@ -30,6 +30,7 @@ SOURCES += main.cpp\
     ChessState.cpp \
     ChessStep.cpp \
     ChessVoice.cpp \
+    Config.cpp \
     MachineGame.cpp \
     NetworkGame.cpp \
     ChooseMainWindow.cpp \
@@ -45,6 +46,7 @@ HEADERS  += ChessBoard.h \
     ChessState.h \
     ChessStep.h \
     ChessVoice.h \
+    Config.h \
     MachineGame.h \
     MonteCarloTree.h \
     NetworkGame.h \

@@ -2,6 +2,7 @@
 #define MONTECARLOTREE_H
 
 #include "Node.h"
+#include "Config.h"
 
 
 template<class T>
@@ -33,7 +34,7 @@ private:
     bool hasTimeLeft(){
         //TODO: resource wise condition should be applied
         std::cout<<"iteration has been going on for "<<iterateTime<<" times"<<std::endl;
-        return ++iterateTime<100;
+        return ++iterateTime<Config::max_iterate_time;
     }
     Node<T> *root;
 };

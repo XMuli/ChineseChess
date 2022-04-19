@@ -21,6 +21,9 @@
  */
 #include "ChessPieces.h"
 #include <map>
+#include "Config.h"
+
+
 //1、定义结构体tPOS
 struct POS
 {
@@ -51,13 +54,13 @@ POS tPos[16]= {
               };
 
 std::map<ChessPiece::CHESS_TYPE,int> valueMap = {
-    {ChessPiece::CHE,1000},
-    {ChessPiece::MA,600},
-    {ChessPiece::PAO,400},
-    {ChessPiece::XIANG,300},
-    {ChessPiece::SHI,300},
-    {ChessPiece::JIANG,10000},
-    {ChessPiece::BING,200},
+    {ChessPiece::CHE,Config::CHE},
+    {ChessPiece::MA,Config::MA},
+    {ChessPiece::PAO,Config::PAO},
+    {ChessPiece::XIANG,Config::XIANG},
+    {ChessPiece::SHI,Config::SHI},
+    {ChessPiece::JIANG,Config::JIANG},
+    {ChessPiece::BING,Config::BING},
 };
 
 

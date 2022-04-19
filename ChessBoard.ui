@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="11,3">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="11,0">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -77,7 +77,7 @@ border-image: url(:/images/b.jpg);
           </font>
          </property>
          <property name="text">
-          <string>对战计时：</string>
+          <string>Time</string>
          </property>
         </widget>
        </item>
@@ -111,7 +111,7 @@ border-image: url(:/images/b.jpg);
             </sizepolicy>
            </property>
            <property name="text">
-            <string>开始</string>
+            <string>Start</string>
            </property>
           </widget>
          </item>
@@ -137,7 +137,7 @@ border-image: url(:/images/b.jpg);
             </sizepolicy>
            </property>
            <property name="text">
-            <string>重置</string>
+            <string>reinit</string>
            </property>
           </widget>
          </item>
@@ -146,28 +146,28 @@ border-image: url(:/images/b.jpg);
        <item>
         <widget class="QPushButton" name="pushButton_restart">
          <property name="text">
-          <string>重新游戏</string>
+          <string>restart</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_back">
          <property name="text">
-          <string>悔棋</string>
+          <string>replay</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_showStep">
          <property name="text">
-          <string>显示/隐藏步数</string>
+          <string>show/hide step</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_toMenu">
          <property name="text">
-          <string>返回主菜单</string>
+          <string>return to main menu</string>
          </property>
         </widget>
        </item>
@@ -228,7 +228,7 @@ border-image: url(:/images/b.jpg);
      <x>0</x>
      <y>0</y>
      <width>1156</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

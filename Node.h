@@ -4,6 +4,7 @@
 #include <math.h>
 #include <float.h>
 #include <limits>
+#include "Config.h"
 
 #define BLACK false
 #define RED true
@@ -109,7 +110,7 @@ private:
         if(numPlayed == 0){
             return std::numeric_limits<double>::max();
         }
-        return node->numWined/(double)node->numPlayed + 1.141 *sqrt(log((double)node->parent->numPlayed)/(double)node->numPlayed);
+        return node->numWined/(double)node->numPlayed + Config::UCB_constant*sqrt(log((double)node->parent->numPlayed)/(double)node->numPlayed);
     }
 
     void generateChildren(){
