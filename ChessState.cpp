@@ -92,16 +92,6 @@ int ChessState::stepValue(ChessStep &step){
         res += this->getPieceById(step.killId).value()*Config::kill_reward_scalar;
     }
 
-//    auto piece = getPieceById(step.moveId);
-//    if(piece.type == ChessPiece::CHE){
-//        res += 200;
-//    }
-
-//    if(piece.type == ChessPiece::MA){
-//        res += 100;
-//    }
-
-
     return res;
 }
 
