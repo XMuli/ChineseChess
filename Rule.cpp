@@ -30,6 +30,11 @@ namespace rule {
             return false;
         }
 
+        auto *p = state->getPieceByPos(step.fromRow,step.fromCol);
+        if(p!=nullptr && p->isDead){
+            return false;
+        }
+
 
 
         switch (state->getPieceById(step.moveId).type) {
