@@ -289,39 +289,25 @@ namespace rule {
             }
 
             int count = 0;
-            int toCheckRow[] = {0,1,2,3,4,5,6,7,8,9};
-            int toCheckCol[] = {0,1,2,3,4,5,6,7,8};
 
             // if movine along the same row, see if there's anything in between from col to to col
             if(step.fromRow == step.toRow){
-                toCheckCol[step.fromCol] = - 1;
-                toCheckCol[step.toCol] = - 1;
-                bool flag = false;
-                for(int col:toCheckCol){
+                int from = step.fromCol < step.toCol ? step.fromCol : step.toCol;
+                int to = step.fromCol > step.toCol ? step.fromCol : step.toCol;
 
-                   if(flag &&col != step.toCol && isPositionOccupied(step.fromRow, col, state)){
-                       count++;
-                   }
-
-                   if(col == -1){
-                       flag = !flag;
-                   }
-                }
-
-            }
-
-            if(step.fromCol == step.toCol){
-                toCheckRow[step.fromRow] = - 1;
-                toCheckRow[step.toRow] = - 1;
-                bool flag = false;
-                for(int row:toCheckRow){
-                    if(flag && row!= step.toRow && isPositionOccupied(row, step.fromCol, state)){
+                for(int i = from+1;i<to;i++){
+                    if(state->getPieceByPos(step.fromRow,i)!=nullptr){
                         count++;
                     }
+                }
+            }
+            else if(step.fromCol == step.toCol){
+                int from = step.fromRow < step.toRow ? step.fromRow : step.toRow;
+                int to = step.fromRow > step.toRow ? step.fromRow : step.toRow;
 
-
-                    if(row == -1){
-                        flag = !flag;
+                for(int i = from+1;i<to;i++){
+                    if(state->getPieceByPos(i,step.fromCol)!=nullptr){
+                        count++;
                     }
                 }
             }
