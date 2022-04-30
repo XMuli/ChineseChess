@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Author:  kirayamato
  * mail:    kirawhile1@gmail.com
  * github:  https://github.com/kira-yamatoo
