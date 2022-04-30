@@ -75,9 +75,15 @@ if (Qt5Core_FOUND AND Qt5Widgets_FOUND AND Qt5Gui_FOUND AND
     include_directories(${QT_INCLUDES})
 endif()
 
-qt5_wrap_ui(UI_HEADERS AboutAuthor.ui
-        ChessBoard.ui)
-qt5_add_resources(QRCS chooseresource.qrc)
+qt5_wrap_ui(UI_HEADERS
+    AboutAuthor.ui
+    ChessBoard.ui)
+
+qt5_add_resources(QRCS
+    chooseresource.qrc)
+
+set(SRCS_RESOURCES
+    "res.rc")
 
 set(SRCS_FILES
     main.cpp
@@ -105,11 +111,13 @@ if (APPLE)
     set(MACOSX_BUNDLE_INFO_STRING "Cross-platform and online battle platform game based on Qt: Chinese Chess. Also known as: Xiangqi")
 
     add_executable(${PROJECT_NAME} MACOSX_BUNDLE
+        ${SRCS_RESOURCES}
         ${SRCS_FILES}
         ${UI_HEADERS}
         ${QRCS})
 else()
     add_executable(${PROJECT_NAME} WIN32
+        ${SRCS_RESOURCES}
         ${SRCS_FILES}
         ${UI_HEADERS}
         ${QRCS})
@@ -120,8 +128,7 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Gui
         Qt5::Widgets
         Qt5::Network
-        Qt5::Multimedia
-        )
+        Qt5::Multimedia)
 
 if(APPLE)
 

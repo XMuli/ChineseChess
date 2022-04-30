@@ -245,7 +245,7 @@ void ChessBoard::paintEvent(QPaintEvent *)
         QRect rect2(m_nOffSet+2*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
         QRect rect3(m_nOffSet+5*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
         QRect rect4(m_nOffSet+6*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
-        painter.setFont(QFont("隶书", m_nR, 800));
+        painter.setFont(QFont("FangSong", m_nR * 5 / 6, 800));
         painter.drawText(rect1, "楚", QTextOption(Qt::AlignCenter));
         painter.drawText(rect2, "河", QTextOption(Qt::AlignCenter));
         painter.drawText(rect3, "汉", QTextOption(Qt::AlignCenter));
@@ -274,7 +274,7 @@ void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具�
 
     painter.setPen(QColor(0, 0, 0));
     painter.drawEllipse(center(id), m_nR, m_nR);  //绘画圆形
-    painter.setFont(QFont("华文行楷", m_nR, 700));
+    painter.setFont(QFont("FangSong", m_nR * 5 / 6, 2700));
 
     if(id < 16)
         painter.setPen(QColor(0, 0, 0));
@@ -360,7 +360,7 @@ void ChessBoard::winMessageBox(QString title, QString msg)
 {
     QMessageBox message(QMessageBox::Information, title, msg);
     message.setIconPixmap(QPixmap(":/images/win.jpg"));
-    message.setFont(QFont("华文行楷",16,QFont::Bold));
+    message.setFont(QFont("FangSong", 16, QFont::Bold));
     message.exec();
 }
 
@@ -418,7 +418,7 @@ bool ChessBoard:: isGeneral()
 //    {
 //        QMessageBox message(QMessageBox::Information, "提示", "本局已结束，请重新开始.");
 //        message.setIconPixmap(QPixmap(":/images/win.jpg"));
-//        message.setFont(QFont("华文行楷",16,QFont::Bold));
+//        message.setFont(QFont("FangSong",16,QFont::Bold));
 //        message.exec();
 //        return;
 //    }
