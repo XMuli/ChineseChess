@@ -9,7 +9,7 @@
 #     已将源码和思路开源公布于我的github和博客，供大家学习参考
 #
 # 联系作者:
-# GitHub:        https://github.com/xmuli
+# GitHub:        https://github.com/XMuli
 # Telegram:      https://t.me/xmuli
 # CSDN Bolg:     https://blog.csdn.net/qq_33154343
 # My Blog:       https://ifmet.cn
