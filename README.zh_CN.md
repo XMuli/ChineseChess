@@ -1,4 +1,4 @@
-# ChinessChess
+# ChineseChess
 
 <div align=center>
 <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/logo.svg" height="240" width="240" />
@@ -9,33 +9,32 @@
 
 <p align="right"><br><a href="README.md">English</a> | <a href="README.zh_CN.md">简体中文</a></p>
 
-![](https://img.shields.io/github/license/XMuli/chinessChess) ![](https://img.shields.io/github/v/release/XMuli/chinessChess?style=flat&color=birightgreen) ![](https://img.shields.io/badge/powered%20by-XMuli-ff69b4)  ![](https://img.shields.io/github/stars/XMuli/chinessChess?style=social) ![](https://img.shields.io/github/forks/XMuli/chinessChess?style=social&label=Fork)
+![](https://img.shields.io/github/license/XMuli/chineseChess) ![](https://img.shields.io/github/v/release/XMuli/ChineseChess?style=flat&color=birightgreen)![](https://img.shields.io/badge/powered%20by-XMuli-ff69b4)![](https://img.shields.io/github/stars/XMuli/ChineseChess?style=social) ![](https://img.shields.io/github/forks/XMuli/ChineseChess?style=social&label=Fork)
 
-![](https://img.shields.io/github/workflow/status/XMuli/chinessChess/Windows?style=flat&logo=windows) ![](https://img.shields.io/github/workflow/status/XMuli/chinessChess/MacOS?style=flat&logo=apple) ![](https://img.shields.io/github/workflow/status/XMuli/chinessChess/Ubuntu?style=flat&logo=linux) ![](https://img.shields.io/github/languages/code-size/XMuli/chinessChess)  ![](https://img.shields.io/github/downloads/XMuli/chinessChess/total)
-
+![](https://img.shields.io/github/workflow/status/XMuli/ChineseChess/Windows?style=flat&logo=windows) ![](https://img.shields.io/github/workflow/status/XMuli/ChineseChess/MacOS?style=flat&logo=apple) ![](https://img.shields.io/github/workflow/status/XMuli/ChineseChess/Linux?style=flat&logo=linux) ![](https://img.shields.io/github/languages/code-size/XMuli/ChineseChess)  ![](https://img.shields.io/github/downloads/XMuli/ChineseChess/total)
 <br>
 
 > 基于`Qt5`开发的中国象棋网络对战平台(含通讯功能)，实现了在单机或联网状态下，无论是单人还是多人，无论使用系统是否相同，均可以实现象棋游戏功能。 
 
 <br>
 
-## 特性:
+## 特性
 
 **该项目主要功能模块分为：**
 
-① 玩家与自己对战
+ⅰ 玩家与自己对战
 
-② 玩家与电脑AI对战 
+ⅱ 玩家与电脑AI对战 
 
-③ 多人网络对战(可跨不同系统)
+ⅲ 多人网络对战(可跨不同系统)
 
-④ 对战计时
+ⅳ 对战计时
 
-⑤ 悔棋（可多步）
+ⅴ 悔棋（可多步）
 
-⑥ 下棋轨迹
+ⅵ 下棋轨迹
 
-⑦ 关于作品信息
+ⅵ 关于作品信息
 
 <br>
 
@@ -43,7 +42,7 @@
 
 <font color=#70AD47 size=4 face="幼圆">**视频演示：**</font> 
 
-[ChinessChess 基于QT的跨平台网络象棋对战演示](https://www.bilibili.com/video/av45509758)
+[ChineseChess 基于QT的跨平台网络象棋对战演示](https://www.bilibili.com/video/av45509758)
 
 <br>
 
@@ -77,9 +76,9 @@
 
 <br>
 
-## 更新(2022.01.01 v6.0)
+## 更新(2022 v6.0+)
 
-### 功能 
+### 功能
 
 - 添加悔棋功能，无限制悔棋
 - 显示下棋轨迹，当前执手
@@ -99,7 +98,7 @@
 
 <br>
 
-## 开发教程：
+## 开发教程
 
 - [项目实战：Qt5／C++：QT象棋【初版】](https://blog.csdn.net/qq_33154343/article/details/80931400) 
 
@@ -109,43 +108,24 @@
 
 - [QT5/C++项目：基于QT的跨平台网络对战象棋（三）](https://blog.csdn.net/qq_33154343/article/details/89286553)
 
-<br>
+## 构建
 
-## 依赖：
-
-### 运行
-
-- libqt5multimedia5
-
-### 构建
-
-- git
-- make
-- g++
-- qtbase5-dev
-- qtchooser
-- qt5-qmake
-- qtbase5-dev-tools
-- qtmultimedia5-dev
-
-## 构建：
-
-1. 安装 Qt （Qt >= 5.9.0）和其他依赖
+1. 安装 Qt （Qt >= 5.12.11）和其他依赖
 
    以 Debian 和 Ubuntu 为例，执行:
    
    ```bash
-   $ sudo apt install -y git make g++ qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools qtmultimedia5-dev
+   $ sudo apt install cmake qtbase5-dev qt5-default libqt5svg5-dev qtmultimedia5-dev qttools5-dev libqt5x11extras5-dev
    ```
    
 2. 运行命令:
 
    ```bash
-   $ git clone https://github.com/XMuli/chinessChess.git
-   $ cd chinessChess
-   $ qmake
+   $ git clone https://github.com/XMuli/ChineseChess.git
+   $ cd ChineseChess
+   $ mkdir build && cd build
+   $ cmake   # or qmake
    $ make
-   $ ./ChineseChess
    ```
 
 
@@ -153,7 +133,7 @@
 
 <br>
 
-## 贡献者：
+## 贡献者
 
 感谢的小伙伴提交的贡献 🥳🥳:
 
@@ -208,16 +188,16 @@
 
 <br>
 
-若是帮助到了你，<font color=#FE7207  size=4 face="幼圆">可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，方便抬手之间，相当点个赞，</font>手有余香；其次才是一份冰的快乐水。
+若是帮助到了你，或者觉得有用，<font color=#FE7207  size=4 face="幼圆">可以点击该项目的的 <font color=#D0087E size=4 face="幼圆">**⭐Star** </font>和<font color=#D0087E size=4 face="幼圆">**🍴 Fork**</font> 的两个图标，方便抬手之间，表示点个赞，手有余香，</font>其次才是一份冰的肥宅快乐水。
 
 <br>
 
-## 作者：
+## 作者
 
-<font color=#70AD47 size=4 face="幼圆">**偕臧 (XMuli)：** </font> [https://ifmet.cn](https://ifmet.cn)
+[![alt text](https://img.shields.io/badge/QQ-%E5%81%95%E8%87%A7-brightgreen)](https://sighttp.qq.com/authd?IDKEY=31f3ef7312b39e2c8dc822ae2f4c3b3118e1a6f31cc83373) [![alt text](https://img.shields.io/badge/GitHub-XMuli-brightgreen)](https://github.com/XMuli) [![alt text](https://img.shields.io/badge/Blog-%E5%81%95%E8%87%A7%E7%9A%84%E5%B0%8F%E7%AB%99-ff69b4)](https://ifmet.cn/) 
 
 <br>
 
-## 协议：
+## 协议
 
-该项目基于 `GNU General Public License v3.0` 协议进行分发和使用。 有关更多信息，请参阅[协议文件](/LICENSE)。
+该项目基于 `GNU General Public License v3.0` 协议进行分发和使用。 有关更多信息，请参阅 [协议文件](/LICENSE)。
