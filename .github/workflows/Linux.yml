@@ -1,0 +1,98 @@
+name: Linux
+on: 
+  push:
+    paths-ignore:
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+jobs:
+  build:
+    name: Build
+    # 运行平台， ubuntu-latest 目前是 Ubuntu 20.04
+    # 参考文档 https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+    runs-on:  ${{ matrix.os }}
+    strategy:
+      matrix: # 矩阵配置
+        qt_ver: [5.12.11]    # 参考: https://mirrors.cloud.tencent.com/qt/online/qtsdkrepository/linux_x64/desktop/qt5_51211
+        qt_target: [desktop]
+        qt_arch: [gcc_64]
+        arch: [arm64, amd64]
+        os: [ubuntu-20.04] # ubuntu-18.04
+    env:
+      targetName: ChineseChess
+      targetOS: debian
+      # ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      
+    steps:
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.qt_ver }}
+          arch: ${{ matrix.qt_arch }}
+          set-env: true
+      
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          submodules: true
+          
+      - name: pull 3rdparty code
+        run: |
+          cd ${{github.workspace}}
+          git submodule init
+          git submodule update
+
+      - name: gcc build
+        id: gcc-build
+        shell: bash
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+     
+      - name: NameVersion
+        id: NameVersion
+        if: startsWith(github.event.ref, 'refs/tags/')
+        shell: pwsh
+        run: |
+          $systemInfo="${{ env.targetOS }}-x64"
+          $productVersion="${{ github.ref }}".substring("refs/tags/v".length)
+          $productName="${{ env.targetName }}-$productVersion-$systemInfo"
+
+          echo "systemInfo=$systemInfo" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "productVersion=$productVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "productName=$productName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      # tag打为.zip包 
+      - name: Package
+        id: Package      
+        if: startsWith(github.event.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          mkdir bin
+          cp -r build/bin/${{ env.targetName }} bin
+          cp -r debian_portable/* bin
+          
+          sudo chmod 777 bin/ldd.sh
+          sudo chmod 777 bin/${{ env.targetName }}.sh
+          
+          cd bin
+          ./ldd.sh ${{ env.targetName }}
+          cd ..
+          zip -q -r ${{ env.productName }}.zip bin/*
+
+      # tag上传Release
+      - name: uploadRelease
+        if: startsWith(github.event.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.upload_release }}
+        with:
+          draft: false
+          prerelease: false
+          files: |
+            ${{ env.productName }}.zip
+          tag: ${{ github.ref }}
+          overwrite: true 

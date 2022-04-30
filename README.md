@@ -135,7 +135,7 @@ In addition, the source code summary is accompanied by detailed code comments fo
 2. Run the command::
 
    ```bash
-   $ git clone https://github.com/xmuli/chinessChess.git
+   $ git clone https://github.com/XMuli/chinessChess.git
    $ cd chinessChess
    $ qmake
    $ make

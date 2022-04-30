@@ -141,7 +141,7 @@
 2. 运行命令:
 
    ```bash
-   $ git clone https://github.com/xmuli/chinessChess.git
+   $ git clone https://github.com/XMuli/chinessChess.git
    $ cd chinessChess
    $ qmake
    $ make

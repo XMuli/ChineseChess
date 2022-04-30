@@ -1,16 +1,11 @@
 name: Windows
 on: 
-  # push代码时触发workflow
   push:
-    paths:
-      - 'CMakeLists.txt'
-      - 'src/**'
-      - '.github/workflows/Windows.yml'
+    paths-ignore:
+      - '*.md'
   pull_request:
-    paths:
-      - 'CMakeLists.txt'
-      - 'src/**'
-      - '.github/workflows/Windows.yml' 
+    paths-ignore:
+      - '*.md'
 jobs:
   build:
     name: Build
@@ -26,40 +21,31 @@ jobs:
             qt_arch: win32_msvc2017
             msvc_arch: x86
             qt_arch_install: msvc2017
-          - qt_ver: 5.12.11           
-            qt_arch: win64_msvc2017_64
-            msvc_arch: x64
-            qt_arch_install: msvc2017_64
+          # - qt_ver: 5.12.11           
+          #   qt_arch: win64_msvc2017_64
+          #   msvc_arch: x64
+          #   qt_arch_install: msvc2017_64
     env:
       targetName: ChineseChess
       targetOS: windows
-    # 步骤
-    steps:
-      # - name: Cache Qt  # 使用缓存安装Qt模块
-      #   id: cache-qt
-      #   uses: actions/cache@v1  # not v2! 参见 https://github.com/jurplel/install-qt-action
-      #   with:
-      #     path: ../Qt
-      #     key: ${{ runner.os }}-QtCache
 
+    steps:
       - name: Install Qt
-        # if: steps.cache-qt.outputs.cache-hit != 'true'
         uses: jurplel/install-qt-action@v2
         with:
           version: ${{ matrix.qt_ver }}
           arch: ${{ matrix.qt_arch }}
           set-env: true
-          # cached: ${{ steps.cache-qt.outputs.cache-hit }}  // 默认 'false'
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-          
-      - name: pull 3rdparty code
-        id: pull-3rdparty-code
+          submodules: true
+
+      - name: Inspect Qt
+        shell: pwsh
         run: |
-          git submodule init
-          git submodule update
+          Get-ChildItem -Recurse -Path $Env:Qt5_Dir
 
       - name: msvc-build
         id: msvc-build
@@ -67,25 +53,19 @@ jobs:
         run: |
           mkdir bin
           mkdir build
-          
+
           cd build
-          qmake ..
-          nmake
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.msvc_arch }}
 
           if "${{ matrix.msvc_arch }}" == "x86" (
             echo "-------------- x86 --------------"
+            cmake -G "Visual Studio 16 2019" -A Win32 ..
+            devenv "${{ env.targetName }}.sln" /Build "Release|Win32"
           ) else (
             echo "-------------- x64 --------------"
+            cmake -G "Visual Studio 16 2019" -A x64 ..
+            devenv "${{ env.targetName }}.sln" /Build "Release|x64"
           )
-          
-          echo "-------------- show dir 01 --------------"
-          chdir
-          dir
-          
-          cd ${{ github.workspace }}/bin/Release
-          echo "-------------- show dir 02 --------------"
-          chdir
-          dir
      
       - name: name version
         id: name-version
@@ -106,16 +86,16 @@ jobs:
         if: startsWith(github.event.ref, 'refs/tags/')
         shell: pwsh
         run: |
-          Copy-Item -Path build/${{ env.targetName }}.exe -Destination bin/
+          Copy-Item -Path build/bin/Release/* -Destination bin/
           dir bin
+
           echo "-------------- debug 1 --------------"
+          # ${{ env.GITHUB_PATH }}/windeployqt bin/${{ env.targetName }}.exe # cache 时使用
           windeployqt bin/${{ env.targetName }}.exe
           
-          dir bin
           echo "-------------- debug 2 --------------"
-
           Compress-Archive -Path ${{ github.workspace }}/bin/* -Destination ${{ env.productName }}.zip
-          dir
+          dir ${{ github.workspace }}/bin
 
       - uses: actions/upload-artifact@v3
         with:

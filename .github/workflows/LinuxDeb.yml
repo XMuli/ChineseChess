@@ -1,0 +1,122 @@
+name: LinuxDeb
+on: 
+  push:
+    paths-ignore:
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+jobs:
+  build:
+    name: Build
+    # 运行平台， ubuntu-latest 目前是 Ubuntu 20.04
+    # 参考文档 https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+    runs-on:  ${{ matrix.os }}
+    strategy:
+      matrix: # 矩阵配置
+        qt_ver: [5.12.11]    # 参考: https://mirrors.cloud.tencent.com/qt/online/qtsdkrepository/linux_x64/desktop/qt5_51211
+        qt_target: [desktop]
+        qt_arch: [gcc_64]
+        arch: [arm64, amd64]
+        os: [ubuntu-20.04] # ubuntu-18.04
+    env:
+      targetName: ChineseChess
+      targetLowerName: chinesechess
+      targetOS: debian
+      
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          submodules: true
+          
+      - name: pull 3rdparty code
+        run: |
+          cd ${{github.workspace}}
+          git submodule init
+          git submodule update
+     
+      - name: NameVersion
+        id: NameVersion
+        if: startsWith(github.event.ref, 'refs/tags/')
+        shell: pwsh
+        run: |
+          $systemInfo="${{ env.targetOS }}-x64"
+          $productVersion="${{ github.ref }}".substring("refs/tags/v".length)
+          # $productName="${{ env.targetName }}-$productVersion-protable-$systemInfo"
+          $productDebName="${{ env.targetLowerName }}-$productVersion"
+
+          echo "systemInfo=$systemInfo" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "productVersion=$productVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          # echo "productName=$productName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "productDebName=$productDebName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      # 安装一些包
+      - name: AptInstallTool
+        id: AptInstallTool      
+        if: startsWith(github.event.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          sudo apt clean
+          sudo apt update
+          sudo apt install wget tar dh-make debmake lintian cmake qtbase5-dev qt5-default libqt5x11extras5-dev
+
+      # tag 打包 .deb，无动态库
+      - name: DebPackage
+        id: DebPackage      
+        if: startsWith(github.event.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          echo "-------------- debug 0 --------------"
+          pwd
+          
+          cd ..
+          cp -r ${{ env.targetName }} ${{ env.productDebName }}
+          tar -cvzf ${{ env.productDebName }}.tar.gz ${{ env.productDebName }}
+
+          echo "-------------- debug 1 --------------"
+          ls -al
+
+          cat >> ~/.bashrc <<EOF 
+          DEBEMAIL="xmulitech@gmail.com" 
+          DEBFULLNAME="XMuli" 
+          export DEBEMAIL DEBFULLNAME 
+          EOF
+
+          . ~/.bashrc
+          echo "-------------- debug 2 --------------"
+          cat  ~/.bashrc
+
+          cd ${{ env.productDebName }}
+
+          pwd
+          ls -al
+          pwd
+          ls -al ..
+
+          # dh_make -f ../${{ env.productDebName }}.tar.gz -s -c mit -y
+
+          # https://askubuntu.com/questions/675154/dpkg-buildpackage-dpkg-source-no-upstream-tarball-found
+          # dpkg-buildpackage -us -uc
+          dpkg-buildpackage -b -rfakeroot -us -uc
+
+          echo "-------------- debug 3 --------------"
+          pwd
+          ls -al
+
+          pwd
+          ls -al ..
+
+      # tag上传Release
+      - name: uploadRelease
+        if: startsWith(github.event.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.upload_release }}
+        with:
+          draft: false
+          prerelease: false
+          files: |
+            ../*.deb
+          tag: ${{ github.ref }}
+          overwrite: true 

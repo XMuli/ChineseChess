@@ -1,0 +1,129 @@
+name: MacOS
+on: 
+  push:
+    paths-ignore:
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-10.15]  # macos-10.14 macos-10.15, macos-11.0  # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11-Readme.md
+        qt_ver: [5.12.11]  # 参考: https://mirrors.cloud.tencent.com/qt/online/qtsdkrepository/mac_x64/desktop/qt5_5111
+        qt_arch: [clang_64]
+    env:
+      targetName: ChineseChess
+      targetOS: macos
+
+    steps:
+      # macos 11.0 后默认环境变了,要指定
+      - name: prepare env
+        if: ${{ matrix.os == 'macos-11.0' }}
+        run: |
+          softwareupdate --all --install --force
+          sudo xcode-select --print-path
+          sudo xcode-select --switch /Library/Developer/CommandLineTools
+      
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.qt_ver }}
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: pull 3rdparty code
+        run: |
+          git submodule init
+          git submodule update
+
+      - name: build macos
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+
+          echo "-------------- debug 1 --------------"
+          pwd
+          ls -al
+
+          echo "-------------- debug 2 --------------"
+          cd bin
+          ls -al
+
+      - name: NameVersion
+        id: NameVersion
+        if: startsWith(github.event.ref, 'refs/tags/')
+        shell: pwsh
+        run: |
+          $systemInfo="${{ env.targetOS }}"
+          $productVersion="${{ github.ref }}".substring("refs/tags/v".length)
+          $productName="${{ env.targetName }}-$productVersion-$systemInfo-x64"
+
+          echo "systemInfo=$systemInfo" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "productVersion=$productVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "productName=$productName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      # tag打为.zip包 
+      - name: package
+        id: package
+        if: startsWith(github.event.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          # 拷贝依赖
+          mkdir bin
+
+          echo "-------------- debug 1 --------------"
+          pwd
+          ls -al
+
+          cp -r build/bin/${{ env.targetName }}.app bin
+
+          echo "-------------- debug 2 --------------"
+          pwd
+          ls -al
+
+          echo "-------------- debug 3 --------------"
+          cd bin
+          pwd
+          ls -al
+          
+          macdeployqt ${{ env.targetName }}.app -dmg
+          mv ${{ env.targetName }}.dmg ../${{ env.productName }}.dmg
+
+
+          echo "-------------- debug 4 --------------"
+          pwd
+          ls -al
+
+
+          echo "-------------- debug 5 --------------"
+          cd ../
+          pwd
+          ls -al
+
+          echo "-------------- debug 6 --------------"
+          cd bin
+          ls -al
+          pwd
+
+      # tag上传Release
+      - name: uploadRelease
+        if: startsWith(github.event.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.upload_release }}
+        with:
+          draft: false
+          prerelease: false
+          files: |
+            ${{ env.productName }}.dmg
+          tag: ${{ github.ref }}
+          overwrite: true 
