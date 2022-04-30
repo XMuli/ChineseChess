@@ -38,11 +38,6 @@ jobs:
           fetch-depth: 1
           submodules: true
 
-      - name: pull 3rdparty code
-        run: |
-          git submodule init
-          git submodule update
-
       - name: build macos
         run: |
           mkdir build

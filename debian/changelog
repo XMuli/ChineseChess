@@ -2,7 +2,7 @@ chinesechess (6.1-1) unstable; urgency=medium
 
   * Use CMake + GitHub action to automatically build CI/CD and generate a runnable application for the corresponding platform
 
- -- XMuli <xmulitech@gmail.com>  Satur, 30 Apr 2022 14:49:38 +0800
+ -- XMuli <xmulitech@gmail.com>  Sat, 30 Apr 2022 14:49:38 +0800
 
 
 picshot (0.1.2-1) unstable; urgency=medium

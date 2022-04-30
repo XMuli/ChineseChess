@@ -20,9 +20,8 @@ jobs:
         arch: [arm64, amd64]
         os: [ubuntu-20.04] # ubuntu-18.04
     env:
-      targetName: ChineseChess
+      targetName: chinesechess
       targetOS: debian
-      # ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       
     steps:
       - name: Install Qt
@@ -36,12 +35,6 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true
-          
-      - name: pull 3rdparty code
-        run: |
-          cd ${{github.workspace}}
-          git submodule init
-          git submodule update
 
       - name: gcc build
         id: gcc-build

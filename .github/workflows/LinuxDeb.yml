@@ -29,12 +29,6 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true
-          
-      - name: pull 3rdparty code
-        run: |
-          cd ${{github.workspace}}
-          git submodule init
-          git submodule update
      
       - name: NameVersion
         id: NameVersion
@@ -59,7 +53,7 @@ jobs:
         run: |
           sudo apt clean
           sudo apt update
-          sudo apt install wget tar dh-make debmake lintian cmake qtbase5-dev qt5-default libqt5x11extras5-dev
+          sudo apt install vim wget tar dh-make debmake lintian cmake qtbase5-dev qt5-default libqt5svg5-dev qtmultimedia5-dev qttools5-dev libqt5x11extras5-dev
 
       # tag 打包 .deb，无动态库
       - name: DebPackage
@@ -94,13 +88,14 @@ jobs:
           pwd
           ls -al ..
 
+          echo "-------------- debug 3 --------------"
           # dh_make -f ../${{ env.productDebName }}.tar.gz -s -c mit -y
 
           # https://askubuntu.com/questions/675154/dpkg-buildpackage-dpkg-source-no-upstream-tarball-found
           # dpkg-buildpackage -us -uc
           dpkg-buildpackage -b -rfakeroot -us -uc
 
-          echo "-------------- debug 3 --------------"
+          echo "-------------- debug 4 --------------"
           pwd
           ls -al
 

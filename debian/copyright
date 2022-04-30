@@ -4,11 +4,11 @@ Upstream-Contact: https://github.com/XMuli/ChineseChess
 Source: https://github.com/XMuli/ChineseChess
 
 Files: *
-Copyright: 2022 XMuli <xmulitech@gmail.com>
+Copyright: 2019 XMuli <xmulitech@gmail.com>
 License: GPL-3.0
 
 Files: debian/*
-Copyright: 2022 XMuli <xmulitech@gmail.com>
+Copyright: 2019 XMuli <xmulitech@gmail.com>
 License: GPL-3.0
 
 License: GPL-3.0
