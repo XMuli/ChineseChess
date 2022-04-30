@@ -17,10 +17,10 @@ jobs:
         qt_ver: [5.12.11]    # 参考: https://mirrors.cloud.tencent.com/qt/online/qtsdkrepository/linux_x64/desktop/qt5_51211
         qt_target: [desktop]
         qt_arch: [gcc_64]
-        arch: [arm64, amd64]
+        arch: [amd64]  # arm64
         os: [ubuntu-20.04] # ubuntu-18.04
     env:
-      targetName: chinesechess
+      targetName: ChineseChess
       targetOS: debian
       
     steps:
