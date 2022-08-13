@@ -185,6 +185,19 @@ border-image: url(:/images/b.jpg);
         </spacer>
        </item>
        <item>
+        <widget class="QLabel" name="labelTextStep">
+         <property name="font">
+          <font>
+           <family>宋体</family>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>labelTextStep</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="topMargin">
           <number>0</number>
@@ -228,7 +241,7 @@ border-image: url(:/images/b.jpg);
      <x>0</x>
      <y>0</y>
      <width>1156</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

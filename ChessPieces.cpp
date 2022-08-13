@@ -123,3 +123,77 @@ QString ChessPieces::getnName(bool isRedSide)
     }
     return "ERROR";
 }
+
+/**
+ * @brief 获取棋子所在列 返回文本棋谱
+ * @return QString
+ */
+QString ChessPieces::getColText(int col)
+{
+    QString colText;
+    if(m_bRed)
+    {
+        colText= colTextRed[col];
+    }
+    else
+    {
+        colText= colTextBlack[col];
+    }
+    return colText;
+}
+
+/**
+ * @brief 获取棋子所在行 返回文本棋谱
+ * @param rowTo
+ * @return QString
+ */
+QString ChessPieces::getRowText(int rowTo)
+{
+    QString temp="";
+    if(m_nRow== rowTo)
+    {
+        temp.append("平");
+        return temp;
+    }
+    if(m_nRow> rowTo)
+    {
+        if(m_bRed){
+            temp.append("进");
+        }
+        else
+        {
+            temp.append("退");
+        }
+    }
+    else
+    {
+        if(m_bRed){
+            temp.append("退");
+        }
+        else
+        {
+            temp.append("进");
+        }
+    }
+    return temp;
+}
+
+/**
+ * @brief 获取棋子移动的格数 返回文本棋谱
+ * @param rowFrom
+ * @param rowTo
+ * @return QString
+ */
+QString ChessPieces::getMoveText(int rowFrom, int rowTo)
+{
+    QString temp="";
+    if(m_bRed)
+    {
+        temp.append(colTextRedTurn[abs(rowFrom-rowTo) -1]);
+    }
+    else
+    {
+        temp.append(colTextBlack[abs(rowFrom-rowTo) -1]);
+    }
+    return temp;
+}
