@@ -101,6 +101,7 @@ public:
     virtual void paintEvent(QPaintEvent *);      //绘画棋盘
     void drawChessPieces(QPainter& painter, int id);  //绘画单个具体的棋子
     void drawLastStep(QPainter &painter, QVector<ChessStep*>& steps);   //绘制上次移动棋子的起止位置
+    void drawTextStep();    //绘制文本棋谱
 //    virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
 //    virtual void clickPieces(int checkedID, int& row, int& col);
 
@@ -125,6 +126,7 @@ public:
     void tryMoveStone(int killid, int row, int col);    //尝试移动
     void doMoveStone(int moveid, int killid, int row, int col);   //执行移动棋子
     void saveStep(int moveid, int killid, int row, int col, QVector<ChessStep*>& steps);     //保存步数
+    QString textStep(int moveid, int row, int col); //文本棋谱
 
     void backOne();     //悔棋一子
     void back(ChessStep* step);  //悔棋到指定步数
@@ -142,6 +144,7 @@ public:
     bool m_bIsTcpServer;
     bool m_bIsOver; //是否已经游戏结束
     bool m_bIsShowStep; //是否显示步数
+    QString textStepRecord; //文本棋谱字符串
 
 private slots:
     void updateTime();

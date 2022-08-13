@@ -257,6 +257,9 @@ void ChessBoard::paintEvent(QPaintEvent *)
         //绘制上次移动棋子的起止位置
         if(m_bIsShowStep)
             drawLastStep(painter,m_ChessSteps);
+
+        //绘制文本棋谱
+        drawTextStep();
 }
 
 void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具体的棋子
@@ -301,6 +304,11 @@ void ChessBoard:: drawLastStep(QPainter &painter,QVector<ChessStep*>& steps)
     painter.setBrush(QColor(0,0,0,30));
     painter.setPen(Qt::black);
     painter.drawRect(rectTo);
+}
+
+void ChessBoard::drawTextStep()
+{
+    ui->labelTextStep->setText(textStepRecord);
 }
 
 // true 产生"对将" 情景了；false 无"对将"情况
@@ -833,6 +841,41 @@ void ChessBoard::saveStep(int moveid, int killid, int row, int col, QVector<Ches
     step->m_nKillID = killid;
 
     steps.append(step);
+    textStepRecord= textStep(moveid, row, col);
+}
+
+QString ChessBoard::textStep(int id, int row, int col)
+{
+    int rowFrom= m_ChessPieces[id].m_nRow;
+    int rowTo= row;
+    int colFrom= m_ChessPieces[id].m_nCol;
+    int colTo= col;
+
+    QString temp="";
+    QString name=m_ChessPieces[id].getnName(m_ChessPieces[id].m_bRed);
+    QString textCol= m_ChessPieces[id].getColText(colFrom);
+    QString textRow= m_ChessPieces[id].getRowText(rowTo);
+    temp.append(name).append(textCol).append(textRow);
+
+    //兵炮车将
+    if(m_ChessPieces[id].m_emType==6 || m_ChessPieces[id].m_emType==5 || m_ChessPieces[id].m_emType==4 || m_ChessPieces[id].m_emType==0)
+    {
+        //行相等
+        if(rowFrom== rowTo)
+        {
+            temp.append(m_ChessPieces[id].getColText(colTo));
+            return temp;
+        }
+        //移动的格数
+        temp.append(m_ChessPieces[id].getMoveText(rowFrom, rowTo));
+    }
+    else    //马相士
+    {
+        //移动后所在列
+        temp.append(m_ChessPieces[id].getColText(colTo));
+    }
+    return temp;
+
 }
 
 void ChessBoard::backOne()
