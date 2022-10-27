@@ -209,6 +209,7 @@ QPoint ChessBoard::center(int id)
 void ChessBoard::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
     int side = qMin(int((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), ui->label->height());
     painter.scale(side / 960.0, side / 960.0);
 
@@ -252,11 +253,12 @@ void ChessBoard::paintEvent(QPaintEvent *)
         painter.drawText(rect4, "界", QTextOption(Qt::AlignCenter));
 
         //*******************绘画棋子*******************
-        for(int i = 0; i < 32; i++)
-            drawChessPieces(painter, i);
         //绘制上次移动棋子的起止位置
         if(m_bIsShowStep)
             drawLastStep(painter,m_ChessSteps);
+
+        for(int i = 0; i < 32; i++)
+            drawChessPieces(painter, i);
 
         //绘制文本棋谱
         drawTextStep();
@@ -289,20 +291,22 @@ void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具�
 
 void ChessBoard:: drawLastStep(QPainter &painter,QVector<ChessStep*>& steps)
 {
-    if (this->m_ChessSteps.size() == 0) {
+    if (this->m_ChessSteps.size() == 0)
         return;
-    }
 
     QPoint stepFrom = center(steps.last()->m_nRowFrom,steps.last()->m_nColFrom);
     QRect rectFrom(stepFrom.x()-m_nR, stepFrom.y()-m_nR, m_nD, m_nD);
-    painter.setBrush(QColor(0,0,0,50));
+    painter.setBrush(QColor(0, 0, 0, 0.3 * 255));
+    QPen pen(Qt::SolidLine);
     painter.setPen(Qt::black);
     painter.drawRect(rectFrom);
 
     QPoint stepTo = center(steps.last()->m_nRowTo,steps.last()->m_nnColTo);
     QRect rectTo(stepTo.x()-m_nR, stepTo.y()-m_nR, m_nD, m_nD);
-    painter.setBrush(QColor(0,0,0,30));
-    painter.setPen(Qt::black);
+    painter.setBrush(QColor(0, 0, 0, 0.2 * 255));
+    pen.setStyle(Qt::SolidLine);
+    pen.setColor(Qt::black);
+    painter.setPen(pen);
     painter.drawRect(rectTo);
 }
 
