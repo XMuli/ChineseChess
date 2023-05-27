@@ -131,7 +131,7 @@ In addition, the source code summary is accompanied by detailed code comments fo
    $ git clone https://github.com/XMuli/ChineseChess.git
    $ cd ChineseChess
    $ mkdir build && cd build
-   $ cmake   # or qmake
+   $ cmake .. # or qmake
    $ make
    ```
 
