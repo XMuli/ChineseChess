@@ -20,6 +20,38 @@
 
 <br>
 
+# linglong-玲珑适配
+
+### update: 2023.11.02
+
+本次适配都是在 Deepin V23.02  环境下适配成功；
+
+```cpp
+// 编译项目的环境
+sudo apt install gcc g++ cmake git tree qtcreator qtbase5-dev qttools5-dev-tools qttools5-dev libqt5x11extras5-dev libqt5svg5-dev libqt5xml5 
+// 适配玲珑包的环境
+sudo apt install linglong-builder
+    
+// 进入源码的根目录下的 tech.xmuli.flipped 文件夹，执行如下适配命令
+ll-builder build
+    
+// Note:，第一次执行安装会很慢，发现和网络有关，linglong 自生会下载很多东西；稍等即可编译成功。但实测发现项目使用 git submodule 引入三方开源库，而 玲珑脚本自生没有处理这这一部分，会导致编译失败。若此原因和项目自生无关。
+    
+
+```
+
+#### Note:
+
+- 整个项目的编译和玲珑适包配是在 Deepin V23.2 中实现，成功编译和运行；若是单独编译，在Windows、MacOS、Linux 下都是成功编译、运行、打包的，成品下载和体验可。
+  - GitHub : [https://github.com/XMuli/ChineseChess](https://github.com/XMuli/ChineseChess)    | [gitee 镜像](https://gitee.com/XMuli/ChineseChess)
+
+REF：
+
+- [https://linglong.dev/guide/ll-builder/build.html](https://linglong.dev/guide/ll-builder/build.html)
+- [https://atomgit.com/linglong](https://atomgit.com/linglong)
+
+
+
 ## characteristic
 
 **The main functional modules of the project are divided into:**

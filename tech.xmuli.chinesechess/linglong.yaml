@@ -1,0 +1,24 @@
+package:
+  id: tech.xmuli.chinesechess
+  name: chinesechess
+  version: 6.2
+  kind: app
+  description: |
+    Cross-platform and online battle platform game based on Qt: Chinese Chess. Also known as: Xiangqi
+
+runtime:
+  id: org.deepin.Runtime
+  version: 23.0.0
+
+depends:
+  - id: icu
+    version: 63.1
+    type: runtime
+
+source:
+  kind: git
+  url: "https://github.com/XMuli/ChineseChess.git"
+  commit: 80bdb58e08f06579c6b90c31001d5309e0d48ce5
+
+build:
+  kind: qmake
