@@ -802,7 +802,7 @@ void ChessBoard::click(QPoint pt)
 
 }
 
-void ChessBoard::clickPieces(int id, int row, int col)
+void ChessBoard::clickPieces(int id, int &row, int &col)
 {
     if (this->m_nSelectID == -1) { // 如果点中的棋子之前未被选中
         trySelectStone(id);

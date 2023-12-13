@@ -127,7 +127,7 @@ public:
     //移动相关
     virtual void mouseReleaseEvent(QMouseEvent *ev); // 鼠标释放事件
     void click(QPoint pt);  //点击转换像素
-    virtual void clickPieces(int id, int row, int col);   //点击选棋
+    virtual void clickPieces(int id, int& row, int& col);   //点击选棋
     void trySelectStone(int id);    //尝试选棋
     void tryMoveStone(int killid, int row, int col);    //尝试移动
     void doMoveStone(int moveid, int killid, int row, int col);   //执行移动棋子

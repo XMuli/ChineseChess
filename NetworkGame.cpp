@@ -21,13 +21,17 @@
  */
 #include "NetworkGame.h"
 #include <QDebug>
+#include <QNetworkProxyFactory>
 
 NetworkGame::NetworkGame(bool isServer)
 {
     m_tcpServer = NULL;
     m_tcpSocket = NULL;
-    m_ip = "129.0.0.1";
+    m_ip = "192.168.31.90"; // "127.0.0.1" "192.168.31.132";
     m_port = "9999";
+
+    QNetworkProxyFactory::setUseSystemConfiguration(false);
+
 
     if(isServer) //作为服务器端
     {
@@ -35,7 +39,14 @@ NetworkGame::NetworkGame(bool isServer)
         m_tcpServer = new QTcpServer(this);
         setNetworkGroupText("设置服务器的port号:", m_port, "监听", "状态结果:监听中");
 
-        m_tcpServer->listen(QHostAddress::Any, m_port.toInt());
+        // 监听指定地址和端口
+        if (m_tcpServer->listen(QHostAddress::Any, m_port.toInt())) {
+            qDebug() << "Server is listening on" << m_tcpServer->serverAddress().toString()
+                     << "port" << m_tcpServer->serverPort();
+        } else {
+            qDebug() << "Server failed to start: " << m_tcpServer->errorString();
+        }
+
         connect(m_tcpServer, SIGNAL(newConnection()),this, SLOT(slotNewConnection()));
     }
     else   //作为客户端
@@ -45,6 +56,14 @@ NetworkGame::NetworkGame(bool isServer)
         m_tcpSocket = new QTcpSocket(this);
         m_tcpSocket->connectToHost(QHostAddress(m_ip), m_port.toInt());
         connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotRecv()));
+
+        // 等待连接成功或失败
+        if (m_tcpSocket->waitForConnected()) {
+            qDebug() << "Connected to the server!";
+        } else {
+            qDebug() << "Connection failed: " << m_tcpSocket->errorString();
+        }
+
     }
 
     connect(this, &NetworkGame::sigLineEditTextChanged, this, &NetworkGame::onLineEditTextChanged);

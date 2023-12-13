@@ -36,7 +36,7 @@ class NetworkGame : public ChessBoard
 public:
     NetworkGame(bool isServer);
     ~NetworkGame() = default;
-    virtual void clickPieces(int checkedID, int& row, int& col);
+    void clickPieces(int checkedID, int& row, int& col) override;
 
 public slots:
     void slotNewConnection();

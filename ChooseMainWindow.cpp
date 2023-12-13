@@ -75,10 +75,7 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
         this->hide();
 
         QMessageBox::StandardButtons ret = QMessageBox::question(this, "提示", "是否作为[服务器 - 红方]启动?\n- Yes - 服务器,属红方\n- No - 客户端,属黑方");
-
-        bool bServer = false;
-        if(ret == QMessageBox::Yes)
-            bServer = true;
+        const bool& bServer = ret == QMessageBox::Yes ? true : false;
 
         m_pNetworkGame = new NetworkGame(bServer);
         m_pNetworkGame->setNetworkGroupShow(true);
