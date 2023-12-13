@@ -43,6 +43,7 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
     connect(m_buttons[0], &QPushButton::clicked,[=](){
         this->hide();
         m_pAgainstYourself = new ChessBoard();
+        m_pAgainstYourself->setNetworkGroupShow(false);
         m_pAgainstYourself->setWindowTitle("玩家自己对战");
         m_pAgainstYourself->show();
 
@@ -58,6 +59,7 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
         this->hide();
 
         m_pMachineGame = new MachineGame();
+        m_pMachineGame->setNetworkGroupShow(false);
         m_pMachineGame->setWindowTitle("玩家和AI对战");
         m_pMachineGame->show();
 
@@ -72,14 +74,16 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
     connect(m_buttons[2], &QPushButton::clicked,[=](){
         this->hide();
 
-        QMessageBox::StandardButtons ret = QMessageBox::question(NULL, "提示", "是否作为服务器启动[选择红方]?");
+        QMessageBox::StandardButtons ret = QMessageBox::question(this, "提示", "是否作为[服务器 - 红方]启动?\n- Yes - 服务器,属红方\n- No - 客户端,属黑方");
 
         bool bServer = false;
         if(ret == QMessageBox::Yes)
             bServer = true;
 
         m_pNetworkGame = new NetworkGame(bServer);
-        m_pNetworkGame->setWindowTitle("双人网络对战");
+        m_pNetworkGame->setNetworkGroupShow(true);
+        const QString& title = QString("双人网络对战 [%1]").arg(bServer ? "服务器 - 红方" : "客户端 - 黑方") ;
+        m_pNetworkGame->setWindowTitle(title);
         m_pNetworkGame->show();
 
         //返回主窗口

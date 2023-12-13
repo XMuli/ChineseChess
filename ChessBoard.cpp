@@ -409,6 +409,31 @@ bool ChessBoard:: isGeneral()
     return false;
 }
 
+void ChessBoard::setNetworkGroupShow(const bool &show)
+{
+    ui->networkGroup->setVisible(show);
+}
+
+/*!
+ * \brief ChessBoard::setNetworkGroupText
+ * \param group group的名称
+ * \param input 输入栏 IP+prot
+ * \param btn    按钮的名称，监听或者连接
+ * \param statue 连接结果的名称
+ */
+void ChessBoard::setNetworkGroupText(const QString &group, const QString &input, const QString &btn, const QString &statue)
+{
+    ui->networkGroup->setTitle(group);
+    ui->lineEdit->setText(input);
+    ui->btnTcpConnect->setText(btn);
+    ui->labConnectStatus->setText(statue);
+}
+
+void ChessBoard::setstatusText(const QString &statue)
+{
+    ui->labConnectStatus->setText(statue);
+}
+
 //鼠标按下事件
 //void ChessBoard::mousePressEvent(QMouseEvent *ev)
 //{
@@ -975,3 +1000,15 @@ void ChessBoard::on_pushButton_toMenu_clicked()
 {
     emit this->toMenu();
 }
+
+void ChessBoard::on_lineEdit_textChanged(const QString &arg1)
+{
+    emit sigLineEditTextChanged(arg1);
+}
+
+
+void ChessBoard::on_btnTcpConnect_released()
+{
+    emit sigBtnTcpConnectReleased();
+}
+

@@ -87,6 +87,12 @@ public:
     int relation(int row1, int col1, int row2, int col2);    //计算选中的棋子的位置和要移动的位置之间的位置关系
     QPoint getRealPoint(QPoint pt);  // 使mouseMoveEvent取得的坐标同Painter的坐标一致
     bool isGeneral();    //校验将移动后位置是否将死
+    void setNetworkGroupShow(const bool& show = false);
+
+protected:
+    // 仅网络对战才需要的接口
+    void setNetworkGroupText(const QString& group, const QString& input, const QString &btn, const QString& statue);
+    void setstatusText(const QString& statue);
 
 private:
     bool hongMenFeast();                     // 鸿门宴：对将
@@ -146,6 +152,10 @@ public:
     bool m_bIsShowStep; //是否显示步数
     QString textStepRecord; //文本棋谱字符串
 
+signals:
+    void sigLineEditTextChanged(const QString &arg1);
+    void sigBtnTcpConnectReleased();
+
 private slots:
     void updateTime();
     void on_pushButton_start_clicked();
@@ -155,6 +165,9 @@ private slots:
     void on_pushButton_back_clicked();
     void on_pushButton_showStep_clicked();
     void on_pushButton_toMenu_clicked();
+    void on_lineEdit_textChanged(const QString &arg1);
+    void on_btnTcpConnect_released();
+
 
 private:
     Ui::ChessBoard *ui;

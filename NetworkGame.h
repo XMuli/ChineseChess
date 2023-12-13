@@ -35,17 +35,20 @@ class NetworkGame : public ChessBoard
 
 public:
     NetworkGame(bool isServer);
-    ~NetworkGame();
-
-    QTcpServer* m_tcpServer;
-    QTcpSocket* m_tcpSocket;
-
-    //virtual void mousePressEvent(QMouseEvent *);    //鼠标点击事件
+    ~NetworkGame() = default;
     virtual void clickPieces(int checkedID, int& row, int& col);
 
 public slots:
     void slotNewConnection();
     void slotRecv();
+    void onLineEditTextChanged(const QString &arg1);
+    void onBtnTcpConnectReleased();
+
+private:
+    QString m_ip;
+    QString m_port;
+    QTcpServer* m_tcpServer;
+    QTcpSocket* m_tcpSocket;
 };
 
 #endif // NETWORKGAME_H

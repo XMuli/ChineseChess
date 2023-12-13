@@ -26,58 +26,30 @@ NetworkGame::NetworkGame(bool isServer)
 {
     m_tcpServer = NULL;
     m_tcpSocket = NULL;
+    m_ip = "129.0.0.1";
+    m_port = "9999";
 
     if(isServer) //作为服务器端
     {
         m_bIsTcpServer = true;
         m_tcpServer = new QTcpServer(this);
-        m_tcpServer->listen(QHostAddress::Any, 9999);
+        setNetworkGroupText("设置服务器的port号:", m_port, "监听", "状态结果:监听中");
 
+        m_tcpServer->listen(QHostAddress::Any, m_port.toInt());
         connect(m_tcpServer, SIGNAL(newConnection()),this, SLOT(slotNewConnection()));
     }
     else   //作为客户端
     {
         m_bIsTcpServer = false;
+        setNetworkGroupText("将接服务器的 ip 和 port:", m_ip + ":" + m_port, "连接", "状态结果:待操作");
         m_tcpSocket = new QTcpSocket(this);
-        m_tcpSocket->connectToHost(QHostAddress("127.0.0.1"), 9999);
-
+        m_tcpSocket->connectToHost(QHostAddress(m_ip), m_port.toInt());
         connect(m_tcpSocket, SIGNAL(readyRead()), this, SLOT(slotRecv()));
     }
+
+    connect(this, &NetworkGame::sigLineEditTextChanged, this, &NetworkGame::onLineEditTextChanged);
+    connect(this, &NetworkGame::sigBtnTcpConnectReleased, this, &NetworkGame::onBtnTcpConnectReleased);
 }
-
-NetworkGame::~NetworkGame()
-{
-}
-
-//void NetworkGame::mousePressEvent(QMouseEvent *ev)
-//{
-//    QPoint pt = ev->pos();
-//    //将pt转化成棋盘的像行列值
-//    //判断这个行列值上面有没有棋子
-//    int row, col;
-
-//    //点击棋盘外面就不做处理
-//    if(!isChecked(pt, row, col))
-//        return;
-
-//    //判断是哪一个棋子被选中，根据ID（这里的局部i）来记录下来
-//    int i;
-//    m_nCheckedID = -1;
-
-//    for(i = 0; i <= 31; i++)
-//    {
-//        if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && m_ChessPieces[i].m_bDead == false)
-//            break;
-//    }
-
-//    if(0<=i && i<32)
-//        m_nCheckedID = i;  //选中的棋子的ID
-
-//    clickPieces(m_nCheckedID, row, col);
-
-//    update();
-//}
-
 
 void NetworkGame::clickPieces(int checkedID, int &row, int &col)
 {
@@ -130,4 +102,14 @@ void NetworkGame::slotRecv()
 
     //qDebug()<<nCheckedID<<"   "<<nRow<<"   "<<nCol<<"   ";
     ChessBoard::clickPieces(nCheckedID, nRow, nCol);
+}
+
+void NetworkGame::onLineEditTextChanged(const QString &arg1)
+{
+
+}
+
+void NetworkGame::onBtnTcpConnectReleased()
+{
+
 }

@@ -57,18 +57,6 @@ border-image: url(:/images/b.jpg);
 }</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="leftMargin">
-        <number>30</number>
-       </property>
-       <property name="topMargin">
-        <number>20</number>
-       </property>
-       <property name="rightMargin">
-        <number>30</number>
-       </property>
-       <property name="bottomMargin">
-        <number>50</number>
-       </property>
        <item>
         <widget class="QLabel" name="label_2">
          <property name="font">
@@ -185,6 +173,66 @@ border-image: url(:/images/b.jpg);
         </spacer>
        </item>
        <item>
+        <widget class="QGroupBox" name="networkGroup">
+         <property name="title">
+          <string>请输入服务器IP和prot：</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="lineEdit">
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="statusTip">
+             <string/>
+            </property>
+            <property name="whatsThis">
+             <string/>
+            </property>
+            <property name="inputMask">
+             <string/>
+            </property>
+            <property name="text">
+             <string>127.0.0.1:9999</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="btnTcpConnect">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>60</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>连接</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLabel" name="labConnectStatus">
+            <property name="text">
+             <string>连接状态：</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="labelTextStep">
          <property name="font">
           <font>
@@ -241,7 +289,7 @@ border-image: url(:/images/b.jpg);
      <x>0</x>
      <y>0</y>
      <width>1156</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
