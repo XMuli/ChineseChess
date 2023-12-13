@@ -4,7 +4,7 @@
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
  * GitHub:  https://github.com/XMuli
- * Blogs:   https://ifmet.cn
+ * Blogs:   https://xmuli.tech
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
