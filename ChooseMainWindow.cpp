@@ -3,7 +3,7 @@
  *
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
- * GitHub:  https://github.com/XMuli
+ * GitHub:  https://github.com/XMuli/ChineseChess
  * Blogs:   https://xmuli.tech
  *
  * This program is free software: you can redistribute it and/or modify
@@ -88,11 +88,6 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
             this->show();
         });
     });
-
-
-
-
-
 }
 
 ChooseMainWindow::~ChooseMainWindow()
