@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C)  2019~2020  偕臧  All rights reserved.
+ * Copyright (C)  2019~2024  偕臧  All rights reserved.
  *
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
@@ -21,6 +21,7 @@
  */
 #include "ChessBoard.h"
 #include "ui_ChessBoard.h"
+#include <mutex>
 
 ChessBoard::ChessBoard(QWidget *parent) :
     QMainWindow(parent),
@@ -409,29 +410,9 @@ bool ChessBoard:: isGeneral()
     return false;
 }
 
-void ChessBoard::setNetworkGroupShow(const bool &show)
+void ChessBoard::showNetworkGui(const bool &show)
 {
     ui->networkGroup->setVisible(show);
-}
-
-/*!
- * \brief ChessBoard::setNetworkGroupText
- * \param group group的名称
- * \param input 输入栏 IP+prot
- * \param btn    按钮的名称，监听或者连接
- * \param statue 连接结果的名称
- */
-void ChessBoard::setNetworkGroupText(const QString &group, const QString &input, const QString &btn, const QString &statue)
-{
-    ui->networkGroup->setTitle(group);
-    ui->lineEdit->setText(input);
-    ui->btnTcpConnect->setText(btn);
-    ui->labConnectStatus->setText(statue);
-}
-
-void ChessBoard::setstatusText(const QString &statue)
-{
-    ui->labConnectStatus->setText(statue);
 }
 
 //鼠标按下事件
@@ -810,6 +791,13 @@ void ChessBoard::clickPieces(int id, int &row, int &col)
     else {
         tryMoveStone(id, row, col);
     }
+
+    // 初次按下时，自启动计时器
+    std::once_flag flag;
+    std::call_once(flag, [&]() {
+        m_bIsStart = false;
+        on_pushButton_start_clicked();
+    });
 }
 
 void ChessBoard::trySelectStone(int id)
@@ -948,17 +936,17 @@ void ChessBoard::updateTime()
 void ChessBoard::on_pushButton_start_clicked()
 {
     if(!m_bIsStart) //尚未开始 开始计时
-        {
-            m_timer->start(1000);
-            ui->pushButton_start->setText("暂停");
-        }
-        else //已经开始，暂停
-        {
-            m_timer->stop();
-            ui->pushButton_start->setText("继续");
-        }
+    {
+        m_timer->start(1000);
+        ui->pushButton_start->setText("暂停");
+    }
+    else //已经开始，暂停
+    {
+        m_timer->stop();
+        ui->pushButton_start->setText("继续");
+    }
 
-        m_bIsStart = !m_bIsStart;
+    m_bIsStart = !m_bIsStart;
 }
 
 void ChessBoard::on_pushButton_reset_clicked()
@@ -1001,14 +989,4 @@ void ChessBoard::on_pushButton_toMenu_clicked()
     emit this->toMenu();
 }
 
-void ChessBoard::on_lineEdit_textChanged(const QString &arg1)
-{
-    emit sigLineEditTextChanged(arg1);
-}
-
-
-void ChessBoard::on_btnTcpConnect_released()
-{
-    emit sigBtnTcpConnectReleased();
-}
 

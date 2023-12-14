@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C)  2019~2020  偕臧  All rights reserved.
+ * Copyright (C)  2019~2024  偕臧  All rights reserved.
  *
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
@@ -38,14 +38,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-//    SelectGameMode dlg;
-//    dlg.setWindowTitle("选择游戏方式");
-//    dlg.setFixedSize(200,120);
-//    dlg.setWindowIcon(QIcon(":/images/chess.svg"));
-//    if(dlg.exec() != QDialog::Accepted)
-//        return 0;
-
-//    ChooseMainWindow wnd(dlg.m_nSelect);
     ChooseMainWindow c;
     c.show();
 

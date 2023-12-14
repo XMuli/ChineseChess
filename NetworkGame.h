@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C)  2019~2020  偕臧  All rights reserved.
+ * Copyright (C)  2019~2024  偕臧  All rights reserved.
  *
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
@@ -36,17 +36,15 @@ class NetworkGame : public ChessBoard
 public:
     NetworkGame(bool isServer);
     ~NetworkGame() = default;
+    void initUI();
     void clickPieces(int checkedID, int& row, int& col) override;
 
 public slots:
     void slotNewConnection();
     void slotRecv();
-    void onLineEditTextChanged(const QString &arg1);
-    void onBtnTcpConnectReleased();
+    void onBtnTryConnect();
 
 private:
-    QString m_ip;
-    QString m_port;
     QTcpServer* m_tcpServer;
     QTcpSocket* m_tcpSocket;
 };

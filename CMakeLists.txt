@@ -19,13 +19,13 @@
 cmake_minimum_required(VERSION 3.5)
 
 set(project_name ChineseChess)
-set(project_version_major 7)
-set(project_version_minor 0)
+set(project_version_major 6)
+set(project_version_minor 2)
 set(project_version_path 0)
 set(project_version ${project_version_major}.${project_version_minor}.${project_version_path})
 project(${project_name} VERSION ${project_version} LANGUAGES CXX)
 
-add_definitions(-DXBUILD_TIME="2023.12.13")
+add_definitions(-DXBUILD_TIME="2023.12.14")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)

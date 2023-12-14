@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C)  2019~2020  偕臧  All rights reserved.
+ * Copyright (C)  2019~2024  偕臧  All rights reserved.
  *
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
@@ -31,12 +31,12 @@ public:
     explicit ChessStep(QObject *parent = 0);
     ~ChessStep();
 
-    int m_nMoveID;   //移动棋子ID
-    int m_nKillID;   //将要被击杀的棋子ID
-    int m_nRowFrom;  //原位置的行
-    int m_nColFrom;  //原位置的列
-    int m_nRowTo;    //目的位置的行
-    int m_nnColTo;   //目的位置的列
+    int m_nMoveID;   // 移动棋子ID
+    int m_nKillID;   // 将要被击杀的棋子ID
+    int m_nRowFrom;  // 原位置的行
+    int m_nColFrom;  // 原位置的列
+    int m_nRowTo;    // 目的位置的行
+    int m_nnColTo;   // 目的位置的列
 };
 
 #endif // CHESSSTEP_H

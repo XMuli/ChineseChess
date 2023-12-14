@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C)  2019~2020  偕臧  All rights reserved.
+ * Copyright (C)  2019~2024  偕臧  All rights reserved.
  *
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
@@ -25,8 +25,9 @@
 #include <QDialog>
 #include <QFont>
 
-namespace Ui {
-class AboutAuthor;
+namespace Ui
+{
+    class AboutAuthor;
 }
 
 class AboutAuthor : public QDialog
@@ -34,15 +35,14 @@ class AboutAuthor : public QDialog
     Q_OBJECT
 
 public:
-    explicit AboutAuthor(QWidget *parent = 0);
+    explicit AboutAuthor(QWidget* parent = 0);
     ~AboutAuthor();
 
 protected:
-    virtual void paintEvent(QPaintEvent *event) override;
+    virtual void paintEvent(QPaintEvent* event) override;
 
 private:
-    Ui::AboutAuthor *ui;
-    QWidget * QDialog;
+    Ui::AboutAuthor* ui;
 };
 
 #endif // ABOUTAUTHOR_H

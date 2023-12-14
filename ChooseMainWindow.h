@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C)  2019~2020  偕臧  All rights reserved.
+ * Copyright (C)  2019~2024  偕臧  All rights reserved.
  *
  * Author:  xmuli(偕臧) xmulitech@gmail.com
  *
@@ -33,11 +33,11 @@ class ChooseMainWindow : public QDialog
     Q_OBJECT
 public:
     explicit ChooseMainWindow(QWidget *parent = nullptr);
-    ~ChooseMainWindow();
+    virtual ~ChooseMainWindow() = default;
 
 private:
     QPushButton* m_buttons[3];
-    ChessBoard* m_pAgainstYourself;
+    ChessBoard*  m_pAgainstYourself;
     MachineGame* m_pMachineGame;
     NetworkGame* m_pNetworkGame;
 };

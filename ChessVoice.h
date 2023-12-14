@@ -37,12 +37,12 @@ public:
     QSound *m_back =new QSound(":/sound/backChess.wav",this);
     QSound *m_general =new QSound(":/sound/generalSound.wav",this);
 
-    void voiceWin();    //胜利音效
-    void voiceSelect(); //选棋音效
-    void voiceMove();   //移动音效
-    void voiceEat();    //吃子音效
-    void voiceBack();   //悔棋音效
-    void voiceGeneral();//将军音效
+    void voiceWin();      // 胜利音效
+    void voiceSelect();   // 选棋音效
+    void voiceMove();     // 移动音效
+    void voiceEat();      // 吃子音效
+    void voiceBack();     // 悔棋音效
+    void voiceGeneral();  // 将军音效
 	
 };
 
