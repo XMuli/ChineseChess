@@ -237,7 +237,7 @@ If it helps you, or find it useful, <font color=#FE7207  size=4 face="幼圆">yo
 
 <br>
 
-## License
+## Tutorial Series
 
-This project is distributed and used based on the `GNU General Public License v3.0` protocol. For more information, please refer to [Agreement File](/LICENSE).
+[QtExamples](https://github.com/XMuli/QtExamples) Welcome to `star` ⭐ and `fork` 🍴 This series of `C++ / QT / DTK` studies, where you can learn how to write this kind of software yourself, is a complete series of tutorials. And **FREE**!
 

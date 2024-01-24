@@ -198,6 +198,7 @@
 
 <br>
 
-## 协议
+## 系列教程
 
-该项目基于 `GNU General Public License v3.0` 协议进行分发和使用。 有关更多信息，请参阅 [协议文件](/LICENSE)。
+[QtExamples](https://github.com/XMuli/QtExamples)  欢迎 `star` ⭐ 和 `fork` 🍴 这个系列的 `C++ / QT / DTK` 学习，这里你可以学到如何亲自编写这类软件的经验，这是一系列完整的教程，并且**免费**！
+
