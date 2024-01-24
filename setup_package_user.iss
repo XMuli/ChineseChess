@@ -8,7 +8,7 @@
 #define MyAppURL "https://chinesechess.xmuli.tech"
 #define MyAppExeName "ChineseChess.exe"                     
 #define MyArchitecture "x64"   ; x64    x86
-#define MyCOMPILER_ID "msvc"   ; mingw  msvc
+#define MyCOMPILER_ID "  msvc"   ; mingw  msvc
 #define MySrc "."
 #define MyBinDir "bin"         ; 相对于 .iss 文件的路径
 #define MyOutputDir "../Archived"
