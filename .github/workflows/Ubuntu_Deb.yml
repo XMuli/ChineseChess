@@ -1,4 +1,4 @@
-name: LinuxDeb
+name: Ubuntu_DEB
 on: 
   push:
     paths-ignore:
@@ -14,18 +14,18 @@ jobs:
     runs-on:  ${{ matrix.os }}
     strategy:
       matrix: # 矩阵配置
-        qt_ver: [5.12.11]    # 参考: https://mirrors.cloud.tencent.com/qt/online/qtsdkrepository/linux_x64/desktop/qt5_51211
+        qt_ver: [5.15.2]    # 参考: https://mirrors.cloud.tencent.com/qt/online/qtsdkrepository/linux_x64/desktop/qt5_5152
         qt_target: [desktop]
         qt_arch: [gcc_64]
-        arch: [arm64, amd64]
-        os: [ubuntu-20.04] # ubuntu-18.04
+        arch: [amd64]  # arm64
+        os: [ubuntu-20.04]
     env:
       targetName: ChineseChess
       targetLowerName: chinesechess
       targetOS: debian
       
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
           submodules: true

@@ -13,8 +13,8 @@
 
 ![](https://img.shields.io/github/license/XMuli/chineseChess) ![](https://img.shields.io/github/v/release/XMuli/ChineseChess?style=flat&color=birightgreen)![](https://img.shields.io/badge/powered%20by-XMuli-ff69b4)![](https://img.shields.io/github/stars/XMuli/ChineseChess?style=social) ![](https://img.shields.io/github/forks/XMuli/ChineseChess?style=social&label=Fork)
 
-![](https://img.shields.io/github/workflow/status/XMuli/ChineseChess/Windows?style=flat&logo=windows) ![](https://img.shields.io/github/workflow/status/XMuli/ChineseChess/MacOS?style=flat&logo=apple) ![](https://img.shields.io/github/workflow/status/XMuli/ChineseChess/Linux?style=flat&logo=linux) ![](https://img.shields.io/github/languages/code-size/XMuli/ChineseChess)  ![](https://img.shields.io/github/downloads/XMuli/ChineseChess/total)
-<br>
+[![macos-badge](https://github.com/xmuli/ChineseChess/workflows/MacOS/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/MacOS/badge.svg)  [![win-badge](https://github.com/xmuli/ChineseChess/workflows/Windows/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/Windows/badge.svg)  [![ubuntu-badge](https://github.com/xmuli/ChineseChess/workflows/Ubuntu/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/Ubuntu/badge.svg)   ![](https://img.shields.io/github/languages/code-size/XMuli/ChineseChess)  ![](https://img.shields.io/github/downloads/XMuli/ChineseChess/total)
+
 
 > The Chinese chess online battle platform (including communication function) developed based on `Qt5` realizes the function of chess game in a single or networked state, no matter whether it is single or multiple players, regardless of whether the system is the same.
 
@@ -109,7 +109,7 @@ REF：
 
 <br>
 
-## Update (2022 v6.0+)
+## Update (2022-2024 v6.x)
 
 ### Features
 
