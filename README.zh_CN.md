@@ -94,7 +94,7 @@
 
 <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/ChineChess.gif" width="90%"/>
 
-<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20211229011429.png" width="90%"/>
+<img src="https://fastly.jsdelivr.net/gh/XMuli/xmuliPic@pic/2024/202401282117185.png" width="80%"/>
 
 <br>
 
@@ -175,15 +175,21 @@
           <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20211227232947.png" width="50px"><br>
           <sub>hmsjy2017</sub>
         </a>
-     </tr>
+    </tr>
          <th align="center" style="width: 80px;">
         <a href="https://github.com/ryanfortner">
           <img src="https://cdn.jsdelivr.net/gh/XMuli/xmuliPic@pic/2022/71036629.png" width="50px"><br>
           <sub>ryanfortner</sub>
         </a>
+       <th align="center" style="width: 80px;">
+        <a href="https://github.com/zjuyk">
+          <img src="https://fastly.jsdelivr.net/gh/XMuli/xmuliPic@pic/2024/202401282118007.png" width="50px"><br>
+          <sub>zjuyk</sub>
+        </a>
      </tr>
   </thead>
 </table>
+
 
 
 <br>

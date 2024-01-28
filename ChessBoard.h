@@ -2,6 +2,7 @@
 // SPDX-FileCopyrightText: 2019-2024 XMuli & Contributors
 // SPDX-GitHub: https://github.com/XMuli/ChineseChess
 // SPDX-Author: XMuli <xmulitech@gmail.com>
+
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 

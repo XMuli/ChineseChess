@@ -2,16 +2,16 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 #pragma parseroption -p
 #define MyAppName "ChineseChess"
-#define MyAppVersion "6.2.0"
+#define MyAppVersion "6.3"
 #define MyAppPublisher "XMuli Teams"
 #define MyAppCompany "XMuli"
 #define MyAppURL "https://chinesechess.xmuli.tech"
 #define MyAppExeName "ChineseChess.exe"                     
-#define MyArchitecture "x64"   ; x64    x86
-#define MyCOMPILER_ID "  msvc"   ; mingw  msvc
+#define MyArchitecture "x86"   ; x64    x86
+#define MyCOMPILER_ID "mingw"   ; mingw  msvc
 #define MySrc "."
 #define MyBinDir "bin"         ; 相对于 .iss 文件的路径
-#define MyOutputDir "../Archived"
+#define MyOutputDir "./"
 #define MyGUID "{AF8B402E-8395-42E8-A55D-B34D45F7BDB3}"
 
 [Setup]
