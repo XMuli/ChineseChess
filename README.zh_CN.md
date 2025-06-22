@@ -100,13 +100,13 @@
 
 ## 开发教程
 
-- [项目实战：Qt5／C++：QT象棋【初版】](https://blog.csdn.net/qq_33154343/article/details/80931400) 
+- [项目实战：Qt5／C++：QT象棋【初版】](https://xmuli.blog.csdn.net//article/details/80931400) 
 
-- [QT5/C++项目：基于QT的跨平台网络对战象棋（一）](https://blog.csdn.net/qq_33154343/article/details/89284983)
+- [QT5/C++项目：基于QT的跨平台网络对战象棋（一）](https://xmuli.blog.csdn.net//article/details/89284983)
 
-- [QT5/C++项目：基于QT的跨平台网络对战象棋（二）](https://blog.csdn.net/qq_33154343/article/details/89285968)
+- [QT5/C++项目：基于QT的跨平台网络对战象棋（二）](https://xmuli.blog.csdn.net//article/details/89285968)
 
-- [QT5/C++项目：基于QT的跨平台网络对战象棋（三）](https://blog.csdn.net/qq_33154343/article/details/89286553)
+- [QT5/C++项目：基于QT的跨平台网络对战象棋（三）](https://xmuli.blog.csdn.net//article/details/89286553)
 
 ## 构建
 

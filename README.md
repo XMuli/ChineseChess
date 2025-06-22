@@ -103,13 +103,13 @@
 
 ## Development tutorial
 
-- [Project actual combat: Qt5/C++: QT chess [Basic version]](https://blog.csdn.net/qq_33154343/article/details/80931400) 
+- [Project actual combat: Qt5/C++: QT chess [Basic version]](https://xmuli.blog.csdn.net//article/details/80931400) 
 
-- [QT5/C++ project: QT-based cross-platform online battle chess (1)](https://blog.csdn.net/qq_33154343/article/details/89284983)
+- [QT5/C++ project: QT-based cross-platform online battle chess (1)](https://xmuli.blog.csdn.net//article/details/89284983)
 
-- [QT5/C++ project: QT-based cross-platform online battle chess (2)](https://blog.csdn.net/qq_33154343/article/details/89285968)
+- [QT5/C++ project: QT-based cross-platform online battle chess (2)](https://xmuli.blog.csdn.net//article/details/89285968)
 
-- [QT5/C++ project: QT-based cross-platform online battle chess (3)](https://blog.csdn.net/qq_33154343/article/details/89286553)
+- [QT5/C++ project: QT-based cross-platform online battle chess (3)](https://xmuli.blog.csdn.net//article/details/89286553)
 
 <br>
 
