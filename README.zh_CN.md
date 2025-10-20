@@ -76,7 +76,7 @@
 
 <br>
 
-## 更新(2022-2024 v6.x)
+## 更新(2022-2025 v7.x)
 
 ### 功能
 
@@ -110,26 +110,46 @@
 
 ## 构建
 
-1. 安装 Qt （Qt >= 5.12.11）和其他依赖
+> 本项目构建同时支持 QT 5 和 QT 6，更多项目集： https://product.xmuli.tech/
 
-   以 Debian 和 Ubuntu 为例，执行:
-   
+
+
+- **环境：** 本工程可以用 Qt 5.15.2 和 6.8.3 LTS 版本同时可编译通过；实测试最低构建 Qt 5.12，更低版本未验证
+- IDE： 推荐直接只用 Qt Creator 打开 CMakeLists.txt 进行构建
+- Other： 也可以自行 CMake 转 .sln 使用 Visual Studio 2022 构建
+
+
+
+### Windows 构建
+
+1. 安装 Qt （推荐 Qt 5.15 或者 Qt 6.8 LTS）
+2. 直接使用 Qt Crator IDE 打开 CMakeLists.txt 
+3. 点击左下角构建-编译
+4. 可以看到成功运行，Enjoy~ 
+
+
+
+### Linux / Mac 构建
+
+1. 以 Debian 和 Ubuntu 为例，安装 Qt （推荐 Qt 5.15 或者 Qt 6.8 LTS）执行:
+
    ```bash
    $ sudo apt install cmake qtbase5-dev qt5-default libqt5svg5-dev qtmultimedia5-dev qttools5-dev libqt5x11extras5-dev
    ```
-   
-2. 运行命令:
+
+2. 运行命令
 
    ```bash
    $ git clone https://github.com/XMuli/ChineseChess.git
    $ cd ChineseChess
    $ mkdir build && cd build
-   $ cmake ..  # or qmake
+   $ cmake ..
    $ make
    ```
 
+3. 或者，你可以跳过第 2 步，同样直接使用 Qt Creator 进行编译和运行，更加方便。
 
-或者，你可以跳过第 2 步，直接使用 Qt Creator 进行编译和运行。
+
 
 <br>
 

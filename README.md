@@ -79,7 +79,7 @@
 
 <br>
 
-## Update (2022-2024 v6.x)
+## Update (2022-2025 v7.x)
 
 ### Features
 
@@ -119,26 +119,52 @@ In addition, the source code summary is accompanied by detailed code comments fo
 
 ## Build
 
-1. Install Qt （Qt >= 5.12.11）and other dependencies 
-   
-   For Debian and Ubuntu, run:
-   
+> This project supports both Qt 5 and Qt 6 builds. 
+>
+> For more project list: https://product.xmuli.tech
+
+
+
+- Environment: This project compiles successfully with both Qt 5.15.2 and 6.8.3 LTS versions. Tested minimum build version is Qt 5.12; lower versions are unverified.
+- IDE: We recommend using Qt Creator directly to open CMakeLists.txt for building.
+- Other: You may also convert CMake to .sln manually and build using Visual Studio 2022.
+
+
+
+### Windows Build
+
+1. Install Qt (recommended: Qt 5.15 or Qt 6.8 LTS)
+2. Open CMakeLists.txt directly in the Qt Creator IDE
+3. Click Build > Compile in the bottom-left corner
+4. You should see it run successfully. Enjoy~
+
+
+
+### Linux / Mac Build
+
+1. Using Debian and Ubuntu as examples, install Qt (recommended: Qt 5.15 or Qt 6.8 LTS) Execute:
+
    ```bash
    $ sudo apt install cmake qtbase5-dev qt5-default libqt5svg5-dev qtmultimedia5-dev qttools5-dev libqt5x11extras5-dev
    ```
+
    
-2. Run the command::
+
+2. Run commands:
 
    ```bash
    $ git clone https://github.com/XMuli/ChineseChess.git
    $ cd ChineseChess
    $ mkdir build && cd build
-   $ cmake .. # or qmake
+   $ cmake ..
    $ make
    ```
 
+3. Alternatively, you can skip Step 2 and directly use Qt Creator for compilation and execution, which is more convenient.
 
-Or you can skip the second step and use Qt Creator to compile and run.
+   
+
+$ sudo apt install cmake qtbase5-dev qt5-default libqt5svg5-dev qtmultimedia5-dev qttools5-dev libqt5x11extras5-dev
 
 <br>
 
