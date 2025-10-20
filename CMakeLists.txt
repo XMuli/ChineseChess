@@ -4,7 +4,7 @@
 # 关于作者:
 # 偕臧 xmulitech@gmail.com
 # 项目完成时间: 2019-02-01
-# 功能更新时间: 2024-01-24
+# 功能更新时间: 2025-10-20
 # 其他:如果觉得该作品对你有用，或者有疑惑或者感谢，可以联系作者或者打赏;
 #     对我的 Star 和 Fork 是最大鼓励；当然有人欢迎你提交在 GitHub 提交 PR,
 #     已将源码和思路开源公布于我的github和博客，供大家学习参考
@@ -12,11 +12,12 @@
 # 联系作者:
 # GitHub:        https://github.com/XMuli/ChineseChess
 # Site:          https://chinesechess.xmuli.tech
+# More Products  https://product.xmuli.tech
 # Telegram:      https://t.me/xmuli
 # CSDN Bolg:     https://blog.csdn.net/qq_33154343
 # My Blog:       https://xmuli.tech
 #-------------------------------------------------
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.25)
 
 set(project_name ChineseChess)
 set(project_version_major 6)
@@ -41,7 +42,7 @@ file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR})                      # 创建输出目�
 # 需要配置环境变量QT5_DIR
 #set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} $ENV{QT5_DIR})
 
-set(qt_moduls Widgets Gui OpenGL  Network Xml Svg Multimedia)                        # Network Multimedia WebSockets
+set(qt_moduls Core Gui Widgets OpenGL Network Xml Svg Multimedia)                        # Network Multimedia WebSockets
 set(qt_version_moduls)
 foreach(it ${qt_moduls})
     list(APPEND qt_version_moduls Qt${QT_VERSION_MAJOR}::${it})

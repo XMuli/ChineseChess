@@ -1,9 +1,10 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-or-later
-// SPDX-FileCopyrightText: 2019-2024 XMuli & Contributors
+// SPDX-FileCopyrightText: 2019-2025 XMuli & Contributors
 // SPDX-GitHub: https://github.com/XMuli/ChineseChess
 // SPDX-Author: XMuli <xmulitech@gmail.com>
 
 #include "MachineGame.h"
+#include <QRandomGenerator>
 
 MachineGame::MachineGame()
 {
@@ -261,8 +262,9 @@ ChessStep* MachineGame::getBestMove()
     //2.试着走一下
     //从这种不击杀红棋子，只是单纯移动黑棋steps里面，随机抽选一种进行下棋
     int nStepsCount = stepsAndNoKill.count();
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime())); //随机数种子, 0~MAX
-    int temp =qrand()% nStepsCount;
+    // qsrand(QTime(0,0,0).secsTo(QTime::currentTime())); //随机数种子, 0~MAX
+    // int temp =qrand()% nStepsCount;
+    int temp = QRandomGenerator::global()->bounded(nStepsCount);
     QVector<ChessStep*>::iterator it = stepsAndNoKill.begin();
     retStep = it[temp];
 
