@@ -20,12 +20,12 @@
 cmake_minimum_required(VERSION 3.25)
 
 set(project_name ChineseChess)
-set(project_version_major 6)
-set(project_version_minor 3)
+set(project_version_major 7)
+set(project_version_minor 0)
 set(project_version ${project_version_major}.${project_version_minor})
 project(${project_name} VERSION ${project_version} LANGUAGES CXX)
 
-add_definitions(-DXBUILD_TIME="2023.12.14")
+add_definitions(-DXBUILD_TIME="2025.10.20")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
@@ -40,7 +40,7 @@ file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR})                      # 创建输出目�
 #set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS ON)
 
 # 需要配置环境变量QT5_DIR
-#set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} $ENV{QT5_DIR})
+# set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} $ENV{QT5_DIR})
 
 set(qt_moduls Core Gui Widgets OpenGL Network Xml Svg Multimedia)                        # Network Multimedia WebSockets
 set(qt_version_moduls)
@@ -109,7 +109,13 @@ else()
     set(lrelease_path "${qt_binray_dir}/lrelease")
 
     if(WIN32)
-        set(windeployqt "${qt_binray_dir}/windeployqt.exe")
+
+        if(${QT_VERSION_MAJOR} EQUAL 6)
+            set(windeployqt6 "${qt_binray_dir}/windeployqt6.exe")
+        elseif(${QT_VERSION_MAJOR} EQUAL 5)
+            set(windeployqt "${qt_binray_dir}/windeployqt.exe")
+        endif()
+
     elseif(APPLE)
         set(windeployqt "${qt_binray_dir}/macdeployqt")
     elseif(UNIX)

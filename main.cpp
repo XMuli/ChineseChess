@@ -40,13 +40,26 @@
 
 
 /**
- * @brief 环境： 本工程可以用 Qt 5.15.2 和 6.8.3 两个长期版本编译通过
+ * @brief 环境： 本工程可以用 Qt 5.15.2 和 6.8.3 LTS 版本同时可编译通过
  * @param IDE： 推荐直接只用 Qt Creator 打开 CMakeLists.txt 进行构建
  * @param Other： 也可以自行 CMake 转 .sln 使用 Visual Studio 2022 构建
- * @note
+ * @note  更多项目集： https://product.xmuli.tech/
  */
 int main(int argc, char *argv[])
 {
+
+    // 启用高 DPI 缩放
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    qDebug() << "Using Qt 6 or newer";
+    QApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough); // support 1.25 1.5
+#else
+    qDebug() << "Using Qt 5";
+    // QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+
+    qApp->setOrganizationName(QStringLiteral("XMuli"));                 // 因多处使用 QSettings，故声明组织等信息
+    qApp->setOrganizationDomain(QStringLiteral("github.com/XMuli"));
     QApplication a(argc, argv);
 
     ChooseMainWindow c;
