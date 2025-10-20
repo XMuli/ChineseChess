@@ -16,7 +16,9 @@
 [![macos-badge](https://github.com/xmuli/ChineseChess/workflows/MacOS/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/MacOS/badge.svg)  [![win-badge](https://github.com/xmuli/ChineseChess/workflows/Windows/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/Windows/badge.svg)  [![ubuntu-badge](https://github.com/xmuli/ChineseChess/workflows/Ubuntu/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/Ubuntu/badge.svg)   ![](https://img.shields.io/github/languages/code-size/XMuli/ChineseChess)  ![](https://img.shields.io/github/downloads/XMuli/ChineseChess/total)
 
 
-> The Chinese chess online battle platform (including communication function) developed based on `Qt5` realizes the function of chess game in a single or networked state, no matter whether it is single or multiple players, regardless of whether the system is the same.
+> - The Chinese chess online battle platform (including communication function) developed based on `Qt5.15 and Qt6.8` realizes the function of chess game in a single or networked state, no matter whether it is single or multiple players, regardless of whether the system is the same.
+> - More project collections: https://product.xmuli.tech
+> - Video Effects: https://www.bilibili.com/video/av45509758
 
 <br>
 
@@ -148,8 +150,6 @@ In addition, the source code summary is accompanied by detailed code comments fo
    $ sudo apt install cmake qtbase5-dev qt5-default libqt5svg5-dev qtmultimedia5-dev qttools5-dev libqt5x11extras5-dev
    ```
 
-   
-
 2. Run commands:
 
    ```bash
@@ -162,9 +162,6 @@ In addition, the source code summary is accompanied by detailed code comments fo
 
 3. Alternatively, you can skip Step 2 and directly use Qt Creator for compilation and execution, which is more convenient.
 
-   
-
-$ sudo apt install cmake qtbase5-dev qt5-default libqt5svg5-dev qtmultimedia5-dev qttools5-dev libqt5x11extras5-dev
 
 <br>
 

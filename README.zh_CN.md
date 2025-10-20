@@ -14,7 +14,10 @@
 [![macos-badge](https://github.com/xmuli/ChineseChess/workflows/MacOS/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/MacOS/badge.svg)  [![win-badge](https://github.com/xmuli/ChineseChess/workflows/Windows/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/Windows/badge.svg)  [![ubuntu-badge](https://github.com/xmuli/ChineseChess/workflows/Ubuntu/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/Ubuntu/badge.svg)   ![](https://img.shields.io/github/languages/code-size/XMuli/ChineseChess)  ![](https://img.shields.io/github/downloads/XMuli/ChineseChess/total)
 <br>
 
-> 基于`Qt5`开发的中国象棋网络对战平台(含通讯功能)，实现了在单机或联网状态下，无论是单人还是多人，无论使用系统是否相同，均可以实现象棋游戏功能。 
+> - 基于`Qt5.15 和 Qt6.8`开发的中国象棋网络对战平台(含通讯功能)，实现了在单机或联网状态下，无论是单人还是多人，无论使用系统是否相同，均可以实现象棋游戏功能。 
+>
+> - 更多项目集： https://product.xmuli.tech
+> - 演示效果：https://www.bilibili.com/video/av45509758
 
 <br>
 
@@ -148,8 +151,6 @@
    ```
 
 3. 或者，你可以跳过第 2 步，同样直接使用 Qt Creator 进行编译和运行，更加方便。
-
-
 
 <br>
 
