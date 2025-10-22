@@ -67,9 +67,9 @@ public:
     // 车、炮的功能辅助函数   判断两个点是否在一个直线上面,且返回直线之间的棋子个数
     int  getStoneCountAtLine(int row1, int col1, int row2, int col2);
     void whoWin();                                           // 谁胜谁负
-    bool isChecked(QPoint pt, int& row, int& col);           // 是否选中该枚棋子。pt为输入参数; row， col为输出参数
+    bool isChecked(QPointF pt, int& row, int& col);           // 是否选中该枚棋子。pt为输入参数; row， col为输出参数
     int relation(int row1, int col1, int row2, int col2);    // 计算选中的棋子的位置和要移动的位置之间的位置关系
-    QPoint getRealPoint(QPoint pt);                          // 使mouseMoveEvent取得的坐标同Painter的坐标一致
+    QPointF getRealPoint(QPointF pt);                          // 使mouseMoveEvent取得的坐标同Painter的坐标一致
     bool isGeneral();                                        // 校验将移动后位置是否将死
     void showNetworkGui(const bool& show = false);
 
@@ -81,8 +81,8 @@ private:
 
 public:
     //视图相关
-    QPoint center(int row, int col);                                    // 象棋的棋盘的坐标转换成界面坐标
-    QPoint center(int id);
+    QPointF center(int row, int col);                                    // 象棋的棋盘的坐标转换成界面坐标
+    QPointF center(int id);
     virtual void paintEvent(QPaintEvent *);                             // 绘画棋盘
     void drawChessPieces(QPainter& painter, int id);                    // 绘画单个具体的棋子
     void drawLastStep(QPainter &painter, QVector<ChessStep*>& steps);   // 绘制上次移动棋子的起止位置
@@ -104,7 +104,7 @@ public:
 
     //移动相关
     virtual void mouseReleaseEvent(QMouseEvent *ev);                                        // 鼠标释放事件
-    void click(QPoint pt);                                                                  // 点击转换像素
+    void click(QPointF pt);                                                                  // 点击转换像素
     virtual void clickPieces(int id, int& row, int& col);                                   // 点击选棋
     void trySelectStone(int id);                                                            // 尝试选棋
     void tryMoveStone(int killid, int row, int col);                                        // 尝试移动
@@ -119,9 +119,9 @@ public:
     ChessPieces m_ChessPieces[32];         // 所有棋子
     QVector<ChessStep*> m_ChessSteps;      // 悔棋步数
     ChessVoice m_Chessvoice;               // 下棋音效
-    int m_nR;                              // 棋子半径
-    int m_nOffSet;                         // 距离界面的边距
-    int m_nD;                              // 间距为50px
+    qreal m_nR;                              // 棋子半径
+    qreal m_nOffSet;                         // 距离界面的边距
+    qreal m_nD;                              // 间距为50px
     int m_nSelectID;                       // 选中棋子[-1:选棋子 || 非-1:走棋子]
     int m_nCheckedID;                      // 将要被击杀的棋子ID
     bool m_bIsRed;                         // 是否是红方回合

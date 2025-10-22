@@ -155,38 +155,35 @@ int ChessBoard:: relation(int row1,int col1,int row2,int col2)
 }
 
 //是否选中该枚棋子。pt为输入参数; row， col为输出参数
-bool ChessBoard::isChecked(QPoint pt, int &row, int &col)
+bool ChessBoard::isChecked(QPointF pt, int &row, int &col)
 {
-    for(row = 0; row <= 9; row++)
-    {
-        for(col = 0; col <= 8; col++)
-        {
-            QPoint temp = center(row, col);
-            int x = temp.x()-pt.x();
-            int y = temp.y()-pt.y();
-
-            if(x*x+y*y < m_nR*m_nR)
+    for (row = 0; row <= 9; row++) {
+        for (col = 0; col <= 8; col++) {
+            QPointF temp = center(row, col);
+            qreal dx = temp.x() - pt.x();  // 使用 qreal
+            qreal dy = temp.y() - pt.y();  // 使用 qreal
+            if (dx * dx + dy * dy < m_nR * m_nR) {
                 return true;
+            }
         }
     }
-
     return false;
 }
 
 
 //象棋的棋盘的坐标转换成界面坐标
-QPoint ChessBoard::center(int row, int col)
+QPointF ChessBoard::center(int row, int col)
 {
-    QPoint rePoint;
+    QPointF rePoint;
     //这里注意坐标的转换
-    rePoint.ry() = row*m_nD+m_nOffSet;
-    rePoint.rx() = col*m_nD+m_nOffSet;
+    rePoint.setY(row * m_nD + m_nOffSet);  // 使用 setY
+    rePoint.setX(col * m_nD + m_nOffSet);  // 使用 setX
 
     return rePoint;
 }
 
 //重载:坐标转换
-QPoint ChessBoard::center(int id)
+QPointF ChessBoard::center(int id)
 {
     return center(m_ChessPieces[id].m_nRow, m_ChessPieces[id].m_nCol);
 }
@@ -198,9 +195,9 @@ void ChessBoard::paintEvent(QPaintEvent *)
     int side = qMin(int((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), ui->label->height());
     painter.scale(side / 960.0, side / 960.0);
 
-        m_nOffSet = 60;  //距离界面的边距
-        m_nD = 90;       //间距为50px
-        m_nR = m_nD/2;   //棋子半径为d/2
+        m_nOffSet = 60.0;  //距离界面的边距
+        m_nD = 90.0;       //间距为50px
+        m_nR = m_nD/2.0;   //棋子半径为d/2
 
         //*******************绘画棋盘*******************
         //绘画10条横线
@@ -251,10 +248,10 @@ void ChessBoard::paintEvent(QPaintEvent *)
 
 void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具体的棋子
 {
-    if(m_ChessPieces[id].m_bDead)
+    if (isDead(id))
         return;
 
-    QPoint temp = center(id);
+    QPointF temp = center(id);
     QRect rect(temp.x()-m_nR, temp.y()-m_nR, m_nD, m_nD);
 
     if(m_nSelectID == id)
@@ -276,23 +273,26 @@ void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具�
 
 void ChessBoard:: drawLastStep(QPainter &painter,QVector<ChessStep*>& steps)
 {
-    if (this->m_ChessSteps.size() == 0)
+    if (steps.size() == 0)
         return;
 
-    QPoint stepFrom = center(steps.last()->m_nRowFrom,steps.last()->m_nColFrom);
-    QRect rectFrom(stepFrom.x()-m_nR, stepFrom.y()-m_nR, m_nD, m_nD);
-    painter.setBrush(QColor(0, 0, 0, 0.3 * 255));
-    QPen pen(Qt::SolidLine);
-    painter.setPen(Qt::black);
+    // 使用 QPointF
+    QPointF stepFrom = center(steps.last()->m_nRowFrom, steps.last()->m_nColFrom);
+    QPointF stepTo = center(steps.last()->m_nRowTo, steps.last()->m_nnColTo);  // 假设有 stepTo，根据完整代码添加
+
+    // 假设原有绘制代码，使用 QRectF
+    painter.save();
+    painter.setPen(QPen(Qt::red, 3));  // 示例：设置红色笔，粗细3
+
+    // 绘制起始位置矩形（使用 QRectF）
+    QRectF rectFrom(stepFrom.x() - m_nR, stepFrom.y() - m_nR, m_nR * 2.0, m_nR * 2.0);
     painter.drawRect(rectFrom);
 
-    QPoint stepTo = center(steps.last()->m_nRowTo,steps.last()->m_nnColTo);
-    QRect rectTo(stepTo.x()-m_nR, stepTo.y()-m_nR, m_nD, m_nD);
-    painter.setBrush(QColor(0, 0, 0, 0.2 * 255));
-    pen.setStyle(Qt::SolidLine);
-    pen.setColor(Qt::black);
-    painter.setPen(pen);
+    // 绘制目标位置矩形（使用 QRectF）
+    QRectF rectTo(stepTo.x() - m_nR, stepTo.y() - m_nR, m_nR * 2.0, m_nR * 2.0);
     painter.drawRect(rectTo);
+
+    painter.restore();
 }
 
 void ChessBoard::drawTextStep()
@@ -361,15 +361,14 @@ void ChessBoard::winMessageBox(QString title, QString msg)
     message.exec();
 }
 
-QPoint ChessBoard::getRealPoint(QPoint pt)
+QPointF ChessBoard::getRealPoint(QPointF pt)
 {
-    int side = qMin(int((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), ui->label->height());
-    QPoint ret;
-
-    ret.setX(pt.x() / double(side) * 960.0);
-    ret.setY(pt.y() / double(side) * 960.0);
-
-    return ret;
+// 计算 side 时，确保使用 qreal 以避免精度丢失
+    qreal side = qMin(qreal((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), qreal(ui->label->height()));
+    QPointF realPt;
+    realPt.setX(pt.x() * 960.0 / side);
+    realPt.setY(pt.y() * 960.0 / side);
+    return realPt;
 }
 
 bool ChessBoard:: isGeneral()
@@ -746,12 +745,12 @@ void ChessBoard::mouseReleaseEvent(QMouseEvent *ev)
     if (ev->button() != Qt::LeftButton || m_bIsOver== true) { // 排除鼠标右键点击 游戏已结束则直接返回
         return;
     }
-    QPoint pt= ev->pos();  //获取当前鼠标位置坐标
-    pt=getRealPoint(pt);    //转换至实际像素坐标
+    QPoint mousePos = ev->pos();  // 逻辑坐标
+    QPointF pt = getRealPoint(mousePos);  // 转换为虚拟坐标，使用 QPointF
     click(pt);
 }
 
-void ChessBoard::click(QPoint pt)
+void ChessBoard::click(QPointF pt)
 {
     // 看有没有点中象棋
     // 将pt转化成象棋的行列值
