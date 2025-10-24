@@ -124,41 +124,40 @@ void MachineGame::getAllPossibleMoveStepAndNoKill(QVector<ChessStep *> &steps)
 
 void MachineGame::mousePressEvent(QMouseEvent *ev)
 {
-    if(ev->button() != Qt::LeftButton)
+    if (ev->button() != Qt::LeftButton) {
         return;
+    }
 
     int row, col;
-    if(!isChecked(ev->pos(), row, col))
+    QPointF pt = getRealPoint(ev->pos());  // 转换为虚拟坐标，使用 QPointF
+    if (!isChecked(pt, row, col)) {  // 使用 QPointF 调用 isChecked
         return;
+    }
 
     m_nCheckedID = -1;
 
     //TODO Fix (升级 Qt6): https://github.com/XMuli/chinessChess/issues/23
-    int i =0;
-    for( ; i < 32; i++)
-    {
-        if(m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && m_ChessPieces[i].m_bDead == false)
+    int i = 0;
+    for (; i < 32; i++) {
+        if (m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && m_ChessPieces[i].m_bDead == false) {
             break;
-    }
-
-    if(0<=i && i<32)
-        m_nCheckedID = i;
-
-    clickPieces(m_nCheckedID, row, col);
-
-    if(m_bIsRed) //红方玩家时间
-    {
-        chooseOrMovePieces(i, row, col);
-
-        if(!m_bIsRed) //黑方紧接着进行游戏
-        {
-            machineChooseAndMovePieces();
-            //ToDo: 机器 黑方时间
         }
     }
 
+    if (0 <= i && i < 32) {
+        m_nCheckedID = i;
+    }
 
+    clickPieces(m_nCheckedID, row, col);
 
+    if (m_bIsRed) {  // 红方玩家时间
+        chooseOrMovePieces(i, row, col);
+
+        if (!m_bIsRed) {  // 黑方紧接着进行游戏
+            machineChooseAndMovePieces();
+            // ToDo: 机器 黑方时间
+        }
+    }
 }
 
 void MachineGame::clickPieces(int checkedID, int &row, int &col)
