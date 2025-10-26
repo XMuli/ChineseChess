@@ -10,8 +10,8 @@ jobs:
   build:
     name: Build
     # 运行平台， windows-latest目前是windows server 2022
-    # 参考文档 https://github.com/actions/runner-images/blob/main/images/windows/Windows2019-Readme.md
-    runs-on: windows-2019
+    # 参考文档 https://github.com/actions/runner-images/blob/main/images/windows/Windows2019-Readme.md https://github.com/actions/runner-images/issues/12045 https://github.com/arvidn/libtorrent/pull/7932
+    runs-on: windows-latest
     strategy:
       # 矩阵配置
       matrix:
@@ -42,6 +42,73 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true
+
+      - name: Check for invisible Unicode characters
+        shell: pwsh
+        run: |
+          Write-Host "检查源代码中的不可见Unicode字符..."
+          $invisibleCharsFound = $false
+          
+          # 检查的文件类型
+          $fileExtensions = @('*.cpp', '*.h', '*.hpp', '*.c', '*.cc', '*.cxx', '*.pro', '*.pri', '*.qml', '*.cmake', '*.txt', '*.md')
+          
+          foreach ($ext in $fileExtensions) {
+            Get-ChildItem -Recurse -Path . -Include $ext | ForEach-Object {
+              $file = $_.FullName
+              $content = Get-Content -Path $file -Raw -Encoding UTF8
+              
+              # 检查不可见控制字符（除了常规的空白字符）
+              if ($content -match '[^\x09\x0A\x0D\x20-\x7E\xA0-\xFF\u0100-\uFFFF]') {
+                Write-Host "警告: 文件 $file 包含不可见Unicode字符"
+                Write-Host "位置:"
+                $lines = $content -split "`n"
+                for ($i = 0; $i -lt $lines.Length; $i++) {
+                  if ($lines[$i] -match '[^\x09\x0A\x0D\x20-\x7E\xA0-\xFF\u0100-\uFFFF]') {
+                    Write-Host "  行 $($i + 1): $($lines[$i].Trim())"
+                    # 显示有问题的字符
+                    $charArray = $lines[$i].ToCharArray()
+                    for ($j = 0; $j -lt $charArray.Length; $j++) {
+                      $charCode = [int]$charArray[$j]
+                      if ($charCode -lt 32 -and $charCode -ne 9 -and $charCode -ne 10 -and $charCode -ne 13) {
+                        Write-Host "    位置 $($j + 1): 控制字符 U+$($charCode.ToString('X4'))"
+                      } elseif ($charCode -gt 127 -and $charCode -lt 160) {
+                        Write-Host "    位置 $($j + 1): C1控制字符 U+$($charCode.ToString('X4'))"
+                      }
+                    }
+                  }
+                }
+                $invisibleCharsFound = $true
+              }
+              
+              # 检查BOM标记
+              $bytes = [System.IO.File]::ReadAllBytes($file)
+              if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+                Write-Host "警告: 文件 $file 包含UTF-8 BOM"
+                $invisibleCharsFound = $true
+              }
+            }
+          }
+          
+          # 检查零宽字符
+          Get-ChildItem -Recurse -Path . -Include *.cpp, *.h, *.hpp, *.c, *.pro, *.qml | ForEach-Object {
+            $file = $_.FullName
+            $content = Get-Content -Path $file -Raw -Encoding UTF8
+            
+            # 零宽空格 (U+200B), 零宽非连接符 (U+200C), 零宽连接符 (U+200D), 零宽非断空格 (U+FEFF)
+            if ($content -match '[\u200B-\u200D\uFEFF]') {
+              Write-Host "警告: 文件 $file 包含零宽字符"
+              $invisibleCharsFound = $true
+            }
+          }
+          
+          if ($invisibleCharsFound) {
+            Write-Host "`n发现不可见Unicode字符！建议清理这些字符以避免潜在问题。"
+            Write-Host "可以使用文本编辑器的'显示不可见字符'功能来定位和删除它们。"
+            # 这里可以选择让构建失败，或者只是警告
+            # exit 1
+          } else {
+            Write-Host "`n检查完成：未发现不可见Unicode字符。"
+          }
 
       - name: Inspect Qt
         shell: pwsh
@@ -115,4 +182,4 @@ jobs:
           files: |
             ${{ env.productName }}.zip
           tag: ${{ github.ref }}
-          overwrite: true 
+          overwrite: true
