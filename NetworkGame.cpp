@@ -129,6 +129,8 @@ NetworkGame::NetworkGame(bool isServer)
     }
 
     connect(ChessBoard::ui->btnTcpConnect, &QPushButton::released, this, &NetworkGame::onBtnTryConnect);
+    connect(ChessBoard::ui->comboIp, &QComboBox::currentTextChanged, this, &NetworkGame::handleServerEndpointChange);
+    connect(ChessBoard::ui->sbPort, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &NetworkGame::handleServerEndpointChange);
 }
 
 void NetworkGame::initUI()
@@ -150,14 +152,6 @@ void NetworkGame::initUI()
             QSignalBlocker blocker(ui->sbPort);
             ui->sbPort->setValue(preservedPort);
         }
-        connect(ui->comboIp, &QComboBox::currentTextChanged, this, [this](const QString&){
-            if (m_bIsTcpServer)
-                onBtnTryConnect();
-        }, Qt::UniqueConnection);
-        connect(ui->sbPort, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [this](int){
-            if (m_bIsTcpServer)
-                onBtnTryConnect();
-        }, Qt::UniqueConnection);
     } else {
         ui->networkGroup->setTitle("请输入[服务器]的IP和Port");
         ui->btnTcpConnect->setText("连接");
@@ -289,6 +283,13 @@ void NetworkGame::onBtnTryConnect()
     qDebug() << text;
     ui->labConnectStatus->setText(text);
 
+}
+
+void NetworkGame::handleServerEndpointChange()
+{
+    if (m_bIsTcpServer) {
+        onBtnTryConnect();
+    }
 }
 
 void NetworkGame::populateLocalIpChoices(const QStringList& candidates, const QString& preferredIp)

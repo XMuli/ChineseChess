@@ -27,6 +27,7 @@ public slots:
     void slotNewConnection();
     void slotRecv();
     void onBtnTryConnect();
+    void handleServerEndpointChange();
 
 private:
     void populateLocalIpChoices(const QStringList& candidates = QStringList(), const QString& preferredIp = QString());
