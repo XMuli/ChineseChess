@@ -12,6 +12,9 @@
 #include <QNetworkProxyFactory>
 #include <QHostAddress>
 #include <QStringList>
+#include <QSignalBlocker>
+#include <QComboBox>
+#include <QSpinBox>
 #include <algorithm>
 #include <iterator>
 
@@ -132,7 +135,7 @@ void NetworkGame::initUI()
 {
     auto& ui = ChessBoard::ui;
     const QString preservedIp = currentIpText();
-    QString port = ui->sbPort->text();
+    const int preservedPort = ui->sbPort->value();
 
     if(m_bIsTcpServer)  {  //作为服务器端
         ui->networkGroup->setTitle("服务器-红方的IP和Port");
@@ -143,7 +146,18 @@ void NetworkGame::initUI()
         populateLocalIpChoices(ipList, ipList.isEmpty() ? QStringLiteral("127.0.0.1") : ipList.first());
         ui->comboIp->setEditable(false);
         ui->comboIp->setEnabled(true);
-        ui->sbPort->setValue(port.toLong());
+        {
+            QSignalBlocker blocker(ui->sbPort);
+            ui->sbPort->setValue(preservedPort);
+        }
+        connect(ui->comboIp, &QComboBox::currentTextChanged, this, [this](const QString&){
+            if (m_bIsTcpServer)
+                onBtnTryConnect();
+        }, Qt::UniqueConnection);
+        connect(ui->sbPort, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [this](int){
+            if (m_bIsTcpServer)
+                onBtnTryConnect();
+        }, Qt::UniqueConnection);
     } else {
         ui->networkGroup->setTitle("请输入[服务器]的IP和Port");
         ui->btnTcpConnect->setText("连接");
@@ -152,7 +166,10 @@ void NetworkGame::initUI()
         ui->comboIp->setEditable(true);
         ui->comboIp->setEnabled(true);
         ui->comboIp->setEditText(preservedIp);
-        ui->sbPort->setValue(port.toLong());
+        {
+            QSignalBlocker blocker(ui->sbPort);
+            ui->sbPort->setValue(preservedPort);
+        }
     }
 }
 
@@ -225,7 +242,8 @@ void NetworkGame::onBtnTryConnect()
     auto& ui = ChessBoard::ui;
     QString text;
     const QString ipText = currentIpText();
-    if (ipText.isEmpty() || ui->sbPort->text().isEmpty()) {
+    const QString portText = ui->sbPort->text();
+    if ((m_bIsTcpServer && ipText.isEmpty()) || portText.isEmpty()) {
         text = "IP或Port为空，请设置后重试";
         qDebug() << text;
         ui->labConnectStatus->setText(text);
@@ -239,9 +257,18 @@ void NetworkGame::onBtnTryConnect()
             m_tcpServer->close();
         }
 
+        QHostAddress bindAddress;
+        if (!bindAddress.setAddress(ipText)) {
+            text = QString("Invalid server IP: %1").arg(ipText);
+            ui->labConnectStatus->setText(text);
+            qDebug() << text;
+            return;
+        }
+
+        const quint16 portValue = static_cast<quint16>(ui->sbPort->value());
         // 监听指定地址和端口
-        if (m_tcpServer->listen(QHostAddress::Any, ui->sbPort->text().toLong())) {
-            text = QString("Server is listening on \"%1\" port \"%2\"").arg(m_tcpServer->serverAddress().toString()).arg(m_tcpServer->serverPort());
+        if (m_tcpServer->listen(bindAddress, portValue)) {
+            text = QString("Server is listening on \"%1\" port \"%2\"").arg(bindAddress.toString()).arg(portValue);
         } else {
             text = QString("Server failed to start: %1").arg(m_tcpServer->errorString());
         }
