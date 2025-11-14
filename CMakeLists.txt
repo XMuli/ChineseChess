@@ -246,6 +246,7 @@ if(QT_BIN_DIR)
     list(APPEND _qt_deploy_hints "${QT_BIN_DIR}")
 endif()
 
+set(_qt_runtime_deploy_handled FALSE)
 if(QT_VERSION_MAJOR EQUAL 6)
     include(Qt6DeploySupport OPTIONAL RESULT_VARIABLE _qt6_deploysupport_included)
     if(_qt6_deploysupport_included AND NOT (_qt6_deploysupport_included MATCHES "NOTFOUND") AND COMMAND qt_generate_deploy_app_script)
@@ -261,13 +262,19 @@ if(QT_VERSION_MAJOR EQUAL 6)
                 -P "${qt_deploy_script}"
             COMMENT "Deploying Qt runtime dependencies for Qt6 target: ${project_name}"
         )
-    else()
-        message(WARNING "Qt6 deploy support is unavailable; runtime dependencies will not be copied automatically.")
+        set(_qt_runtime_deploy_handled TRUE)
     endif()
-elseif(WIN32)
-    if(_qt_deploy_hints)
-        find_program(QT_WINDEPLOYQT_EXECUTABLE
-            NAMES windeployqt windeployqt.exe
+endif()
+
+if(NOT _qt_runtime_deploy_handled)
+    if(QT_VERSION_MAJOR EQUAL 6 AND (NOT DEFINED _qt6_deploysupport_included OR _qt6_deploysupport_included MATCHES "NOTFOUND"))
+        message(WARNING "Qt6DeploySupport.cmake unavailable; falling back to classic deploy helpers.")
+    endif()
+
+    if(WIN32)
+        if(_qt_deploy_hints)
+            find_program(QT_WINDEPLOYQT_EXECUTABLE
+                NAMES windeployqt windeployqt.exe
             HINTS ${_qt_deploy_hints}
             NO_DEFAULT_PATH)
     endif()
@@ -328,7 +335,8 @@ elseif(UNIX)
     else()
         message(WARNING "linuxdeployqt not found; runtime dependencies will not be copied automatically.")
     endif()
-endif()
+endif() # platform deploy fallback
+endif() # _qt_runtime_deploy_handled
 #***************************************************************************************************************************
 
 if(APPLE)

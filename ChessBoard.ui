@@ -217,7 +217,7 @@ border-image: url(:/images/b.jpg);
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLineEdit" name="leIp">
+           <widget class="QComboBox" name="comboIp">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -230,20 +230,14 @@ border-image: url(:/images/b.jpg);
               <height>0</height>
              </size>
             </property>
-            <property name="toolTip">
-             <string/>
+            <property name="editable">
+             <bool>true</bool>
             </property>
-            <property name="statusTip">
-             <string/>
+            <property name="insertPolicy">
+             <enum>QComboBox::NoInsert</enum>
             </property>
-            <property name="whatsThis">
-             <string/>
-            </property>
-            <property name="inputMask">
-             <string/>
-            </property>
-            <property name="text">
-             <string/>
+            <property name="sizeAdjustPolicy">
+             <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
             </property>
            </widget>
           </item>

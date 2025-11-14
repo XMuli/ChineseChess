@@ -10,6 +10,97 @@
 #include <QNetworkInterface>
 #include <QDebug>
 #include <QNetworkProxyFactory>
+#include <QHostAddress>
+#include <QStringList>
+#include <algorithm>
+
+namespace {
+struct IpCandidate {
+    QString ip;
+    QString label;
+    int priority = 2;
+};
+
+bool isInterfaceUsable(const QNetworkInterface& iface)
+{
+    if (!iface.isValid())
+        return false;
+    const auto flags = iface.flags();
+    if (!(flags & QNetworkInterface::IsUp) || !(flags & QNetworkInterface::IsRunning))
+        return false;
+    if (flags & QNetworkInterface::IsLoopBack)
+        return false;
+    return true;
+}
+
+int interfacePriority(const QNetworkInterface& iface)
+{
+    const QString human = iface.humanReadableName().toLower();
+    const QString raw = iface.name().toLower();
+    auto containsAny = [&](const QStringList& keys) {
+        for (const QString& key : keys) {
+            if (human.contains(key) || raw.contains(key))
+                return true;
+        }
+        return false;
+    };
+
+    if (containsAny({"wlan", "wifi", "wi-fi", "wireless", "wl"}))
+        return 0; // Wi-Fi
+    if (containsAny({"eth", "en", "lan"}))
+        return 1; // Ethernet
+    return 2;      // Others
+}
+
+QString interfaceLabel(int priority)
+{
+    switch (priority) {
+    case 0: return QObject::tr("Wi-Fi");
+    case 1: return QObject::tr("Ethernet");
+    default: return QObject::tr("Other");
+    }
+}
+
+QList<IpCandidate> collectIpCandidates()
+{
+    QList<IpCandidate> result;
+    const auto interfaces = QNetworkInterface::allInterfaces();
+
+    for (const QNetworkInterface& iface : interfaces) {
+        if (!isInterfaceUsable(iface))
+            continue;
+
+        const int priority = interfacePriority(iface);
+        const QString tag = interfaceLabel(priority);
+        for (const QNetworkAddressEntry& entry : iface.addressEntries()) {
+            const QHostAddress addr = entry.ip();
+            if (addr.protocol() != QAbstractSocket::IPv4Protocol)
+                continue;
+
+            const QString ip = addr.toString();
+            const bool duplicate = std::any_of(result.cbegin(), result.cend(), [&](const IpCandidate& candidate) {
+                return candidate.ip == ip;
+            });
+            if (duplicate)
+                continue;
+
+            IpCandidate candidate;
+            candidate.ip = ip;
+            candidate.priority = priority;
+            candidate.label = QStringLiteral("%1  (%2 · %3)").arg(ip, tag, iface.humanReadableName());
+            result.append(candidate);
+        }
+    }
+
+    std::sort(result.begin(), result.end(), [](const IpCandidate& lhs, const IpCandidate& rhs) {
+        if (lhs.priority != rhs.priority)
+            return lhs.priority < rhs.priority;
+        return lhs.ip < rhs.ip;
+    });
+
+    return result;
+}
+} // namespace
 
 NetworkGame::NetworkGame(bool isServer)
 {
@@ -39,39 +130,23 @@ NetworkGame::NetworkGame(bool isServer)
 void NetworkGame::initUI()
 {
     auto& ui = ChessBoard::ui;
-    QString ip = ui->leIp->text();
+    const QString preservedIp = currentIpText();
     QString port = ui->sbPort->text();
+    populateLocalIpChoices(m_bIsTcpServer ? QString() : preservedIp);
 
     if(m_bIsTcpServer)  {  //作为服务器端
-        QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
-
-        // 遍历每个接口
-        foreach (QNetworkInterface interface, interfaces) {
-            // 如果接口处于活动状态且不是回环接口
-            if (interface.isValid() && interface.flags().testFlag(QNetworkInterface::IsUp) && !interface.flags().testFlag(QNetworkInterface::IsLoopBack)) {
-                foreach (QNetworkAddressEntry entry, interface.addressEntries()) {
-                    // 输出IPv4地址
-                    if (entry.ip().protocol() == QAbstractSocket::IPv4Protocol) {
-                        ip = entry.ip().toString();
-                        qDebug() << "Interface:" << interface.humanReadableName() << "IPv4 Address:" << entry.ip().toString();
-                        break;
-                    }
-                }
-            }
-        }
-
         ui->networkGroup->setTitle("服务器-红方的IP和Port");
         ui->btnTcpConnect->setText("监听");
-        ui->leIp->setText(ip);
+        ui->comboIp->setEditable(false);
         ui->sbPort->setValue(port.toLong());
-        ui->leIp->setReadOnly(true);
-        ui->leIp->setDisabled(true);
-//        ui->lePort->setReadOnly(true);
     } else {
         ui->networkGroup->setTitle("请输入[服务器]的IP和Port");
         ui->btnTcpConnect->setText("连接");
         ui->btnTcpConnect->show();
-        ui->leIp->setText(ip);
+        ui->comboIp->setEditable(true);
+        if (!preservedIp.isEmpty()) {
+            ui->comboIp->setEditText(preservedIp);
+        }
         ui->sbPort->setValue(port.toLong());
     }
 }
@@ -144,7 +219,8 @@ void NetworkGame::onBtnTryConnect()
 {
     auto& ui = ChessBoard::ui;
     QString text;
-    if (ui->leIp->text().isEmpty() || ui->sbPort->text().isEmpty()) {
+    const QString ipText = currentIpText();
+    if (ipText.isEmpty() || ui->sbPort->text().isEmpty()) {
         text = "IP或Port为空，请设置后重试";
         qDebug() << text;
         ui->labConnectStatus->setText(text);
@@ -167,7 +243,7 @@ void NetworkGame::onBtnTryConnect()
 
     } else {  // 客户端-输入IP+Port尝试连接服务器
         if (!m_tcpSocket) return;
-        const QString& ip = ui->leIp->text();
+        const QString& ip = ipText;
         const QString& port = ui->sbPort->text();
         m_tcpSocket->connectToHost(QHostAddress(ip), port.toInt());
         // 等待连接成功或失败
@@ -181,4 +257,51 @@ void NetworkGame::onBtnTryConnect()
     qDebug() << text;
     ui->labConnectStatus->setText(text);
 
+}
+
+void NetworkGame::populateLocalIpChoices(const QString& preferredIp)
+{
+    auto combo = ChessBoard::ui->comboIp;
+    if (!combo)
+        return;
+
+    const QList<IpCandidate> candidates = collectIpCandidates();
+    const QString targetIp = preferredIp.trimmed();
+
+    combo->blockSignals(true);
+    combo->clear();
+    for (const auto& candidate : candidates) {
+        combo->addItem(candidate.label, candidate.ip);
+    }
+    if (!targetIp.isEmpty() && combo->findData(targetIp) == -1) {
+        combo->addItem(targetIp, targetIp);
+    }
+
+    int index = -1;
+    if (!targetIp.isEmpty()) {
+        index = combo->findData(targetIp);
+    }
+    if (index < 0 && !candidates.isEmpty()) {
+        index = 0;
+    }
+
+    if (index >= 0) {
+        combo->setCurrentIndex(index);
+    } else {
+        combo->setEditText(targetIp.isEmpty() ? QStringLiteral("127.0.0.1") : targetIp);
+    }
+
+    combo->blockSignals(false);
+}
+
+QString NetworkGame::currentIpText() const
+{
+    const auto combo = ChessBoard::ui->comboIp;
+    if (!combo)
+        return {};
+
+    QString ip = combo->currentData().toString();
+    if (ip.isEmpty())
+        ip = combo->currentText();
+    return ip.trimmed();
 }
