@@ -137,7 +137,12 @@
 1. 以 Debian 和 Ubuntu 为例，安装 Qt （推荐 Qt 5.15 或者 Qt 6.8 LTS）执行:
 
    ```bash
+   # Ubuntu 20.04 STL， apt 默认 qt5.12.8
    $ sudo apt install cmake qtbase5-dev qt5-default libqt5svg5-dev qtmultimedia5-dev qttools5-dev libqt5x11extras5-dev
+   
+   
+   # Ubuntu 24.04 STL， apt 默认 qt6.4.2
+   $ sudo apt install cmake g++ vim qt6-base-dev qt6-tools-dev             qt6-svg-dev    qt6-multimedia-dev
    ```
 
 2. 运行命令

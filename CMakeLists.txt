@@ -42,15 +42,39 @@ file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR})                      # 创建输出目�
 # 需要配置环境变量QT5_DIR
 # set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} $ENV{QT5_DIR})
 
-set(qt_moduls Core Gui Widgets OpenGL Network Xml Svg Multimedia)                        # Network Multimedia WebSockets
+set(qt_modules Core Gui Widgets OpenGL Network Xml Svg Multimedia)                        # Network Multimedia WebSockets
 set(qt_version_moduls)
-foreach(it ${qt_moduls})
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS ${qt_modules} LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${qt_modules} LinguistTools) # LinguistTools No link
+
+foreach(it ${qt_modules})
     list(APPEND qt_version_moduls Qt${QT_VERSION_MAJOR}::${it})
-    message("--->qt_moduls:" Qt${QT_VERSION_MAJOR}::${it})
+    message("--->qt_module:" Qt${QT_VERSION_MAJOR}::${it})
 endforeach()
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS ${qt_moduls} LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${qt_moduls} LinguistTools) # LinguistTools No link
+# Try to resolve the Qt bin directory regardless of the major version in use.
+set(_qt_cmake_dir "")
+if(QT_VERSION_MAJOR EQUAL 6 AND DEFINED Qt6_DIR)
+    set(_qt_cmake_dir "${Qt6_DIR}")
+elseif(QT_VERSION_MAJOR EQUAL 5 AND DEFINED Qt5_DIR)
+    set(_qt_cmake_dir "${Qt5_DIR}")
+endif()
+
+if(_qt_cmake_dir)
+    get_filename_component(_qt_prefix "${_qt_cmake_dir}/.." ABSOLUTE)
+    set(QT_BIN_DIR "${_qt_prefix}/bin")
+endif()
+
+if(NOT DEFINED QT_BIN_DIR)
+    set(QT_BIN_DIR "")
+endif()
+
+if(QT_BIN_DIR)
+    message(STATUS "Qt bin dir: ${QT_BIN_DIR}")
+else()
+    message(WARNING "Qt bin directory could not be deduced; deploy helpers may be skipped.")
+endif()
 
 set(src_files
     main.cpp
@@ -86,14 +110,14 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(is_x64bit true)
 endif()
 
-# 定义一些 qt bin 的基础变量
-set(qt_binray_dir "${Qt5_DIR}/../../../bin")   # C:/Qt/5.15.2/msvc2019_64/lib/cmake/Qt5/../../../bin
+# 定义 lupdate/lrelease 的默认位置，兼容不同平台
+set(_qt_tool_suffix "")
+if(WIN32)
+    set(_qt_tool_suffix ".exe")
+endif()
 
-if(UNIX)  # using apt install qt5-devtools*
-#    set(lupdate_path "lupdate")
-#    set(lrelease_path "lrelease")
-
-    execute_process(COMMAND lsb_release -i OUTPUT_VARIABLE LSB_ID)
+if(UNIX AND NOT APPLE)  # using apt install qt5-devtools*
+    execute_process(COMMAND lsb_release -i OUTPUT_VARIABLE LSB_ID ERROR_QUIET)
     if (LSB_ID MATCHES "Deepin" OR LSB_ID MATCHES "UOS")
         set(lupdate_path "/usr/lib/qt5/bin/lupdate")
         set(lrelease_path "/usr/lib/qt5/bin/lrelease")
@@ -103,29 +127,18 @@ if(UNIX)  # using apt install qt5-devtools*
         set(lrelease_path "lrelease")
         message("This is other linux system.")
     endif()
-
 else()
-    set(lupdate_path "${qt_binray_dir}/lupdate")
-    set(lrelease_path "${qt_binray_dir}/lrelease")
-
-    if(WIN32)
-
-        if(${QT_VERSION_MAJOR} EQUAL 6)
-            set(windeployqt6 "${qt_binray_dir}/windeployqt6.exe")
-        elseif(${QT_VERSION_MAJOR} EQUAL 5)
-            set(windeployqt "${qt_binray_dir}/windeployqt.exe")
-        endif()
-
-    elseif(APPLE)
-        set(windeployqt "${qt_binray_dir}/macdeployqt")
-    elseif(UNIX)
-        # custom deployqt
+    if(QT_BIN_DIR)
+        set(lupdate_path "${QT_BIN_DIR}/lupdate${_qt_tool_suffix}")
+        set(lrelease_path "${QT_BIN_DIR}/lrelease${_qt_tool_suffix}")
+    else()
+        set(lupdate_path "lupdate${_qt_tool_suffix}")
+        set(lrelease_path "lrelease${_qt_tool_suffix}")
     endif()
 endif()
 
 message("Qt5_DIR:" ${Qt5_DIR})
-message("qt_binray_dir:" ${qt_binray_dir})
-message("windeployqt:" ${windeployqt})
+message("Qt6_DIR:" ${Qt6_DIR})
 message("lupdate_path:" ${lupdate_path})
 message("lrelease_path:" ${lrelease_path})
 message("EXECUTABLE_OUTPUT_PATH:" ${EXECUTABLE_OUTPUT_PATH})
@@ -227,30 +240,96 @@ if (WIN32)
     endif(MSVC)
 endif()
 
-#******************************************* 拷贝 ssl 和对应的 qt 依赖 *******************************************************
-if(APPLE)
-    #file(COPY "/usr/local/Cellar/openssl@3/3.1.1/lib/libcrypto.3.dylib" DESTINATION "${EXECUTABLE_OUTPUT_PATH}")
-    #file(COPY "/usr/local/Cellar/openssl@3/3.1.1/lib/libssl.3.dylib" DESTINATION "${exe_output_dir}")
-    add_custom_command(TARGET ${project_name} POST_BUILD COMMAND "${windeployqt}" "${EXECUTABLE_OUTPUT_PATH}/${project_name}.app" "-verbose=1")
-    add_custom_command(TARGET ${project_name} POST_BUILD COMMAND "${windeployqt}" "${EXECUTABLE_OUTPUT_PATH}/${project_name}.app" "-dmg")
-elseif(UNIX)
-elseif(WIN32)
-#    if(${is_x64bit})
-#        set(ssl_dir "C:/Qt/Tools/OpenSSL/Win_x64/")
-#        set(ssl_file "libssl-1_1-x64.dll" "libcrypto-1_1-x64.dll")
-#    else()
-#        set(ssl_dir "C:/Qt/Tools/OpenSSL/Win_x86/")
-#        set(ssl_file "libssl-1_1.dll" "libcrypto-1_1.dll")
-#    endif()
-
-#    foreach(it ${ssl_file})
-#        file(COPY "${ssl_dir}/bin/${it}" DESTINATION "${EXECUTABLE_OUTPUT_PATH}")
-#        message("--->it:" "${ssl_dir}/bin/${it}")
-#    endforeach()
-
-    add_custom_command(TARGET ${project_name} POST_BUILD COMMAND "${windeployqt}" "${EXECUTABLE_OUTPUT_PATH}/${project_name}.exe" --no-opengl-sw --no-translations)
+#******************************************* Qt runtime dependency deployment **********************************************
+set(_qt_deploy_hints)
+if(QT_BIN_DIR)
+    list(APPEND _qt_deploy_hints "${QT_BIN_DIR}")
 endif()
-#******************************************************  *********************************************************************
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    include(Qt6DeploySupport OPTIONAL RESULT_VARIABLE _qt6_deploysupport_included)
+    if(_qt6_deploysupport_included AND NOT (_qt6_deploysupport_included MATCHES "NOTFOUND") AND COMMAND qt_generate_deploy_app_script)
+        qt_generate_deploy_app_script(
+            TARGET ${project_name}
+            OUTPUT_SCRIPT qt_deploy_script
+            NO_COMPILER_RUNTIME
+            NO_UNSUPPORTED_PLATFORM_ERROR
+        )
+        add_custom_command(TARGET ${project_name} POST_BUILD
+            COMMAND "${CMAKE_COMMAND}"
+                -DQT_DEPLOY_PREFIX="$<TARGET_FILE_DIR:${project_name}>"
+                -P "${qt_deploy_script}"
+            COMMENT "Deploying Qt runtime dependencies for Qt6 target: ${project_name}"
+        )
+    else()
+        message(WARNING "Qt6 deploy support is unavailable; runtime dependencies will not be copied automatically.")
+    endif()
+elseif(WIN32)
+    if(_qt_deploy_hints)
+        find_program(QT_WINDEPLOYQT_EXECUTABLE
+            NAMES windeployqt windeployqt.exe
+            HINTS ${_qt_deploy_hints}
+            NO_DEFAULT_PATH)
+    endif()
+    if(NOT QT_WINDEPLOYQT_EXECUTABLE)
+        find_program(QT_WINDEPLOYQT_EXECUTABLE NAMES windeployqt windeployqt.exe)
+    endif()
+    if(QT_WINDEPLOYQT_EXECUTABLE)
+        add_custom_command(TARGET ${project_name} POST_BUILD
+            COMMAND "${QT_WINDEPLOYQT_EXECUTABLE}"
+                --no-opengl-sw
+                --no-translations
+                --dir "$<TARGET_FILE_DIR:${project_name}>"
+                "$<TARGET_FILE:${project_name}>"
+            COMMENT "Deploying Qt runtime dependencies with windeployqt"
+        )
+    else()
+        message(WARNING "windeployqt not found; runtime dependencies will not be copied automatically.")
+    endif()
+elseif(APPLE)
+    if(_qt_deploy_hints)
+        find_program(QT_MACDEPLOYQT_EXECUTABLE
+            NAMES macdeployqt
+            HINTS ${_qt_deploy_hints}
+            NO_DEFAULT_PATH)
+    endif()
+    if(NOT QT_MACDEPLOYQT_EXECUTABLE)
+        find_program(QT_MACDEPLOYQT_EXECUTABLE NAMES macdeployqt)
+    endif()
+    if(QT_MACDEPLOYQT_EXECUTABLE)
+        add_custom_command(TARGET ${project_name} POST_BUILD
+            COMMAND "${QT_MACDEPLOYQT_EXECUTABLE}"
+                "$<TARGET_BUNDLE_DIR:${project_name}>"
+                -always-overwrite
+            COMMENT "Deploying Qt runtime dependencies with macdeployqt"
+        )
+    else()
+        message(WARNING "macdeployqt not found; runtime dependencies will not be copied automatically.")
+    endif()
+elseif(UNIX)
+    if(_qt_deploy_hints)
+        find_program(QT_LINUXDEPLOYQT_EXECUTABLE
+            NAMES linuxdeployqt
+            HINTS ${_qt_deploy_hints}
+            NO_DEFAULT_PATH)
+    endif()
+    if(NOT QT_LINUXDEPLOYQT_EXECUTABLE)
+        find_program(QT_LINUXDEPLOYQT_EXECUTABLE NAMES linuxdeployqt)
+    endif()
+    if(QT_LINUXDEPLOYQT_EXECUTABLE)
+        add_custom_command(TARGET ${project_name} POST_BUILD
+            COMMAND "${QT_LINUXDEPLOYQT_EXECUTABLE}"
+                "$<TARGET_FILE:${project_name}>"
+                -always-overwrite
+                -bundle-non-qt-libs
+                -qmldir "${CMAKE_SOURCE_DIR}"
+            COMMENT "Deploying Qt runtime dependencies with linuxdeployqt"
+        )
+    else()
+        message(WARNING "linuxdeployqt not found; runtime dependencies will not be copied automatically.")
+    endif()
+endif()
+#***************************************************************************************************************************
 
 if(APPLE)
 elseif(WIN32)

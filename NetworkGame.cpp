@@ -137,6 +137,7 @@ void NetworkGame::slotRecv()
 
     //qDebug()<<nCheckedID<<"   "<<nRow<<"   "<<nCol<<"   ";
     ChessBoard::clickPieces(nCheckedID, nRow, nCol);
+    update();   // Force repaint so the last-move trail & text stay in sync on both peers
 }
 
 void NetworkGame::onBtnTryConnect()

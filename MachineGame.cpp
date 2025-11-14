@@ -14,44 +14,6 @@ MachineGame::~MachineGame()
 {
 }
 
-//辅助函: 选棋或移动棋子
-void MachineGame::chooseOrMovePieces(int tempID, int& row, int& col)
-{
-    if(m_nSelectID == -1) //选择棋子
-    {
-        if(m_nCheckedID != -1)
-        {
-            if(m_ChessPieces[m_nCheckedID].m_bRed)
-            {
-                m_nSelectID = tempID;
-            }
-            else
-            {
-                m_nSelectID = -1;
-                return;
-            }
-        }
-    }
-    else
-    {
-        if(canMove(m_nSelectID, m_nCheckedID, row, col ))
-        {
-            //_selectId为第一次点击选中的棋子，
-            //_clickId为第二次点击||被杀的棋子ID，准备选中棋子下子的地方
-            m_ChessPieces[m_nSelectID].m_nRow = row;
-            m_ChessPieces[m_nSelectID].m_nCol = col;
-            if(m_nCheckedID != -1)
-                m_ChessPieces[m_nCheckedID].m_bDead = true;
-
-            m_nSelectID = -1;
-            m_bIsRed = !m_bIsRed;
-        }
-    }
-
-    whoWin();
-    update();
-}
-
 void MachineGame::saveStep(int selectID, int checkedID, int row, int col, QVector<ChessStep *> &steps)
 {
     ChessStep* step = new ChessStep;
@@ -122,58 +84,13 @@ void MachineGame::getAllPossibleMoveStepAndNoKill(QVector<ChessStep *> &steps)
     }
 }
 
-void MachineGame::mousePressEvent(QMouseEvent *ev)
+void MachineGame::mouseReleaseEvent(QMouseEvent *ev)
 {
-    if (ev->button() != Qt::LeftButton) {
-        return;
-    }
+    const bool wasRedTurn = m_bIsRed;
+    ChessBoard::mouseReleaseEvent(ev);
 
-    int row, col;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    const QPointF logicalPos = ev->position();
-#else
-    const QPointF logicalPos = ev->pos();
-#endif
-    QPointF pt = getRealPoint(logicalPos);  // 转换为虚拟坐标
-    if (!isChecked(pt, row, col)) {
-        return;
-    }
-
-    m_nCheckedID = -1;
-
-    //TODO Fix (升级 Qt6): https://github.com/XMuli/chinessChess/issues/23
-    int i = 0;
-    for (; i < 32; i++) {
-        if (m_ChessPieces[i].m_nRow == row && m_ChessPieces[i].m_nCol == col && m_ChessPieces[i].m_bDead == false) {
-            break;
-        }
-    }
-
-    if (0 <= i && i < 32) {
-        m_nCheckedID = i;
-    }
-
-    clickPieces(m_nCheckedID, row, col);
-
-    if (m_bIsRed) {  // 红方玩家时间
-        chooseOrMovePieces(i, row, col);
-
-        if (!m_bIsRed) {  // 黑方紧接着进行游戏
-            machineChooseAndMovePieces();
-            // ToDo: 机器 黑方时间
-        }
-    }
-}
-
-void MachineGame::clickPieces(int checkedID, int &row, int &col)
-{
-    if(m_bIsRed) //红方玩家时间
-    {
-        chooseOrMovePieces(checkedID, row, col);
-
-        if(!m_bIsRed) //黑方紧接着进行游戏
-            machineChooseAndMovePieces();
-            //ToDo: 机器 黑方时间
+    if (!m_bIsOver && wasRedTurn && !m_bIsRed) {
+        machineChooseAndMovePieces();
     }
 }
 
@@ -282,20 +199,11 @@ ChessStep* MachineGame::getBestMove()
 void MachineGame::machineChooseAndMovePieces()
 {
     ChessStep* step = getBestMove();
-
-    if(step->m_nKillID == -1)  //黑棋没有可以击杀的红棋子，只好走能够走的过程中最后一步棋
-    {
-        m_ChessPieces[step->m_nMoveID].m_nRow = step->m_nRowTo;
-        m_ChessPieces[step->m_nMoveID].m_nCol = step->m_nnColTo;
-
-    }
-    else //黑棋有可以击杀的红棋子，故击杀红棋子
-    {
-        m_ChessPieces[step->m_nKillID].m_bDead = true;
-        m_ChessPieces[step->m_nMoveID].m_nRow = m_ChessPieces[step->m_nKillID].m_nRow;
-        m_ChessPieces[step->m_nMoveID].m_nCol = m_ChessPieces[step->m_nKillID].m_nCol;
-        m_nSelectID = -1;
+    if (step == nullptr) {
+        return;
     }
 
-    m_bIsRed = !m_bIsRed;
+    doMoveStone(step->m_nMoveID, step->m_nKillID, step->m_nRowTo, step->m_nnColTo);
+    m_nSelectID = -1;
+    update();
 }

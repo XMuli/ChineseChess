@@ -16,13 +16,11 @@ public:
     MachineGame();
     ~MachineGame();
 
-    void chooseOrMovePieces(int tempID, int& row, int& col);                                 // 辅助函： 选棋或移动棋子
     void saveStep(int moveID, int checkedID, int row, int col, QVector<ChessStep*>& steps);  // 保存棋子步骤
     void getAllPossibleMoveStep(QVector<ChessStep*>& steps);                                 // 获得所有可能的移动步骤(击杀)
     void getAllPossibleMoveStepAndNoKill(QVector<ChessStep*>& steps);                        // 获得所有可能的移动步骤(不击杀)
 
-    virtual void mousePressEvent(QMouseEvent *);                                             // 鼠标点击事件
-    void clickPieces(int checkedID, int& row, int& col);
+    void mouseReleaseEvent(QMouseEvent *ev) override;                                        // 鼠标释放事件：继承默认执棋流程
 
     void fakeMove(ChessStep* step);          // 假装移动棋子
     void unFakeMove(ChessStep* step);        // 撤回先前假装移动棋子的步骤
