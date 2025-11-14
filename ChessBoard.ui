@@ -177,21 +177,11 @@ border-image: url(:/images/b.jpg);
          <property name="title">
           <string>请输入服务器IP和prot：</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout" columnstretch="3,1" columnminimumwidth="110,60">
+         <layout class="QGridLayout" name="gridLayout" columnstretch="5,2" columnminimumwidth="110,60">
           <property name="leftMargin">
            <number>0</number>
           </property>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/XMuli/ChineseChess/wiki/%E7%BD%91%E7%BB%9C%E5%AF%B9%E6%88%98%E6%A8%A1%E5%BC%8F%E8%AE%BE%E7%BD%AE&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;📖 Wiki&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="openExternalLinks">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QPushButton" name="btnTcpConnect">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -216,7 +206,7 @@ border-image: url(:/images/b.jpg);
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="1" column="0" colspan="2">
            <widget class="QComboBox" name="comboIp">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -237,11 +227,14 @@ border-image: url(:/images/b.jpg);
              <enum>QComboBox::NoInsert</enum>
             </property>
             <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+             <enum>QComboBox::AdjustToContents</enum>
+            </property>
+            <property name="minimumContentsLength">
+             <number>18</number>
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
+          <item row="4" column="0" colspan="2">
            <widget class="QLabel" name="labConnectStatus">
             <property name="text">
              <string>等待操作中</string>
@@ -251,21 +244,21 @@ border-image: url(:/images/b.jpg);
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
+          <item row="0" column="0" colspan="2">
            <widget class="QLabel" name="label_4">
             <property name="text">
              <string>IP:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item row="2" column="0">
            <widget class="QLabel" name="label_5">
             <property name="text">
              <string>Port:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
            <widget class="QSpinBox" name="sbPort">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -290,6 +283,16 @@ border-image: url(:/images/b.jpg);
             </property>
             <property name="value">
              <number>9999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="labelWiki">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/XMuli/ChineseChess/wiki/%E7%BD%91%E7%BB%9C%E5%AF%B9%E6%88%98%E6%A8%A1%E5%BC%8F%E8%AE%BE%E7%BD%AE&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;📖 Wiki&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="openExternalLinks">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

@@ -78,6 +78,9 @@ private:
     bool havePieces(int row, int col);                       // 判断某一格子，是否有棋子
     void reset();                                            // 胜负已分，重置
     void winMessageBox(QString title, QString msg);
+    void startGameTimer();
+    void pauseGameTimer();
+    void autoStartTimerIfNeeded();
 
 public:
     //视图相关
@@ -152,6 +155,7 @@ private:
     QTime*       m_timeRecord;             // 记录时间
     bool         m_bIsStart;               // 记录是否已经开始计时
     AboutAuthor* m_pAbout;
+    bool         m_bTimerAutoStarted;
 };
 
 #endif // CHESSBOARD_H

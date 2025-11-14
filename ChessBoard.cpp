@@ -47,6 +47,7 @@ void ChessBoard::init()
     m_bIsRed = true;
     m_bIsOver = false;
     m_bIsShowStep = true;
+    m_bTimerAutoStarted = false;
 }
 
 bool ChessBoard:: isRed(int id)
@@ -383,11 +384,41 @@ void ChessBoard::reset()
     //游戏结束 则计时停止 & 计时控制按钮不再可用 直到用户重新游戏
     if(m_bIsStart)
     {
-        m_timer->stop();
-        m_bIsStart = false;
+        pauseGameTimer();
     }
 
+    ui->pushButton_start->setText("开始");
     ui->pushButton_start->setEnabled(false);
+    m_bTimerAutoStarted = false;
+}
+
+void ChessBoard::startGameTimer()
+{
+    if (!m_timer || m_bIsStart)
+        return;
+
+    m_timer->start(1000);
+    m_bIsStart = true;
+    ui->pushButton_start->setText("暂停");
+}
+
+void ChessBoard::pauseGameTimer()
+{
+    if (!m_timer || !m_bIsStart)
+        return;
+
+    m_timer->stop();
+    m_bIsStart = false;
+    ui->pushButton_start->setText("继续");
+}
+
+void ChessBoard::autoStartTimerIfNeeded()
+{
+    if (m_bIsOver || m_bTimerAutoStarted)
+        return;
+
+    startGameTimer();
+    m_bTimerAutoStarted = true;
 }
 
 void ChessBoard::winMessageBox(QString title, QString msg)
@@ -824,12 +855,6 @@ void ChessBoard::clickPieces(int id, int &row, int &col)
         tryMoveStone(id, row, col);
     }
 
-    // 初次按下时，自启动计时器
-    std::once_flag flag;
-    std::call_once(flag, [&]() {
-        m_bIsStart = false;
-        on_pushButton_start_clicked();
-    });
 }
 
 void ChessBoard::trySelectStone(int id)
@@ -864,6 +889,7 @@ void ChessBoard::tryMoveStone(int killid, int row, int col)
 
 void ChessBoard::doMoveStone(int moveid, int killid, int row, int col)
 {
+    autoStartTimerIfNeeded();
     saveStep(moveid, killid, row, col, m_ChessSteps);
 
     killStone(killid);
@@ -969,26 +995,23 @@ void ChessBoard::on_pushButton_start_clicked()
 {
     if(!m_bIsStart) //尚未开始 开始计时
     {
-        m_timer->start(1000);
-        ui->pushButton_start->setText("暂停");
+        startGameTimer();
+        m_bTimerAutoStarted = true;
     }
     else //已经开始，暂停
     {
-        m_timer->stop();
-        ui->pushButton_start->setText("继续");
+        pauseGameTimer();
     }
-
-    m_bIsStart = !m_bIsStart;
 }
 
 void ChessBoard::on_pushButton_reset_clicked()
 {
-    m_timer->stop();    //计时器停止
+    pauseGameTimer();    //计时器停止
     m_timeRecord->setHMS(0,0,0); //时间设为0
     ui->lcdNumber->display(m_timeRecord->toString("hh:mm:ss")); //显示00:00:00
-    m_bIsStart = false;
     ui->pushButton_start->setText("开始");
     ui->pushButton_start->setEnabled(true);
+    m_bTimerAutoStarted = false;
 }
 
 void ChessBoard::on_pushButton_about_clicked()

@@ -55,9 +55,9 @@ int interfacePriority(const QNetworkInterface& iface)
 QString interfaceLabel(int priority)
 {
     switch (priority) {
-    case 0: return QObject::tr("Wi-Fi");
-    case 1: return QObject::tr("Ethernet");
-    default: return QObject::tr("Other");
+    case 0: return QStringLiteral("Wi-Fi");
+    case 1: return QStringLiteral("Ethernet");
+    default: return QStringLiteral("Other");
     }
 }
 
