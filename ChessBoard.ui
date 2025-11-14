@@ -234,14 +234,17 @@ border-image: url(:/images/b.jpg);
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>0</height>
-             </size>
+             <height>0</height>
+            </size>
+           </property>
+            <property name="minimum">
+             <number>1</number>
             </property>
             <property name="maximum">
              <number>65535</number>
             </property>
             <property name="value">
-             <number>9999</number>
+             <number>12345</number>
             </property>
            </widget>
           </item>
