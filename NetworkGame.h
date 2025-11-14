@@ -29,7 +29,7 @@ public slots:
     void onBtnTryConnect();
 
 private:
-    void populateLocalIpChoices(const QString& preferredIp = QString());
+    void populateLocalIpChoices(const QStringList& candidates = QStringList(), const QString& preferredIp = QString());
     QString currentIpText() const;
 
     QTcpServer* m_tcpServer;

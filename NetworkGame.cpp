@@ -13,6 +13,7 @@
 #include <QHostAddress>
 #include <QStringList>
 #include <algorithm>
+#include <iterator>
 
 namespace {
 struct IpCandidate {
@@ -132,21 +133,25 @@ void NetworkGame::initUI()
     auto& ui = ChessBoard::ui;
     const QString preservedIp = currentIpText();
     QString port = ui->sbPort->text();
-    populateLocalIpChoices(m_bIsTcpServer ? QString() : preservedIp);
 
     if(m_bIsTcpServer)  {  //作为服务器端
         ui->networkGroup->setTitle("服务器-红方的IP和Port");
         ui->btnTcpConnect->setText("监听");
+        const QList<IpCandidate> candidates = collectIpCandidates();
+        QStringList ipList;
+        std::transform(candidates.cbegin(), candidates.cend(), std::back_inserter(ipList), [](const IpCandidate& c){ return c.ip; });
+        populateLocalIpChoices(ipList, ipList.isEmpty() ? QStringLiteral("127.0.0.1") : ipList.first());
         ui->comboIp->setEditable(false);
+        ui->comboIp->setEnabled(true);
         ui->sbPort->setValue(port.toLong());
     } else {
         ui->networkGroup->setTitle("请输入[服务器]的IP和Port");
         ui->btnTcpConnect->setText("连接");
         ui->btnTcpConnect->show();
+        ui->comboIp->clear();
         ui->comboIp->setEditable(true);
-        if (!preservedIp.isEmpty()) {
-            ui->comboIp->setEditText(preservedIp);
-        }
+        ui->comboIp->setEnabled(true);
+        ui->comboIp->setEditText(preservedIp);
         ui->sbPort->setValue(port.toLong());
     }
 }
@@ -259,36 +264,34 @@ void NetworkGame::onBtnTryConnect()
 
 }
 
-void NetworkGame::populateLocalIpChoices(const QString& preferredIp)
+void NetworkGame::populateLocalIpChoices(const QStringList& candidates, const QString& preferredIp)
 {
     auto combo = ChessBoard::ui->comboIp;
     if (!combo)
         return;
 
-    const QList<IpCandidate> candidates = collectIpCandidates();
     const QString targetIp = preferredIp.trimmed();
 
     combo->blockSignals(true);
     combo->clear();
-    for (const auto& candidate : candidates) {
-        combo->addItem(candidate.label, candidate.ip);
+    for (const QString& ip : candidates) {
+        combo->addItem(ip, ip);
     }
     if (!targetIp.isEmpty() && combo->findData(targetIp) == -1) {
         combo->addItem(targetIp, targetIp);
     }
 
-    int index = -1;
     if (!targetIp.isEmpty()) {
-        index = combo->findData(targetIp);
-    }
-    if (index < 0 && !candidates.isEmpty()) {
-        index = 0;
-    }
-
-    if (index >= 0) {
-        combo->setCurrentIndex(index);
+        const int index = combo->findData(targetIp);
+        if (index >= 0) {
+            combo->setCurrentIndex(index);
+        } else {
+            combo->setEditText(targetIp);
+        }
+    } else if (combo->count() > 0) {
+        combo->setCurrentIndex(0);
     } else {
-        combo->setEditText(targetIp.isEmpty() ? QStringLiteral("127.0.0.1") : targetIp);
+        combo->setEditText(QStringLiteral("127.0.0.1"));
     }
 
     combo->blockSignals(false);
