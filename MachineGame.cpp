@@ -129,8 +129,13 @@ void MachineGame::mousePressEvent(QMouseEvent *ev)
     }
 
     int row, col;
-    QPointF pt = getRealPoint(ev->pos());  // 转换为虚拟坐标，使用 QPointF
-    if (!isChecked(pt, row, col)) {  // 使用 QPointF 调用 isChecked
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QPointF logicalPos = ev->position();
+#else
+    const QPointF logicalPos = ev->pos();
+#endif
+    QPointF pt = getRealPoint(logicalPos);  // 转换为虚拟坐标
+    if (!isChecked(pt, row, col)) {
         return;
     }
 

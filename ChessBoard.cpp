@@ -23,6 +23,11 @@ ChessBoard::ChessBoard(QWidget *parent) :
 
     this->setWindowIcon(QIcon(":/images/chess.svg"));
     ui->setupUi(this);
+
+    // 交互只依赖于 ChessBoard，自身绘制用的 QLabel 需要放行鼠标事件
+    if (ui->label) {
+        ui->label->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+    }
 }
 
 ChessBoard::~ChessBoard()
@@ -188,12 +193,43 @@ QPointF ChessBoard::center(int id)
     return center(m_ChessPieces[id].m_nRow, m_ChessPieces[id].m_nCol);
 }
 
-void ChessBoard::paintEvent(QPaintEvent *)
+bool ChessBoard::boardTransform(QPointF& origin, qreal& side) const
 {
+    if (!ui || !ui->label)
+        return false;
+
+    const QPoint topLeft = ui->label->mapTo(this, QPoint(0, 0));
+    const QSize boardSize = ui->label->size();
+    if (boardSize.isEmpty())
+        return false;
+
+    const qreal width = boardSize.width();
+    const qreal height = boardSize.height();
+    side = qMin(width, height);
+    if (side <= 0.0)
+        return false;
+
+    origin = QPointF(topLeft);
+    origin.rx() += (width - side) / 2.0;
+    origin.ry() += (height - side) / 2.0;
+    return true;
+}
+
+void ChessBoard::paintEvent(QPaintEvent *event)
+{
+    QMainWindow::paintEvent(event);
+
+    QPointF boardOrigin;
+    qreal boardSide = 0.0;
+    if (!boardTransform(boardOrigin, boardSide))
+        return;
+
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
-    int side = qMin(int((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), ui->label->height());
-    painter.scale(side / 960.0, side / 960.0);
+    painter.save();
+    painter.translate(boardOrigin);
+    const qreal scale = boardSide / 960.0;
+    painter.scale(scale, scale);
 
         m_nOffSet = 60.0;  //距离界面的边距
         m_nD = 90.0;       //间距为50px
@@ -243,6 +279,7 @@ void ChessBoard::paintEvent(QPaintEvent *)
             drawChessPieces(painter, i);
 
         //绘制文本棋谱
+        painter.restore();
         drawTextStep();
 }
 
@@ -363,11 +400,15 @@ void ChessBoard::winMessageBox(QString title, QString msg)
 
 QPointF ChessBoard::getRealPoint(QPointF pt)
 {
-// 计算 side 时，确保使用 qreal 以避免精度丢失
-    qreal side = qMin(qreal((ui->centralwidget->width() - ui->verticalWidget->width()) / 0.9), qreal(ui->label->height()));
+    QPointF origin;
+    qreal side = 0.0;
+    if (!boardTransform(origin, side) || side <= 0.0)
+        return QPointF(-1.0, -1.0);
+
+    const QPointF relative = pt - origin;
     QPointF realPt;
-    realPt.setX(pt.x() * 960.0 / side);
-    realPt.setY(pt.y() * 960.0 / side);
+    realPt.setX(relative.x() * 960.0 / side);
+    realPt.setY(relative.y() * 960.0 / side);
     return realPt;
 }
 
@@ -745,8 +786,16 @@ void ChessBoard::mouseReleaseEvent(QMouseEvent *ev)
     if (ev->button() != Qt::LeftButton || m_bIsOver== true) { // 排除鼠标右键点击 游戏已结束则直接返回
         return;
     }
-    QPoint mousePos = ev->pos();  // 逻辑坐标
-    QPointF pt = getRealPoint(mousePos);  // 转换为虚拟坐标，使用 QPointF
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QPointF globalPos = ev->globalPosition();
+#else
+    const QPointF globalPos = ev->globalPos();
+#endif
+    const QPointF windowTopLeft = mapToGlobal(QPoint(0, 0));
+    const QPointF mousePos = globalPos - windowTopLeft;  // 统一转换为 ChessBoard 坐标系
+
+    QPointF pt = getRealPoint(mousePos);  // 转换为虚拟坐标
     click(pt);
 }
 

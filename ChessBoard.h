@@ -89,6 +89,7 @@ public:
     void drawTextStep();                                                // 绘制文本棋谱
 //    virtual void mousePressEvent(QMouseEvent *);                      // 鼠标点击事件
 //    virtual void clickPieces(int checkedID, int& row, int& col);
+    bool boardTransform(QPointF& origin, qreal& side) const;            // 计算棋盘绘制和点击的起点与边长
 
     // 象棋移动的规则[将  士  象  马  车  炮  兵]
     bool canMove(int moveId, int killId, int row, int col);
