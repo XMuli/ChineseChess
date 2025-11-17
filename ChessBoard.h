@@ -90,6 +90,7 @@ public:
     void drawChessPieces(QPainter& painter, int id);                    // 绘画单个具体的棋子
     void drawLastStep(QPainter &painter, QVector<ChessStep*>& steps);   // 绘制上次移动棋子的起止位置
     void drawTextStep();                                                // 绘制文本棋谱
+    void setPerspectiveFlipped(bool flipped);
 //    virtual void mousePressEvent(QMouseEvent *);                      // 鼠标点击事件
 //    virtual void clickPieces(int checkedID, int& row, int& col);
     bool boardTransform(QPointF& origin, qreal& side) const;            // 计算棋盘绘制和点击的起点与边长
@@ -132,6 +133,7 @@ public:
     bool m_bIsTcpServer;
     bool m_bIsOver;                        // 是否已经游戏结束
     bool m_bIsShowStep;                    // 是否显示步数
+    bool m_bReverseView;                   // 是否翻转视角以便本地玩家
     QString textStepRecord;                // 文本棋谱字符串
 
 signals:

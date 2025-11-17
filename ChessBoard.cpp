@@ -12,6 +12,8 @@ ChessBoard::ChessBoard(QWidget *parent) :
     ui(new Ui::ChessBoard)
 {
     init();
+    m_bIsTcpServer = true;
+    m_bReverseView = false;
 
     //计时器部分
     m_timer = new QTimer;  //初始化定时器
@@ -43,7 +45,6 @@ void ChessBoard::init()
     m_ChessSteps.clear(); //重置步数
     m_nSelectID = -1;
     m_nCheckedID = -1;
-    m_bIsTcpServer = true;
     m_bIsRed = true;
     m_bIsOver = false;
     m_bIsShowStep = true;
@@ -180,10 +181,12 @@ bool ChessBoard::isChecked(QPointF pt, int &row, int &col)
 //象棋的棋盘的坐标转换成界面坐标
 QPointF ChessBoard::center(int row, int col)
 {
+    const int displayRow = m_bReverseView ? (9 - row) : row;
+    const int displayCol = m_bReverseView ? (8 - col) : col;
     QPointF rePoint;
     //这里注意坐标的转换
-    rePoint.setY(row * m_nD + m_nOffSet);  // 使用 setY
-    rePoint.setX(col * m_nD + m_nOffSet);  // 使用 setX
+    rePoint.setY(displayRow * m_nD + m_nOffSet);  // 使用 setY
+    rePoint.setX(displayCol * m_nD + m_nOffSet);  // 使用 setX
 
     return rePoint;
 }
@@ -192,6 +195,15 @@ QPointF ChessBoard::center(int row, int col)
 QPointF ChessBoard::center(int id)
 {
     return center(m_ChessPieces[id].m_nRow, m_ChessPieces[id].m_nCol);
+}
+
+void ChessBoard::setPerspectiveFlipped(bool flipped)
+{
+    if (m_bReverseView == flipped)
+        return;
+
+    m_bReverseView = flipped;
+    update();
 }
 
 bool ChessBoard::boardTransform(QPointF& origin, qreal& side) const

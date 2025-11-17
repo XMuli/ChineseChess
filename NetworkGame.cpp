@@ -109,6 +109,7 @@ QList<IpCandidate> collectIpCandidates()
 NetworkGame::NetworkGame(bool isServer)
 {
     m_bIsTcpServer = isServer;
+    setPerspectiveFlipped(!isServer);
     m_tcpServer = NULL;
     m_tcpSocket = NULL;
 
