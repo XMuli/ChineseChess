@@ -1,6 +1,10 @@
 name: Windows
 on: 
   push:
+    branches:
+      - '**'
+    tags:
+      - 'v*'
     paths-ignore:
       - '*.md'
   pull_request:
@@ -9,30 +13,22 @@ on:
 jobs:
   build:
     name: Build
-    # 运行平台， windows-latest目前是windows server 2022
-    # 参考文档 https://github.com/actions/runner-images/blob/main/images/windows/Windows2019-Readme.md https://github.com/actions/runner-images/issues/12045 https://github.com/arvidn/libtorrent/pull/7932
-    runs-on: windows-latest
+    # windows-2022 runners map to Windows 11 environments
+    runs-on: ${{ matrix.os }}
     strategy:
-      # 矩阵配置
       matrix:
-        qt_target: [desktop]
         include:
-          # 5.15.2 参考 https://mirrors.cloud.tencent.com/qt/online/qtsdkrepository/windows_x86/desktop/qt5_5152/
-          - qt_ver: 5.15.2
-            qt_arch: win32_msvc2019
-            msvc_arch: x86
-            qt_arch_install: msvc2019
-          - qt_ver: 5.15.2           
+          - os: windows-2022
+            qt_ver: '6.7.2'
             qt_arch: win64_msvc2019_64
             msvc_arch: x64
-            qt_arch_install: msvc2019_64
     env:
       targetName: ChineseChess
       targetOS: windows
 
     steps:
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           version: ${{ matrix.qt_ver }}
           arch: ${{ matrix.qt_arch }}
@@ -113,9 +109,9 @@ jobs:
       - name: Inspect Qt
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse -Path $Env:Qt5_Dir
+          Get-ChildItem -Recurse -Path $Env:Qt6_DIR
 
-      - name: msvc-build
+      - name: Configure & Build (MSVC)
         id: msvc-build
         shell: cmd
         run: |
@@ -123,17 +119,10 @@ jobs:
           mkdir build
 
           cd build
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.msvc_arch }}
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.msvc_arch }}
 
-          if "${{ matrix.msvc_arch }}" == "x86" (
-            echo "-------------- x86 --------------"
-            cmake -G "Visual Studio 17 2019" -A Win32 ..
-            devenv "${{ env.targetName }}.sln" /Build "Release|Win32"
-          ) else (
-            echo "-------------- x64 --------------"
-            cmake -G "Visual Studio 16 2019" -A x64 ..
-            devenv "${{ env.targetName }}.sln" /Build "Release|x64"
-          )
+          cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_PREFIX_PATH="%Qt6_DIR%" ..
+          cmake --build . --config Release
      
       - name: name version
         id: name-version
@@ -166,6 +155,7 @@ jobs:
           dir ${{ github.workspace }}/bin
 
       - uses: actions/upload-artifact@v3
+        if: startsWith(github.event.ref, 'refs/tags/')
         with:
           name: my-artifact
           path: ${{ env.productName }}.zip

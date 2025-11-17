@@ -1,6 +1,10 @@
 name: Ubuntu_DEB
 on: 
   push:
+    branches:
+      - '**'
+    tags:
+      - 'v*'
     paths-ignore:
       - '*.md'
   pull_request:
@@ -9,16 +13,11 @@ on:
 jobs:
   build:
     name: Build
-    # 运行平台， ubuntu-latest 目前是 Ubuntu 20.04
-    # 参考文档 https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
     runs-on:  ${{ matrix.os }}
     strategy:
-      matrix: # 矩阵配置
-        qt_ver: [5.15.2]    # 参考: https://mirrors.cloud.tencent.com/qt/online/qtsdkrepository/linux_x64/desktop/qt5_5152
-        qt_target: [desktop]
-        qt_arch: [gcc_64]
-        arch: [amd64]  # arm64
-        os: [ubuntu-20.04]
+      matrix:
+        include:
+          - os: ubuntu-24.04
     env:
       targetName: ChineseChess
       targetLowerName: chinesechess
@@ -53,7 +52,8 @@ jobs:
         run: |
           sudo apt clean
           sudo apt update
-          sudo apt install vim wget tar dh-make debmake lintian cmake qtbase5-dev qt5-default libqt5svg5-dev qtmultimedia5-dev qttools5-dev libqt5x11extras5-dev
+          sudo apt install -y vim wget tar dh-make debmake lintian cmake ninja-build libgl1-mesa-dev \
+            qt6-base-dev qt6-tools-dev qt6-tools-dev-tools qt6-wayland-dev libqt6svg6-dev libqt6opengl6-dev
 
       # tag 打包 .deb，无动态库
       - name: DebPackage

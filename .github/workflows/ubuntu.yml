@@ -1,6 +1,10 @@
 name: Ubuntu
 on: 
   push:
+    branches:
+      - '**'
+    tags:
+      - 'v*'
     paths-ignore:
       - '*.md'
   pull_request:
@@ -9,23 +13,20 @@ on:
 jobs:
   build:
     name: Build
-    # 运行平台， ubuntu-latest 目前是 Ubuntu 20.04
-    # 参考文档 https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
     runs-on:  ${{ matrix.os }}
     strategy:
-      matrix: # 矩阵配置
-        qt_ver: [5.15.2]    # 参考: https://mirrors.cloud.tencent.com/qt/online/qtsdkrepository/linux_x64/desktop/qt5_51211
-        qt_target: [desktop]
-        qt_arch: [gcc_64]
-        arch: [arm64, amd64]
-        os: [ubuntu-20.04] # ubuntu-18.04
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            qt_ver: '6.7.2'
+            qt_arch: gcc_64
     env:
       targetName: ChineseChess
       targetOS: debian
       
     steps:
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           version: ${{ matrix.qt_ver }}
           arch: ${{ matrix.qt_arch }}
@@ -36,14 +37,17 @@ jobs:
           fetch-depth: 1
           submodules: true
 
+      - name: Install build deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libgl1-mesa-dev libpulse-dev
+
       - name: gcc build
         id: gcc-build
         shell: bash
         run: |
-          mkdir build
-          cd build
-          cmake ..
-          make
+          cmake -S . -B build -GNinja -DCMAKE_PREFIX_PATH="$Qt6_DIR"
+          cmake --build build
      
       - name: NameVersion
         id: NameVersion
@@ -65,7 +69,11 @@ jobs:
         shell: bash
         run: |
           mkdir bin
-          cp -r build/bin/${{ env.targetName }} bin
+          target_path="build/bin/${{ env.targetName }}"
+          if [ ! -f "$target_path" ]; then
+            target_path="${{ github.workspace }}/bin/${{ env.targetName }}"
+          fi
+          cp "$target_path" bin/${{ env.targetName }}
           cp -r debian_portable/* bin
           
           sudo chmod 777 bin/ldd.sh
