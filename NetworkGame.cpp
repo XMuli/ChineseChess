@@ -175,24 +175,10 @@ void NetworkGame::initUI()
 
 void NetworkGame::clickPieces(int checkedID, int &row, int &col)
 {
-    //不能够替对方选棋和下棋
-    if(m_bIsTcpServer) //作为服务器一方  不能替黑棋下棋
-    {
-        //选棋[非下棋]这一步过程，使得其无法选择中黑棋
-        if(m_nSelectID == -1 && m_nCheckedID != -1 )
-        {
-            if(m_bIsTcpServer != m_ChessPieces[checkedID].m_bRed )
-                return ;
-        }
-    }
-    else  //作为客户端一方  不能替红棋下棋
-    {
-        //选棋[非下棋]这一步过程，使得其无法选择中红棋
-        if(m_nSelectID == -1 && m_nCheckedID != -1)
-        {
-            if(m_bIsTcpServer != m_ChessPieces[checkedID].m_bRed )
-                return ;
-        }
+    // 本地只能选中己方棋子，禁止移动对手棋子
+    if (m_nSelectID == -1 && checkedID >= 0 && checkedID < 32) {
+        if (m_ChessPieces[checkedID].m_bRed != m_bIsTcpServer)
+            return;
     }
 
     whoWin();

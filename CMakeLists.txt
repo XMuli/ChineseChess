@@ -21,8 +21,9 @@ cmake_minimum_required(VERSION 3.25)
 
 set(project_name ChineseChess)
 set(project_version_major 7)
-set(project_version_minor 0)
-set(project_version ${project_version_major}.${project_version_minor})
+set(project_version_minor 1)
+set(project_version_patch 0)
+set(project_version ${project_version_major}.${project_version_minor}.${project_version_patch})
 project(${project_name} VERSION ${project_version} LANGUAGES CXX)
 
 add_definitions(-DXBUILD_TIME="2025.10.20")
@@ -170,7 +171,7 @@ set_target_properties(${project_name} PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER https://chinesechess.xmuli.tech
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )

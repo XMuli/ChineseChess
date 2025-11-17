@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 #pragma parseroption -p
 #define MyAppName "ChineseChess"
-#define MyAppVersion "7.0"
+#define MyAppVersion "7.1.0"
 #define MyAppPublisher "Wengeng Zhang"
 #define MyAppCompany "XMuli"
 #define MyAppURL "https://chinesechess.xmuli.tech"
