@@ -149,6 +149,7 @@ void NetworkGame::initUI()
         populateLocalIpChoices(ipList, ipList.isEmpty() ? QStringLiteral("127.0.0.1") : ipList.first());
         ui->comboIp->setEditable(false);
         ui->comboIp->setEnabled(true);
+        ui->comboIp->setStyleSheet(QString());
         {
             QSignalBlocker blocker(ui->sbPort);
             ui->sbPort->setValue(preservedPort);
@@ -160,6 +161,10 @@ void NetworkGame::initUI()
         ui->comboIp->clear();
         ui->comboIp->setEditable(true);
         ui->comboIp->setEnabled(true);
+        ui->comboIp->setStyleSheet(QStringLiteral(
+            "QComboBox::drop-down { width: 0px; border: none; }\n"
+            "QComboBox::down-arrow { image: none; }"
+        ));
         ui->comboIp->setEditText(preservedIp);
         {
             QSignalBlocker blocker(ui->sbPort);
