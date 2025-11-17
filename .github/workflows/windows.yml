@@ -154,7 +154,7 @@ jobs:
           Compress-Archive -Path ${{ github.workspace }}/bin/* -Destination ${{ env.productName }}.zip
           dir ${{ github.workspace }}/bin
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: startsWith(github.event.ref, 'refs/tags/')
         with:
           name: my-artifact
