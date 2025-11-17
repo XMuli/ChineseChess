@@ -84,6 +84,12 @@ jobs:
           cd ..
           zip -q -r ${{ env.productName }}.zip bin/*
 
+      - uses: actions/upload-artifact@v4
+        if: startsWith(github.event.ref, 'refs/tags/')
+        with:
+          name: ${{ env.productName }}-linux
+          path: ${{ env.productName }}.zip
+
       # tag上传Release
       - name: uploadRelease
         if: startsWith(github.event.ref, 'refs/tags/')

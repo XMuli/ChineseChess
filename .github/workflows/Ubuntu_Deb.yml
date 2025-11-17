@@ -102,6 +102,12 @@ jobs:
           pwd
           ls -al ..
 
+      - uses: actions/upload-artifact@v4
+        if: startsWith(github.event.ref, 'refs/tags/')
+        with:
+          name: ${{ env.productDebName }}-deb
+          path: ../*.deb
+
       # tag上传Release
       - name: uploadRelease
         if: startsWith(github.event.ref, 'refs/tags/')

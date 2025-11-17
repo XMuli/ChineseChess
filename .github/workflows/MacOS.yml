@@ -104,6 +104,12 @@ jobs:
           ls -al
           pwd
 
+      - uses: actions/upload-artifact@v4
+        if: startsWith(github.event.ref, 'refs/tags/')
+        with:
+          name: ${{ env.productName }}-macos
+          path: ${{ env.productName }}.dmg
+
       # tag上传Release
       - name: uploadRelease
         if: startsWith(github.event.ref, 'refs/tags/')
