@@ -4,7 +4,7 @@
 # 关于作者:
 # 偕臧 xmulitech@gmail.com
 # 项目完成时间: 2019-02-01
-# 功能更新时间: 2025-10-20
+# 功能更新时间: 2026-02-04
 # 其他:如果觉得该作品对你有用，或者有疑惑或者感谢，可以联系作者或者打赏;
 #     对我的 Star 和 Fork 是最大鼓励；当然有人欢迎你提交在 GitHub 提交 PR,
 #     已将源码和思路开源公布于我的github和博客，供大家学习参考
@@ -21,12 +21,12 @@ cmake_minimum_required(VERSION 3.25)
 
 set(project_name ChineseChess)
 set(project_version_major 7)
-set(project_version_minor 1)
+set(project_version_minor 2)
 set(project_version_patch 0)
 set(project_version ${project_version_major}.${project_version_minor}.${project_version_patch})
 project(${project_name} VERSION ${project_version} LANGUAGES CXX)
 
-add_definitions(-DXBUILD_TIME="2025.10.20")
+add_definitions(-DXBUILD_TIME="2026.02.04")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
