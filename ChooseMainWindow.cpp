@@ -10,17 +10,60 @@
 #include <QDialog>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QLabel>
+#include <QSizePolicy>
 
 ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
 {
     this->setWindowTitle(QString("选择游戏方式 %1").arg(XPROJECT_VERSION));
-    this->setFixedSize(360, 160);
+    this->resize(500, 340);
+    this->setMinimumSize(480, 280);
     this->setWindowIcon(QIcon(":/images/chess.svg"));
 
-    QVBoxLayout* lay = new QVBoxLayout(this);
-    lay->addWidget(m_buttons[0] = new QPushButton("玩家自己对战"));
-    lay->addWidget(m_buttons[1] = new QPushButton("玩家和AI对战"));
-    lay->addWidget(m_buttons[2] = new QPushButton("双人网络对战"));
+    auto* lay = new QVBoxLayout(this);
+    lay->setContentsMargins(24, 24, 24, 24);
+    lay->setSpacing(16);
+
+    auto* title = new QLabel("选择一场对局", this);
+    title->setAlignment(Qt::AlignCenter);
+    title->setStyleSheet("font: 700 18pt 'Microsoft YaHei'; color: #222;");
+
+    auto* subtitle = new QLabel("选择你希望的开局方式", this);
+    subtitle->setAlignment(Qt::AlignCenter);
+    subtitle->setStyleSheet("color: #666;");
+
+    auto* btnLayout = new QVBoxLayout();
+    btnLayout->setSpacing(12);
+
+    const QStringList texts = {
+        "玩家自己对战",
+        "玩家和 AI 对战",
+        "双人网络对战"
+    };
+
+    for (int i = 0; i < 3; ++i) {
+        m_buttons[i] = new QPushButton(texts[i], this);
+        m_buttons[i]->setMinimumHeight(52);
+        m_buttons[i]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        m_buttons[i]->setStyleSheet(
+            "QPushButton {"
+            "  border: 1px solid #c5c5c5;"
+            "  border-radius: 8px;"
+            "  background: qlineargradient(x1:0, y1:0, x2:0, y2:1,"
+            "    stop:0 #ffffff, stop:1 #f3f3f3);"
+            "  font: 12pt 'Microsoft YaHei';"
+            "  padding: 10px 14px;"
+            "}"
+            "QPushButton:hover { background: #f8f8f8; }"
+            "QPushButton:pressed { background: #e9e9e9; }"
+        );
+        btnLayout->addWidget(m_buttons[i]);
+        btnLayout->setStretch(i, 1);
+    }
+
+    lay->addWidget(title);
+    lay->addWidget(subtitle);
+    lay->addLayout(btnLayout, 1);
 
     /*游戏方式一: 自己和自己下棋【同一台PC机器】*/
     connect(m_buttons[0], &QPushButton::clicked,[=](){
