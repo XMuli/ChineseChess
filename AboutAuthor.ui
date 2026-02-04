@@ -162,17 +162,11 @@
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer">
+    <widget class="Line" name="line">
      <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>34</height>
-      </size>
-     </property>
-    </spacer>
+    </widget>
    </item>
    <item>
     <widget class="QFrame" name="gridWidget">
