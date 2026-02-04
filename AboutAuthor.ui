@@ -6,27 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>980</width>
-    <height>660</height>
+    <width>838</width>
+    <height>389</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>关于作者</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>12</number>
-   </property>
    <item>
     <widget class="QLabel" name="labelTitle">
      <property name="styleSheet">
-      <string notr="true">font: 700 20pt "Segoe UI"; color: #1f1f1f;</string>
+      <string notr="true">font: 700 20pt &quot;Segoe UI&quot;; color: #1f1f1f;</string>
      </property>
      <property name="text">
       <string>ChineseChess / 中国象棋</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -36,20 +33,20 @@
       <string notr="true">background: rgba(255,255,255,200); border: 1px solid #dcdcdc; border-radius: 6px;</string>
      </property>
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::Shape::StyledPanel</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+      <enum>QFrame::Shadow::Raised</enum>
      </property>
      <layout class="QFormLayout" name="formLayout">
+      <property name="labelAlignment">
+       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+      </property>
       <property name="horizontalSpacing">
        <number>12</number>
       </property>
       <property name="verticalSpacing">
        <number>8</number>
-      </property>
-      <property name="labelAlignment">
-       <set>Qt::AlignRight|Qt::AlignVCenter</set>
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="labelAppTitle">
@@ -109,15 +106,15 @@
          <string>&lt;a href=&quot;mailto:xmulitech@gmail.com&quot;&gt;xmulitech@gmail.com&lt;/a&gt; · &lt;a href=&quot;https://xmuli.tech&quot;&gt;Blog&lt;/a&gt; · &lt;a href=&quot;https://t.me/xmuli&quot;&gt;Telegram&lt;/a&gt;</string>
         </property>
         <property name="textFormat">
-         <enum>Qt::RichText</enum>
+         <enum>Qt::TextFormat::RichText</enum>
         </property>
         <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-        <property name="openExternalLinks">
-         <bool>true</bool>
+         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
         </property>
         <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="openExternalLinks">
          <bool>true</bool>
         </property>
        </widget>
@@ -128,512 +125,627 @@
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>10</height>
+       <height>111</height>
       </size>
      </property>
     </spacer>
    </item>
    <item>
-    <widget class="QLabel" name="labelWallTitle">
-     <property name="styleSheet">
-      <string notr="true">font: 600 12pt "Segoe UI";</string>
-     </property>
-     <property name="text">
-      <string>作者 &amp; 贡献者</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="gridWidget" native="true">
-     <layout class="QGridLayout" name="gridLayout">
-      <property name="horizontalSpacing">
-       <number>16</number>
-      </property>
-      <property name="verticalSpacing">
-       <number>12</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QWidget" name="cardXmuli" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <property name="spacing">
-          <number>4</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="avatarXmuli">
-           <property name="minimumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="resources/res.qrc">:/images/5abc.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Box</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="nameXmuli">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/XMuli&quot;&gt;XMuli&lt;/a&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QWidget" name="cardBruce" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <property name="spacing">
-          <number>4</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="avatarBruce">
-           <property name="minimumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="resources/res.qrc">:/images/b.jpg</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Box</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="nameBruce">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/Bruce-Ch&quot;&gt;Bruce-Ch&lt;/a&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QWidget" name="cardBlueArvin" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <property name="spacing">
-          <number>4</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="avatarBlueArvin">
-           <property name="minimumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="resources/res.qrc">:/images/win.jpg</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Box</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="nameBlueArvin">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/BlueArvin&quot;&gt;BlueArvin&lt;/a&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QWidget" name="cardUbuntuser" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <property name="spacing">
-          <number>4</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="avatarUbuntuser">
-           <property name="minimumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="resources/res.qrc">:/images/chess.svg</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Box</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="nameUbuntuser">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/Ubuntuser2012&quot;&gt;Ubuntuser2012&lt;/a&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QWidget" name="cardKira" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <property name="spacing">
-          <number>4</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="avatarKira">
-           <property name="minimumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="resources/res.qrc">:/images/background.jpg</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Box</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="nameKira">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/kira-yamatoo&quot;&gt;kira-yamatoo&lt;/a&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="0" column="5">
-       <widget class="QWidget" name="cardHmsjy" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_7">
-         <property name="spacing">
-          <number>4</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="avatarHmsjy">
-           <property name="minimumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="resources/res.qrc">:/images/b.jpg</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Box</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="nameHmsjy">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/hmsjy2017&quot;&gt;hmsjy2017&lt;/a&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QWidget" name="cardRyan" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_8">
-         <property name="spacing">
-          <number>4</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="avatarRyan">
-           <property name="minimumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="resources/res.qrc">:/images/5abc.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Box</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="nameRyan">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/ryanfortner&quot;&gt;ryanfortner&lt;/a&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QWidget" name="cardZjuyk" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_9">
-         <property name="spacing">
-          <number>4</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="avatarZjuyk">
-           <property name="minimumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>72</width>
-             <height>72</height>
-            </size>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="resources/res.qrc">:/images/chess.svg</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::Box</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="nameZjuyk">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/zjuyk&quot;&gt;zjuyk&lt;/a&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QWidget" name="gridWidget" native="true">
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="horizontalSpacing">
+         <number>16</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>12</number>
+        </property>
+        <item row="1" column="5">
+         <widget class="QWidget" name="cardUbuntuser" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="avatarUbuntuser">
+             <property name="minimumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::Box</enum>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources/res.qrc">:/images/contributor/Ubuntuser2012.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nameUbuntuser">
+             <property name="text">
+              <string>&lt;a href=&quot;https://github.com/Ubuntuser2012&quot;&gt;Ubuntuser2012&lt;/a&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="6">
+         <widget class="QWidget" name="cardKira" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="avatarKira">
+             <property name="minimumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::Box</enum>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources/res.qrc">:/images/contributor/kirayamatoo.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nameKira">
+             <property name="text">
+              <string>&lt;a href=&quot;https://github.com/kira-yamatoo&quot;&gt;kira-yamatoo&lt;/a&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="8">
+         <widget class="QWidget" name="cardRyan" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="avatarRyan">
+             <property name="minimumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::Box</enum>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources/res.qrc">:/images/contributor/ryanfortner.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nameRyan">
+             <property name="text">
+              <string>&lt;a href=&quot;https://github.com/ryanfortner&quot;&gt;ryanfortner&lt;/a&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <widget class="QWidget" name="cardBlueArvin" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="avatarBlueArvin">
+             <property name="minimumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::Box</enum>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources/res.qrc">:/images/contributor/BlueArvin.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nameBlueArvin">
+             <property name="text">
+              <string>&lt;a href=&quot;https://github.com/BlueArvin&quot;&gt;BlueArvin&lt;/a&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="3">
+         <widget class="QWidget" name="cardBruce" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="avatarBruce">
+             <property name="minimumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::Box</enum>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources/res.qrc">:/images/contributor/Bruce-Ch.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nameBruce">
+             <property name="text">
+              <string>&lt;a href=&quot;https://github.com/Bruce-Ch&quot;&gt;Bruce-Ch&lt;/a&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="3" colspan="8">
+         <widget class="QLabel" name="labelWallTitle_2">
+          <property name="styleSheet">
+           <string notr="true">font: 600 12pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="text">
+           <string>贡献者</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="9">
+         <widget class="QWidget" name="cardZjuyk" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="avatarZjuyk">
+             <property name="minimumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::Box</enum>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources/res.qrc">:/images/contributor/zjuyk.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nameZjuyk">
+             <property name="text">
+              <string>&lt;a href=&quot;https://github.com/zjuyk&quot;&gt;zjuyk&lt;/a&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="labelWallTitle">
+          <property name="styleSheet">
+           <string notr="true">font: 600 12pt &quot;Segoe UI&quot;;</string>
+          </property>
+          <property name="text">
+           <string>作者</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="7">
+         <widget class="QWidget" name="cardHmsjy" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="avatarHmsjy">
+             <property name="minimumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::Box</enum>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources/res.qrc">:/images/contributor/hmsjy2017.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nameHmsjy">
+             <property name="text">
+              <string>&lt;a href=&quot;https://github.com/hmsjy2017&quot;&gt;hmsjy2017&lt;/a&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QWidget" name="cardXmuli" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="avatarXmuli">
+             <property name="minimumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::Box</enum>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources/res.qrc">:/images/contributor/XMuli.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nameXmuli">
+             <property name="text">
+              <string>&lt;a href=&quot;https://github.com/XMuli&quot;&gt;XMuli&lt;/a&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="10">
+         <widget class="QWidget" name="cardZjuyk_2" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_11">
+           <property name="spacing">
+            <number>4</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="avatarZjuyk_3">
+             <property name="minimumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>72</width>
+               <height>72</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::Shape::Box</enum>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources/res.qrc">:/images/contributor/OpenAI-Codex.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nameZjuyk_3">
+             <property name="text">
+              <string>&lt;a href=&quot;https://openai.com/codex/&quot;&gt;OpenAI-Codex&lt;/a&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

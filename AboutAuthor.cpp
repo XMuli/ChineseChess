@@ -1,5 +1,5 @@
 ﻿// SPDX-License-Identifier: GPL-3.0-or-later
-// SPDX-FileCopyrightText: 2019-2025 XMuli & Contributors
+// SPDX-FileCopyrightText: 2019-2026 XMuli & Contributors
 // SPDX-GitHub: https://github.com/XMuli/ChineseChess
 // SPDX-Author: XMuli <xmulitech@gmail.com>
 
@@ -21,10 +21,10 @@ AboutAuthor::~AboutAuthor()
     delete ui;
 }
 
-void AboutAuthor::paintEvent(QPaintEvent *event)
-{
-    QPainter painter(this);
-    painter.drawPixmap(rect(), QPixmap(":/images/background.jpg"));
+// void AboutAuthor::paintEvent(QPaintEvent *event)
+// {
+//     QPainter painter(this);
+//     painter.drawPixmap(rect(), QPixmap(":/images/background.jpg"));
 
-    QDialog::paintEvent(event);
-}
+//     QDialog::paintEvent(event);
+// }

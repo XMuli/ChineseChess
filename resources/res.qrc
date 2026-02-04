@@ -11,5 +11,14 @@
         <file>sound/moveChess.wav</file>
         <file>sound/selectChess.wav</file>
         <file>sound/WinSound.wav</file>
+        <file>images/contributor/BlueArvin.png</file>
+        <file>images/contributor/Bruce-Ch.png</file>
+        <file>images/contributor/hmsjy2017.png</file>
+        <file>images/contributor/kirayamatoo.png</file>
+        <file>images/contributor/OpenAI-Codex.png</file>
+        <file>images/contributor/ryanfortner.png</file>
+        <file>images/contributor/Ubuntuser2012.png</file>
+        <file>images/contributor/XMuli.png</file>
+        <file>images/contributor/zjuyk.png</file>
     </qresource>
 </RCC>
