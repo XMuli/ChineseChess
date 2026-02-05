@@ -15,9 +15,12 @@
 
 [![macos-badge](https://github.com/xmuli/ChineseChess/workflows/MacOS/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/MacOS/badge.svg)  [![win-badge](https://github.com/xmuli/ChineseChess/workflows/Windows/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/Windows/badge.svg)  [![ubuntu-badge](https://github.com/xmuli/ChineseChess/workflows/Ubuntu/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/Ubuntu/badge.svg)   ![](https://img.shields.io/github/languages/code-size/XMuli/ChineseChess)  ![](https://img.shields.io/github/downloads/XMuli/ChineseChess/total)
 
+[<img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="260"/>](https://apps.microsoft.com/detail/9NK0TDS79DKG?mode=direct)
+
+<br>
 
 > - The Chinese chess online battle platform (including communication function) developed based on `Qt5.15 and Qt6.8` realizes the function of chess game in a single or networked state, no matter whether it is single or multiple players, regardless of whether the system is the same.
-> - More project collections: https://product.xmuli.tech
+> - This project is included in: [product](https://product.xmuli.tech)
 > - Video Effects: https://www.bilibili.com/video/av45509758
 
 <br>
