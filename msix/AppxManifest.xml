@@ -1,0 +1,30 @@
+<Package IgnorableNamespaces="build uap uap4 rescap rescap6" xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:build="http://schemas.microsoft.com/developer/appx/2015/build" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:rescap6="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities/6" xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6">
+  <Resources>
+    <Resource Language="en-US" />
+  </Resources>
+  <Dependencies>
+    <TargetDeviceFamily MaxVersionTested="10.0.17763.0" MinVersion="10.0.17763.0" Name="Windows.Desktop" />
+  </Dependencies>
+  <Properties>
+    <DisplayName>中国象棋 · Xiangqi (Chinese Chess)</DisplayName>
+    <PublisherDisplayName>Wengeng Zhang</PublisherDisplayName>
+    <Description>中国象棋网络对战平台(含通讯功能)，实现了在单机或联网状态下，无论是单人还是多人，无论使用系统是否相同，均可以实现象棋游戏功能。</Description>
+    <Logo>Assets\Logo.png</Logo>
+  </Properties>
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+  <Identity Publisher="CN=A54FFB99-BB48-4CCD-BEAF-A4FEC9E5241F" Name="58584VincentOrganization.XiangqiChineseChess" Version="7.2.0.0" ProcessorArchitecture="x64" />
+  <Applications>
+    <Application Id="Xiangqi" EntryPoint="Windows.FullTrustApplication" Executable="ChineseChess.exe">
+      <uap:VisualElements DisplayName="中国象棋 · Xiangqi (Chinese Chess)" Square150x150Logo="Assets/Logo.png" Square44x44Logo="Assets/Logo.png" BackgroundColor="#333333" Description="基于 QT 的跨平台网络象棋对战演示: Chinese Chess，也称『Xiangqi』『中国象棋』" />
+    </Application>
+  </Applications>
+  <build:Metadata>
+    <build:Item Name="MsixHero" Version="3.1.0.0" />
+    <build:Item Name="MakePri.exe" Version="10.0.22621.1" />
+    <build:Item Name="SignTool.exe" Version="10.0.22621.1" />
+    <build:Item Name="MakeAppx.exe" Version="10.0.22621.1" />
+    <build:Item Name="OperatingSystem" Version="10.0.26200.0" />
+  </build:Metadata>
+</Package>
