@@ -81,7 +81,7 @@
 
 <br>
 
-## Update (2022-2025 v7.x)
+## Update (2019-2026 v7.x)
 
 ### Features
 
@@ -218,9 +218,20 @@ Thanks for the contributions submitted by the friends 🥳🥳:
           <img src="https://fastly.jsdelivr.net/gh/XMuli/xmuliPic@pic/2024/202401282118007.png" width="50px"><br>
           <sub>zjuyk</sub>
         </a>
+       <th align="center" style="width: 80px;">
+        <a href="https://github.com/sum2012">
+          <img src="https://fastly.jsdelivr.net/gh/XMuli/xmuliPic@pic/2026/202602050959732.png" width="50px"><br>
+          <sub>sum2012</sub>
+        </a>
+       <th align="center" style="width: 80px;">
+        <a href="https://openai.com/codex">
+          <img src="https://fastly.jsdelivr.net/gh/XMuli/xmuliPic@pic/2026/202602051002745.png" width="50px"><br>
+          <sub>Codex</sub>
+        </a>
      </tr>
   </thead>
 </table>
+
 
 
 
