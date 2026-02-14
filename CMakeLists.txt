@@ -246,13 +246,15 @@ if (WIN32)
 endif()
 
 #******************************************* Qt runtime dependency deployment **********************************************
+option(SKIP_DEPLOY "Skip POST_BUILD Qt runtime deployment (for batch build scripts)" OFF)
+
 set(_qt_deploy_hints)
 if(QT_BIN_DIR)
     list(APPEND _qt_deploy_hints "${QT_BIN_DIR}")
 endif()
 
 set(_qt_runtime_deploy_handled FALSE)
-if(QT_VERSION_MAJOR EQUAL 6)
+if(NOT SKIP_DEPLOY AND QT_VERSION_MAJOR EQUAL 6)
     include(Qt6DeploySupport OPTIONAL RESULT_VARIABLE _qt6_deploysupport_included)
     if(_qt6_deploysupport_included AND NOT (_qt6_deploysupport_included MATCHES "NOTFOUND") AND COMMAND qt_generate_deploy_app_script)
         qt_generate_deploy_app_script(
@@ -271,7 +273,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
     endif()
 endif()
 
-if(NOT _qt_runtime_deploy_handled)
+if(NOT SKIP_DEPLOY AND NOT _qt_runtime_deploy_handled)
     if(QT_VERSION_MAJOR EQUAL 6 AND (NOT DEFINED _qt6_deploysupport_included OR _qt6_deploysupport_included MATCHES "NOTFOUND"))
         message(WARNING "Qt6DeploySupport.cmake unavailable; falling back to classic deploy helpers.")
     endif()

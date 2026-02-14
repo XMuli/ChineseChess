@@ -2,16 +2,29 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 #pragma parseroption -p
 #define MyAppName "ChineseChess"
-#define MyAppVersion "7.2.0"
+#ifndef MyAppVersion
+  #define MyAppVersion "7.2.0"
+#endif
 #define MyAppPublisher "WENGENG ZHANG"
 #define MyAppCompany "XMuli"
 #define MyAppURL "https://chinesechess.xmuli.tech"
-#define MyAppExeName "ChineseChess.exe"                     
-#define MyArchitecture "x64"   ; x64    x86
-#define MyCOMPILER_ID "msvc"   ; mingw  msvc
+#define MyAppExeName "ChineseChess.exe"
+#ifndef MyArchitecture
+  #define MyArchitecture "x64"
+#endif
+#ifndef MyCOMPILER_ID
+  #define MyCOMPILER_ID "msvc"
+#endif
 #define MySrc "."
-#define MyBinDir "bin"         ; Ïà¶ÔÓÚ .iss ÎÄ¼þµÄÂ·¾¶
-#define MyOutputDir "./"
+#ifndef MyBinDir
+  #define MyBinDir "bin"
+#endif
+#ifndef MyOutputDir
+  #define MyOutputDir "./release"
+#endif
+#ifndef OutputBaseFilename
+  #define OutputBaseFilename MyAppName + "_setup_" + MyCOMPILER_ID + "_" + MyAppVersion + "_" + MyArchitecture
+#endif
 #define MyGUID "{AF8B402E-8395-42E8-A55D-B34D45F7BDB3}"
 
 [Setup]
@@ -31,22 +44,22 @@ DefaultGroupName={#MyAppName}
 ;LicenseFile={#MyBinDir}\resources\licenses\License.md
 ;InfoBeforeFile={#MyBinDir}\resources\licenses\PrivacyAndDataProtection.md
 ;InfoAfterFile={#MyBinDir}\resources\licenses\other.md
-;¿ØÖÆÃæ°åÉ¾³ýµÄÍ¼±ê
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
 UninstallDisplayIcon={app}\{#MyAppExeName}
 UninstallDisplayName={#MyAppName}
 
 ; Uncomment the following line to run in non-administrative install mode (install for current user only.)
-; PrivilegesRequiredOverridesAllowed µÄÁ½¸ö²ÎÊý£¬dialog ¿ÉÑ¡°²×°Â·¾¶£» commandline ²»¿ÉÑ¡Â·¾¶
+; PrivilegesRequiredOverridesAllowed ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½dialog ï¿½ï¿½Ñ¡ï¿½ï¿½×°Â·ï¿½ï¿½ï¿½ï¿½ commandline ï¿½ï¿½ï¿½ï¿½Ñ¡Â·ï¿½ï¿½
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline   
 OutputDir={#MyOutputDir}
-OutputBaseFilename={#MyAppName}_setup_{#MyCOMPILER_ID}_{#MyAppVersion}_{#MyArchitecture}
+OutputBaseFilename={#OutputBaseFilename}
 SetupIconFile={#MyBinDir}\resources\logo\logo.ico
 Password=
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
-;¿ªÆôÈÕÖ¾¹¦ÄÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½
 ;SetupLogging=yes
 
 
@@ -105,7 +118,7 @@ Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Registry]
-; ½«°²×°Â·¾¶Ð´Èë×¢²á±í
+; ï¿½ï¿½ï¿½ï¿½×°Â·ï¿½ï¿½Ð´ï¿½ï¿½×¢ï¿½ï¿½ï¿½
 Root: HKCU; Subkey: "Software\{#MyAppCompany}\{#MyAppName}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
 
 [Run]
@@ -116,7 +129,7 @@ procedure InstallVCRuntime( );
 var
   szAppName, szParam, szExecutable, szArchitecture, szVCRuntimeInstalled, szFileExists: String;
   nRetCode: Integer;
-  bFileExists, bVCRuntimeInstalled: Boolean; // ¶¨ÒåÒ»¸ö²¼¶û±äÁ¿
+  bFileExists, bVCRuntimeInstalled: Boolean; // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
   
 begin
   szArchitecture := '{#MyArchitecture}';
@@ -130,7 +143,7 @@ begin
   end;
 
   szExecutable := ExpandConstant('{app}\') + szAppName;
-  bVCRuntimeInstalled := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{8bdfe669-9705-4184-9368-db9ce581e0e7}');   // x64»òx86 ¾ùÎª´Ë guid ÊýÖµ
+  bVCRuntimeInstalled := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{8bdfe669-9705-4184-9368-db9ce581e0e7}');   // x64ï¿½ï¿½x86 ï¿½ï¿½Îªï¿½ï¿½ guid ï¿½ï¿½Öµ
   bFileExists := FileExists(szExecutable);
   
   if bVCRuntimeInstalled then
@@ -145,12 +158,12 @@ begin
 
 	Log('-->szAppName:' + szAppName + ' szExecutable:' + szExecutable + ' szArchitecture:' + szArchitecture + ' szVCRuntimeInstalled:' + szVCRuntimeInstalled + ' szFileExists:' + szFileExists + ' The value of {app} is: ' + ExpandConstant('{app}'));
 
-  if bVCRuntimeInstalled then      // ÏµÍ³ÈôÒÑ¾­°²×°ÁË VC_redist ÔòÌø¹ý
+  if bVCRuntimeInstalled then      // ÏµÍ³ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½×°ï¿½ï¿½ VC_redist ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     begin
     Log('VC_redist is already installed. Skipping installation.');
     end
   else
-    if bFileExists then            // ´ËÎÄ¼þ´æÔÚ²Å°²×°
+    if bFileExists then            // ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ú²Å°ï¿½×°
       begin
 	  Log('VC_redist is install');
       szParam := '/install /quiet /norestart';
@@ -167,7 +180,7 @@ procedure CurStepChanged(CurStep: TSetupStep);
 var
   logfilepathname, logfilename, newfilepathname: string;
 begin
-  if CurStep = ssPostInstall then   // Í¨³£ÊÇÔÚ°²×°³ÌÐò³É¹¦°²×°Ó¦ÓÃ³ÌÐòÖ®ºóÖ´ÐÐµÄ²½Öè
+  if CurStep = ssPostInstall then   // Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½×°ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½×°Ó¦ï¿½Ã³ï¿½ï¿½ï¿½Ö®ï¿½ï¿½Ö´ï¿½ÐµÄ²ï¿½ï¿½ï¿½
   begin
     InstallVCRuntime();
     Log('RESULTCODE=0');
@@ -177,7 +190,7 @@ begin
   logfilename := ExtractFileName(logfilepathname);
   newfilepathname := ExpandConstant('{app}\') + logfilename;
 
-  if CurStep = ssDone then          // µ±Ç°µÄ°²×°²½ÖèÊÇ·ñÒÑ¾­Íê³É£¨Done£©
+  if CurStep = ssDone then          // ï¿½ï¿½Ç°ï¿½Ä°ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½É£ï¿½Doneï¿½ï¿½
   begin
     FileCopy(logfilepathname, newfilepathname, false);
   end;
