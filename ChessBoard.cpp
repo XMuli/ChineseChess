@@ -239,6 +239,18 @@ void ChessBoard::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
+
+    // 填充整个棋盘区域背景（label 范围），深木色作为桌面底色
+    const QPoint labelTopLeft = ui->label->mapTo(this, QPoint(0, 0));
+    QRectF fullBg(labelTopLeft.x(), labelTopLeft.y(),
+                  ui->label->width(), ui->label->height());
+    QLinearGradient outerBg(fullBg.topLeft(), fullBg.bottomRight());
+    outerBg.setColorAt(0, QColor(160, 120, 80));
+    outerBg.setColorAt(1, QColor(130, 95, 60));
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(outerBg);
+    painter.drawRect(fullBg);
+
     painter.save();
     painter.translate(boardOrigin);
     const qreal scale = boardSide / 960.0;

@@ -3,7 +3,7 @@
 setlocal enabledelayedexpansion
 
 :: Define the new path you want to prepend
-set new_path=C:\Qt\5.15.2\msvc2019_64\bin
+set new_path=C:\Qt\6.8.3\msvc2022_64\bin
 
 :: Check if the path already exists in PATH
 echo !PATH! | findstr /C:"%new_path%" > nul
