@@ -1,5 +1,5 @@
 name: Ubuntu_DEB
-on: 
+on:
   push:
     branches:
       - '**'
@@ -13,94 +13,50 @@ on:
 jobs:
   build:
     name: Build
-    runs-on:  ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-24.04
+    runs-on: ubuntu-24.04
     env:
       targetName: ChineseChess
       targetLowerName: chinesechess
       targetOS: debian
-      
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
           submodules: true
-     
-      - name: NameVersion
-        id: NameVersion
+
+      - name: Name version
+        id: name-version
         if: startsWith(github.event.ref, 'refs/tags/')
         shell: pwsh
         run: |
           $systemInfo="${{ env.targetOS }}-x64"
           $productVersion="${{ github.ref }}".substring("refs/tags/v".length)
-          # $productName="${{ env.targetName }}-$productVersion-protable-$systemInfo"
           $productDebName="${{ env.targetLowerName }}-$productVersion"
 
-          echo "systemInfo=$systemInfo" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "productVersion=$productVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          # echo "productName=$productName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "productDebName=$productDebName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "systemInfo=$systemInfo" >> $env:GITHUB_ENV
+          echo "productVersion=$productVersion" >> $env:GITHUB_ENV
+          echo "productDebName=$productDebName" >> $env:GITHUB_ENV
 
-      # 安装一些包
-      - name: AptInstallTool
-        id: AptInstallTool      
+      - name: Install build deps
         if: startsWith(github.event.ref, 'refs/tags/')
-        shell: bash
         run: |
-          sudo apt clean
-          sudo apt update
-          sudo apt install -y vim wget tar dh-make debmake lintian cmake ninja-build libgl1-mesa-dev \
-            qt6-base-dev qt6-tools-dev qt6-tools-dev-tools qt6-wayland-dev libqt6svg6-dev libqt6opengl6-dev
+          sudo apt-get update
+          sudo apt-get install -y vim wget tar dh-make debmake lintian cmake ninja-build libgl1-mesa-dev \
+            qt6-base-dev qt6-tools-dev qt6-tools-dev-tools qt6-multimedia-dev libqt6svg6-dev libqt6opengl6-dev
 
-      # tag 打包 .deb，无动态库
-      - name: DebPackage
-        id: DebPackage      
+      - name: Build DEB package
         if: startsWith(github.event.ref, 'refs/tags/')
-        shell: bash
         run: |
-          echo "-------------- debug 0 --------------"
-          pwd
-          
           cd ..
           cp -r ${{ env.targetName }} ${{ env.productDebName }}
-          tar -cvzf ${{ env.productDebName }}.tar.gz ${{ env.productDebName }}
+          tar -czf ${{ env.productDebName }}.tar.gz ${{ env.productDebName }}
 
-          echo "-------------- debug 1 --------------"
-          ls -al
-
-          cat >> ~/.bashrc <<EOF 
-          DEBEMAIL="xmulitech@gmail.com" 
-          DEBFULLNAME="XMuli" 
-          export DEBEMAIL DEBFULLNAME 
-          EOF
-
-          . ~/.bashrc
-          echo "-------------- debug 2 --------------"
-          cat  ~/.bashrc
+          export DEBEMAIL="xmulitech@gmail.com"
+          export DEBFULLNAME="XMuli"
 
           cd ${{ env.productDebName }}
-
-          pwd
-          ls -al
-          pwd
-          ls -al ..
-
-          echo "-------------- debug 3 --------------"
-          # dh_make -f ../${{ env.productDebName }}.tar.gz -s -c mit -y
-
-          # https://askubuntu.com/questions/675154/dpkg-buildpackage-dpkg-source-no-upstream-tarball-found
-          # dpkg-buildpackage -us -uc
           dpkg-buildpackage -b -rfakeroot -us -uc
-
-          echo "-------------- debug 4 --------------"
-          pwd
-          ls -al
-
-          pwd
-          ls -al ..
 
       - uses: actions/upload-artifact@v4
         if: startsWith(github.event.ref, 'refs/tags/')
@@ -108,10 +64,9 @@ jobs:
           name: ${{ env.productDebName }}-deb
           path: ../*.deb
 
-      # tag上传Release
-      - name: uploadRelease
+      - name: Upload Release
         if: startsWith(github.event.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.upload_release }}
         with:
@@ -120,4 +75,3 @@ jobs:
           files: |
             ../*.deb
           tag: ${{ github.ref }}
-          overwrite: true 

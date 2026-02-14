@@ -1,5 +1,5 @@
 name: MacOS
-on: 
+on:
   push:
     branches:
       - '**'
@@ -13,12 +13,11 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-14
     strategy:
       matrix:
-        os: [macos-14]
-        qt_ver: ['6.7.2']
-        qt_arch: [clang_64]
+        include:
+          - qt_ver: '6.8.3'
     env:
       targetName: ChineseChess
       targetOS: macos
@@ -28,7 +27,6 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ matrix.qt_ver }}
-          arch: ${{ matrix.qt_arch }}
 
       - uses: actions/checkout@v4
         with:
@@ -37,72 +35,30 @@ jobs:
 
       - name: Configure & Build
         run: |
-          cmake -S . -B build -DCMAKE_PREFIX_PATH="$Qt6_DIR"
-          cmake --build build --config Release -- -j$(sysctl -n hw.ncpu)
+          cmake -S . -B build -DCMAKE_PREFIX_PATH="$Qt6_DIR" -DSKIP_DEPLOY=ON
+          cmake --build build --config Release --parallel $(sysctl -n hw.ncpu)
 
-          echo "-------------- debug 1 --------------"
-          pwd
-          ls -al
-
-          echo "-------------- debug 2 --------------"
-          cd build/bin
-          ls -al
-
-      - name: NameVersion
-        id: NameVersion
+      - name: Name version
+        id: name-version
         if: startsWith(github.event.ref, 'refs/tags/')
         shell: pwsh
         run: |
           $systemInfo="${{ env.targetOS }}"
           $productVersion="${{ github.ref }}".substring("refs/tags/v".length)
-          $productName="${{ env.targetName }}-$productVersion-$systemInfo-x64"
+          $productName="${{ env.targetName }}-$productVersion-$systemInfo-arm64"
 
-          echo "systemInfo=$systemInfo" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "productVersion=$productVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "productName=$productName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "systemInfo=$systemInfo" >> $env:GITHUB_ENV
+          echo "productVersion=$productVersion" >> $env:GITHUB_ENV
+          echo "productName=$productName" >> $env:GITHUB_ENV
 
-      # tag打为.zip包 
-      - name: package
-        id: package
+      - name: Package
         if: startsWith(github.event.ref, 'refs/tags/')
-        shell: bash
         run: |
-          # 拷贝依赖
-          mkdir bin
-
-          echo "-------------- debug 1 --------------"
-          pwd
-          ls -al
-
-          cp -r build/bin/${{ env.targetName }}.app bin
-
-          echo "-------------- debug 2 --------------"
-          pwd
-          ls -al
-
-          echo "-------------- debug 3 --------------"
-          cd bin
-          pwd
-          ls -al
-          
+          mkdir -p pkg
+          cp -r build/bin/${{ env.targetName }}.app pkg/
+          cd pkg
           macdeployqt ${{ env.targetName }}.app -dmg
           mv ${{ env.targetName }}.dmg ../${{ env.productName }}.dmg
-
-
-          echo "-------------- debug 4 --------------"
-          pwd
-          ls -al
-
-
-          echo "-------------- debug 5 --------------"
-          cd ../
-          pwd
-          ls -al
-
-          echo "-------------- debug 6 --------------"
-          cd bin
-          ls -al
-          pwd
 
       - uses: actions/upload-artifact@v4
         if: startsWith(github.event.ref, 'refs/tags/')
@@ -110,10 +66,9 @@ jobs:
           name: ${{ env.productName }}-macos
           path: ${{ env.productName }}.dmg
 
-      # tag上传Release
-      - name: uploadRelease
+      - name: Upload Release
         if: startsWith(github.event.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.upload_release }}
         with:
@@ -122,4 +77,3 @@ jobs:
           files: |
             ${{ env.productName }}.dmg
           tag: ${{ github.ref }}
-          overwrite: true 

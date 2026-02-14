@@ -1,5 +1,5 @@
 name: Ubuntu
-on: 
+on:
   push:
     branches:
       - '**'
@@ -13,17 +13,16 @@ on:
 jobs:
   build:
     name: Build
-    runs-on:  ${{ matrix.os }}
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         include:
-          - os: ubuntu-24.04
-            qt_ver: '6.7.2'
-            qt_arch: gcc_64
+          - qt_ver: '6.8.3'
+            qt_arch: linux_gcc_64
     env:
       targetName: ChineseChess
       targetOS: debian
-      
+
     steps:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
@@ -31,7 +30,7 @@ jobs:
           version: ${{ matrix.qt_ver }}
           arch: ${{ matrix.qt_arch }}
           set-env: true
-      
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
@@ -42,15 +41,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ninja-build libgl1-mesa-dev libpulse-dev
 
-      - name: gcc build
-        id: gcc-build
-        shell: bash
+      - name: Build
         run: |
-          cmake -S . -B build -GNinja -DCMAKE_PREFIX_PATH="$Qt6_DIR"
-          cmake --build build
-     
-      - name: NameVersion
-        id: NameVersion
+          cmake -S . -B build -GNinja -DCMAKE_PREFIX_PATH="$Qt6_DIR" -DSKIP_DEPLOY=ON
+          cmake --build build --parallel
+
+      - name: Name version
+        id: name-version
         if: startsWith(github.event.ref, 'refs/tags/')
         shell: pwsh
         run: |
@@ -58,31 +55,28 @@ jobs:
           $productVersion="${{ github.ref }}".substring("refs/tags/v".length)
           $productName="${{ env.targetName }}-$productVersion-$systemInfo"
 
-          echo "systemInfo=$systemInfo" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "productVersion=$productVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "productName=$productName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "systemInfo=$systemInfo" >> $env:GITHUB_ENV
+          echo "productVersion=$productVersion" >> $env:GITHUB_ENV
+          echo "productName=$productName" >> $env:GITHUB_ENV
 
-      # tag打为.zip包 
       - name: Package
-        id: Package      
         if: startsWith(github.event.ref, 'refs/tags/')
-        shell: bash
         run: |
-          mkdir bin
+          mkdir -p pkg/bin
           target_path="build/bin/${{ env.targetName }}"
           if [ ! -f "$target_path" ]; then
-            target_path="${{ github.workspace }}/bin/${{ env.targetName }}"
+            target_path="bin/${{ env.targetName }}"
           fi
-          cp "$target_path" bin/${{ env.targetName }}
-          cp -r debian_portable/* bin
-          
-          sudo chmod 777 bin/ldd.sh
-          sudo chmod 777 bin/${{ env.targetName }}.sh
-          
-          cd bin
+          cp "$target_path" pkg/bin/${{ env.targetName }}
+          cp -r debian_portable/* pkg/bin/
+
+          chmod +x pkg/bin/ldd.sh
+          chmod +x pkg/bin/${{ env.targetName }}.sh
+
+          cd pkg/bin
           ./ldd.sh ${{ env.targetName }}
-          cd ..
-          zip -q -r ${{ env.productName }}.zip bin/*
+          cd ../..
+          zip -q -r ${{ env.productName }}.zip pkg/bin/*
 
       - uses: actions/upload-artifact@v4
         if: startsWith(github.event.ref, 'refs/tags/')
@@ -90,10 +84,9 @@ jobs:
           name: ${{ env.productName }}-linux
           path: ${{ env.productName }}.zip
 
-      # tag上传Release
-      - name: uploadRelease
+      - name: Upload Release
         if: startsWith(github.event.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.upload_release }}
         with:
@@ -102,4 +95,3 @@ jobs:
           files: |
             ${{ env.productName }}.zip
           tag: ${{ github.ref }}
-          overwrite: true 
