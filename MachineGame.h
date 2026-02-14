@@ -1,4 +1,4 @@
-﻿// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: 2019-2026 XMuli & Contributors
 // SPDX-GitHub: https://github.com/XMuli/ChineseChess
 // SPDX-Author: XMuli <xmulitech@gmail.com>
@@ -10,23 +10,33 @@
 #include "ChessStep.h"
 #include <QVector>
 
+enum class AIDifficulty { Easy = 0, Medium = 1, Hard = 2 };
+
 class MachineGame : public ChessBoard
 {
 public:
-    MachineGame();
+    MachineGame(AIDifficulty diff = AIDifficulty::Medium);
     ~MachineGame();
 
-    void saveStep(int moveID, int checkedID, int row, int col, QVector<ChessStep*>& steps);  // 保存棋子步骤
-    void getAllPossibleMoveStep(QVector<ChessStep*>& steps);                                 // 获得所有可能的移动步骤(击杀)
-    void getAllPossibleMoveStepAndNoKill(QVector<ChessStep*>& steps);                        // 获得所有可能的移动步骤(不击杀)
+    void saveStep(int moveID, int checkedID, int row, int col, QVector<ChessStep*>& steps);
+    void getAllMoves(QVector<ChessStep*>& steps, bool forRed);
 
-    void mouseReleaseEvent(QMouseEvent *ev) override;                                        // 鼠标释放事件：继承默认执棋流程
+    void mouseReleaseEvent(QMouseEvent *ev) override;
 
-    void fakeMove(ChessStep* step);          // 假装移动棋子
-    void unFakeMove(ChessStep* step);        // 撤回先前假装移动棋子的步骤
-    int calcScore();                         // 计算最好的局面分
-    ChessStep* getBestMove();                // 获得最好的移动步骤
-    void machineChooseAndMovePieces();       // 机器 黑方时间: 进行选棋+下棋
+    void fakeMove(ChessStep* step);
+    void unFakeMove(ChessStep* step);
+    int calcScore();
+    int alphaBeta(int depth, int alpha, int beta, bool isMaximizing);
+    ChessStep* getBestMove();
+    void machineChooseAndMovePieces();
+
+    int getSearchDepth() const;
+    bool isAiRed() const { return m_bAiIsRed; }
+    void setAiIsRed(bool red) { m_bAiIsRed = red; }
+
+protected:
+    AIDifficulty m_difficulty;
+    bool m_bAiIsRed = false;  // AI 默认执黑
 };
 
 #endif // MACHINEGAME_H

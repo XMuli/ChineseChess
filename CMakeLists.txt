@@ -97,6 +97,10 @@ set(src_files
     AboutAuthor.h
     AboutAuthor.cpp
     AboutAuthor.ui
+    PuzzleData.h
+    PuzzleData.cpp
+    PuzzleGame.h
+    PuzzleGame.cpp
 
     resources/res.qrc
     resources/logo/resources.rc

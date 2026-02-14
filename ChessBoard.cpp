@@ -249,34 +249,53 @@ void ChessBoard::paintEvent(QPaintEvent *event)
         m_nR = m_nD/2.0;   //棋子半径为d/2
 
         //*******************绘画棋盘*******************
+        // 棋盘背景：木纹色渐变
+        QRectF boardRect(m_nOffSet - m_nR, m_nOffSet - m_nR,
+                         8 * m_nD + 2 * m_nR, 9 * m_nD + 2 * m_nR);
+        QLinearGradient bgGrad(boardRect.topLeft(), boardRect.bottomRight());
+        bgGrad.setColorAt(0, QColor(222, 184, 135));
+        bgGrad.setColorAt(1, QColor(205, 170, 125));
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(bgGrad);
+        painter.drawRoundedRect(boardRect, 6, 6);
+
+        // 棋盘线条：深棕色
+        QPen boardPen(QColor(101, 67, 33), 2.0);
+        painter.setPen(boardPen);
+
         //绘画10条横线
         for(int i = 0; i <= 9; i++)
-            painter.drawLine(QPoint(m_nOffSet, m_nOffSet+i*m_nD), QPoint(m_nOffSet+8*m_nD, m_nOffSet+i*m_nD));
+            painter.drawLine(QPointF(m_nOffSet, m_nOffSet+i*m_nD), QPointF(m_nOffSet+8*m_nD, m_nOffSet+i*m_nD));
 
         //绘画9条竖线
         for(int i = 0; i <= 8; i++)
         {
             if(i==0 || i==8)
             {
-                painter.drawLine(QPoint(m_nOffSet+i*m_nD, m_nOffSet), QPoint(m_nOffSet+i*m_nD, m_nOffSet+9*m_nD));
+                painter.drawLine(QPointF(m_nOffSet+i*m_nD, m_nOffSet), QPointF(m_nOffSet+i*m_nD, m_nOffSet+9*m_nD));
             }
             else
             {
-                painter.drawLine(QPoint(m_nOffSet+i*m_nD, m_nOffSet), QPoint(m_nOffSet+i*m_nD, m_nOffSet+4*m_nD));
-                painter.drawLine(QPoint(m_nOffSet+i*m_nD, m_nOffSet+5*m_nD), QPoint(m_nOffSet+i*m_nD, m_nOffSet+9*m_nD));
+                painter.drawLine(QPointF(m_nOffSet+i*m_nD, m_nOffSet), QPointF(m_nOffSet+i*m_nD, m_nOffSet+4*m_nD));
+                painter.drawLine(QPointF(m_nOffSet+i*m_nD, m_nOffSet+5*m_nD), QPointF(m_nOffSet+i*m_nD, m_nOffSet+9*m_nD));
             }
         }
 
-        //绘画4条斜线
-        painter.drawLine(QPoint(m_nOffSet+3*m_nD, m_nOffSet), QPoint(m_nOffSet+5*m_nD, m_nOffSet+2*m_nD));
-        painter.drawLine(QPoint(m_nOffSet+3*m_nD, m_nOffSet+2*m_nD), QPoint(m_nOffSet+5*m_nD, m_nOffSet));
-        painter.drawLine(QPoint(m_nOffSet+3*m_nD, m_nOffSet+7*m_nD), QPoint(m_nOffSet+5*m_nD, m_nOffSet+9*m_nD));
-        painter.drawLine(QPoint(m_nOffSet+3*m_nD, m_nOffSet+9*m_nD), QPoint(m_nOffSet+5*m_nD, m_nOffSet+7*m_nD));
+        //绘画4条斜线（九宫格）
+        painter.drawLine(QPointF(m_nOffSet+3*m_nD, m_nOffSet), QPointF(m_nOffSet+5*m_nD, m_nOffSet+2*m_nD));
+        painter.drawLine(QPointF(m_nOffSet+3*m_nD, m_nOffSet+2*m_nD), QPointF(m_nOffSet+5*m_nD, m_nOffSet));
+        painter.drawLine(QPointF(m_nOffSet+3*m_nD, m_nOffSet+7*m_nD), QPointF(m_nOffSet+5*m_nD, m_nOffSet+9*m_nD));
+        painter.drawLine(QPointF(m_nOffSet+3*m_nD, m_nOffSet+9*m_nD), QPointF(m_nOffSet+5*m_nD, m_nOffSet+7*m_nD));
 
-        QRect rect1(m_nOffSet+m_nD,   m_nOffSet+4*m_nD, m_nD, m_nD);
-        QRect rect2(m_nOffSet+2*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
-        QRect rect3(m_nOffSet+5*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
-        QRect rect4(m_nOffSet+6*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
+        // 绘制星位标记（炮位和兵/卒位的十字花）
+        drawStarMarks(painter);
+
+        // 楚河汉界文字
+        QRectF rect1(m_nOffSet+m_nD,   m_nOffSet+4*m_nD, m_nD, m_nD);
+        QRectF rect2(m_nOffSet+2*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
+        QRectF rect3(m_nOffSet+5*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
+        QRectF rect4(m_nOffSet+6*m_nD, m_nOffSet+4*m_nD, m_nD, m_nD);
+        painter.setPen(QColor(120, 80, 40, 180));
         painter.setFont(QFont("FangSong", m_nR * 5 / 6, 800));
         painter.drawText(rect1, "楚", QTextOption(Qt::AlignCenter));
         painter.drawText(rect2, "河", QTextOption(Qt::AlignCenter));
@@ -301,24 +320,83 @@ void ChessBoard::drawChessPieces(QPainter &painter, int id)   //绘画单个具�
     if (isDead(id))
         return;
 
-    QPointF temp = center(id);
-    QRect rect(temp.x()-m_nR, temp.y()-m_nR, m_nD, m_nD);
+    QPointF c = center(id);
+    QRectF rect(c.x()-m_nR, c.y()-m_nR, m_nD, m_nD);
 
-    if(m_nSelectID == id)
-        painter.setBrush(QBrush(QColor(64,64,196, 80)));
+    // 棋子阴影
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(QColor(0, 0, 0, 40));
+    painter.drawEllipse(QPointF(c.x()+2, c.y()+2), m_nR, m_nR);
+
+    // 棋子底色：径向渐变
+    QRadialGradient pieceGrad(c, m_nR);
+    if (id < 16) { // 黑方
+        pieceGrad.setColorAt(0, QColor(80, 80, 80));
+        pieceGrad.setColorAt(0.8, QColor(45, 45, 45));
+        pieceGrad.setColorAt(1, QColor(30, 30, 30));
+    } else { // 红方
+        pieceGrad.setColorAt(0, QColor(210, 60, 60));
+        pieceGrad.setColorAt(0.8, QColor(160, 30, 30));
+        pieceGrad.setColorAt(1, QColor(120, 15, 15));
+    }
+    painter.setBrush(pieceGrad);
+
+    // 外圈边框
+    if (m_nSelectID == id)
+        painter.setPen(QPen(QColor(255, 215, 0), 3.0));  // 选中：金色发光
     else
-        painter.setBrush(QBrush(QColor(64,64,196, 10)));
+        painter.setPen(QPen(QColor(180, 150, 100), 2.5)); // 默认：木色边框
+    painter.drawEllipse(c, m_nR, m_nR);
 
-    painter.setPen(QColor(0, 0, 0));
-    painter.drawEllipse(center(id), m_nR, m_nR);  //绘画圆形
+    // 内圈装饰环
+    painter.setPen(QPen(QColor(200, 175, 130, 160), 1.2));
+    painter.setBrush(Qt::NoBrush);
+    painter.drawEllipse(c, m_nR * 0.82, m_nR * 0.82);
+
+    // 棋子文字
     painter.setFont(QFont("FangSong", m_nR * 5 / 6, 2700));
-
-    if(id < 16)
-        painter.setPen(QColor(0, 0, 0));
+    if (id < 16)
+        painter.setPen(QColor(220, 220, 220));  // 黑方：浅灰文字
     else
-        painter.setPen(QColor(255, 0, 0));
+        painter.setPen(QColor(255, 230, 200));  // 红方：暖白文字
 
-    painter.drawText(rect, m_ChessPieces[id].getnName(m_ChessPieces[id].m_bRed), QTextOption(Qt::AlignCenter));  //绘画圆形里面的汉字
+    painter.drawText(rect, m_ChessPieces[id].getnName(m_ChessPieces[id].m_bRed), QTextOption(Qt::AlignCenter));
+}
+
+void ChessBoard::drawStarMarks(QPainter &painter)
+{
+    // 星位标记位置：炮位(row=2,col=1/7; row=7,col=1/7) 和 兵/卒位
+    // 兵位: row=3,col=0/2/4/6/8; row=6,col=0/2/4/6/8
+    struct StarPos { int row; int col; };
+    StarPos positions[] = {
+        {2,1},{2,7},{7,1},{7,7},  // 炮位
+        {3,0},{3,2},{3,4},{3,6},{3,8},  // 黑方兵位
+        {6,0},{6,2},{6,4},{6,6},{6,8}   // 红方卒位
+    };
+
+    const qreal len = m_nD * 0.15;  // 标记线长度
+    const qreal gap = m_nD * 0.08;  // 与交叉点的间距
+    painter.setPen(QPen(QColor(101, 67, 33), 1.5));
+
+    for (const auto& pos : positions) {
+        qreal cx = m_nOffSet + pos.col * m_nD;
+        qreal cy = m_nOffSet + pos.row * m_nD;
+
+        // 右下角标记（边界列除外右侧）
+        if (pos.col < 8) {
+            painter.drawLine(QPointF(cx+gap, cy+gap), QPointF(cx+gap+len, cy+gap));
+            painter.drawLine(QPointF(cx+gap, cy+gap), QPointF(cx+gap, cy+gap+len));
+            painter.drawLine(QPointF(cx+gap, cy-gap), QPointF(cx+gap+len, cy-gap));
+            painter.drawLine(QPointF(cx+gap, cy-gap), QPointF(cx+gap, cy-gap-len));
+        }
+        // 左侧标记（边界列除外左侧）
+        if (pos.col > 0) {
+            painter.drawLine(QPointF(cx-gap, cy+gap), QPointF(cx-gap-len, cy+gap));
+            painter.drawLine(QPointF(cx-gap, cy+gap), QPointF(cx-gap, cy+gap+len));
+            painter.drawLine(QPointF(cx-gap, cy-gap), QPointF(cx-gap-len, cy-gap));
+            painter.drawLine(QPointF(cx-gap, cy-gap), QPointF(cx-gap, cy-gap-len));
+        }
+    }
 }
 
 void ChessBoard:: drawLastStep(QPainter &painter,QVector<ChessStep*>& steps)
@@ -466,8 +544,10 @@ bool ChessBoard:: isGeneral()
 
     for(int i=0; i<32; ++i)
     {
-        if(i>=16&& m_bIsRed)    //红方时采用黑子0-15 黑方时采用红子16-32
+        if(m_bIsRed && i >= 16)    //红方回合：只检查黑子(0-15)能否将红帅
             break;
+        if(!m_bIsRed && i < 16)    //黑方回合：跳过黑子，只检查红子(16-31)
+            continue;
 
         if(canMove(i,generalId,row,col) && !m_ChessPieces[i].m_bDead)   //依次遍历存活子能否移动到指定坐标
         {
@@ -670,7 +750,7 @@ bool ChessBoard::canMove(int moveId, int killId, int row, int col)
     default: break;
     }
 
-    return true;
+    return false;
 }
 
 bool ChessBoard::canMoveJIANG(int moveId, int killId, int row, int col)
@@ -978,6 +1058,13 @@ void ChessBoard::backOne()
     update();
     delete step;
     m_Chessvoice.voiceBack();
+
+    // 悔棋到第0步时停止计时器
+    if (m_ChessSteps.size() == 0 && m_bTimerAutoStarted) {
+        pauseGameTimer();
+        m_bTimerAutoStarted = false;
+        ui->pushButton_start->setText("开始");
+    }
 }
 
 void ChessBoard::back(ChessStep* step)
@@ -996,11 +1083,6 @@ void ChessBoard::updateTime()
 {
     *m_timeRecord = m_timeRecord->addSecs(1);
     ui->lcdNumber->display(m_timeRecord->toString("hh:mm:ss"));
-
-    if(m_bIsStart == false)
-        ui->pushButton_start->setText("开始");
-    else if(m_bIsStart == true)
-        ui->pushButton_start->setText("暂停");
 }
 
 void ChessBoard::on_pushButton_start_clicked()

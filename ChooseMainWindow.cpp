@@ -12,6 +12,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QSizePolicy>
+#include <QInputDialog>
 
 ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
 {
@@ -38,10 +39,11 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
     const QStringList texts = {
         "玩家自己对战",
         "玩家和 AI 对战",
-        "双人网络对战"
+        "双人网络对战",
+        "残局挑战"
     };
 
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 4; ++i) {
         m_buttons[i] = new QPushButton(texts[i], this);
         m_buttons[i]->setMinimumHeight(52);
         m_buttons[i]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -82,11 +84,24 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
 
     /*游戏方式二: 自己和电脑下棋【同一台PC机器】*/
     connect(m_buttons[1], &QPushButton::clicked,[=](){
+        // 选择AI难度
+        QStringList items = {"简单", "中等", "困难"};
+        bool ok = false;
+        QString item = QInputDialog::getItem(this, "AI难度", "请选择AI难度:", items, 1, false, &ok);
+        if (!ok) {
+            return;
+        }
+
+        AIDifficulty diff = AIDifficulty::Medium;
+        if (item == "简单") diff = AIDifficulty::Easy;
+        else if (item == "困难") diff = AIDifficulty::Hard;
+
         this->hide();
 
-        m_pMachineGame = new MachineGame();
+        m_pMachineGame = new MachineGame(diff);
         m_pMachineGame->showNetworkGui(false);
-        m_pMachineGame->setWindowTitle(QString("玩家和AI对战 %1").arg(XPROJECT_VERSION));
+        QString diffText = item;
+        m_pMachineGame->setWindowTitle(QString("玩家和AI对战 [%1] %2").arg(diffText).arg(XPROJECT_VERSION));
         m_pMachineGame->show();
 
         //返回主窗口
@@ -122,6 +137,44 @@ ChooseMainWindow::ChooseMainWindow(QWidget *parent) : QDialog(parent)
         //返回主窗口
         connect(m_pNetworkGame,&ChessBoard::toMenu,[=](){
             m_pNetworkGame->close();
+            this->show();
+        });
+    });
+
+    /*游戏方式四: 残局挑战*/
+    connect(m_buttons[3], &QPushButton::clicked,[=](){
+        QVector<PuzzleConfig> puzzles = getBuiltinPuzzles();
+        if (puzzles.isEmpty()) return;
+
+        // 选择残局
+        QStringList puzzleNames;
+        for (const auto& p : puzzles)
+            puzzleNames.append(p.name);
+
+        bool ok = false;
+        QString name = QInputDialog::getItem(this, "残局挑战", "请选择残局:", puzzleNames, 0, false, &ok);
+        if (!ok) return;
+
+        int idx = puzzleNames.indexOf(name);
+        if (idx < 0) return;
+
+        // 选择AI难度
+        QStringList diffItems = {"简单", "中等", "困难"};
+        QString diffStr = QInputDialog::getItem(this, "AI难度", "请选择AI难度:", diffItems, 1, false, &ok);
+        if (!ok) return;
+
+        AIDifficulty diff = AIDifficulty::Medium;
+        if (diffStr == "简单") diff = AIDifficulty::Easy;
+        else if (diffStr == "困难") diff = AIDifficulty::Hard;
+
+        this->hide();
+        m_pPuzzleGame = new PuzzleGame(puzzles[idx], diff);
+        m_pPuzzleGame->showNetworkGui(false);
+        m_pPuzzleGame->setWindowTitle(QString("残局挑战 - %1 [%2] %3").arg(name).arg(diffStr).arg(XPROJECT_VERSION));
+        m_pPuzzleGame->show();
+
+        connect(m_pPuzzleGame, &ChessBoard::toMenu, [=](){
+            m_pPuzzleGame->close();
             this->show();
         });
     });

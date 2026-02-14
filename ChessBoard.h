@@ -90,6 +90,7 @@ public:
     void drawChessPieces(QPainter& painter, int id);                    // 绘画单个具体的棋子
     void drawLastStep(QPainter &painter, QVector<ChessStep*>& steps);   // 绘制上次移动棋子的起止位置
     void drawTextStep();                                                // 绘制文本棋谱
+    void drawStarMarks(QPainter& painter);                              // 绘制星位标记
     void setPerspectiveFlipped(bool flipped);
 //    virtual void mousePressEvent(QMouseEvent *);                      // 鼠标点击事件
 //    virtual void clickPieces(int checkedID, int& row, int& col);
@@ -151,13 +152,13 @@ private slots:
 
 protected:
     Ui::ChessBoard *ui;
+    bool         m_bTimerAutoStarted;
 
 private:
     QTimer*      m_timer;                  // 定时器 每秒更新时间
     QTime*       m_timeRecord;             // 记录时间
     bool         m_bIsStart;               // 记录是否已经开始计时
     AboutAuthor* m_pAbout;
-    bool         m_bTimerAutoStarted;
 };
 
 #endif // CHESSBOARD_H

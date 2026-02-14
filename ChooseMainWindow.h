@@ -1,4 +1,4 @@
-﻿// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: 2019-2026 XMuli & Contributors
 // SPDX-GitHub: https://github.com/XMuli/ChineseChess
 // SPDX-Author: XMuli <xmulitech@gmail.com>
@@ -10,7 +10,7 @@
 #include "ChessBoard.h"
 #include "MachineGame.h"
 #include "NetworkGame.h"
-#include "ChessBoard.h"
+#include "PuzzleGame.h"
 
 class ChooseMainWindow : public QDialog
 {
@@ -20,10 +20,11 @@ public:
     virtual ~ChooseMainWindow() = default;
 
 private:
-    QPushButton* m_buttons[3];
+    QPushButton* m_buttons[4];
     ChessBoard*  m_pAgainstYourself;
     MachineGame* m_pMachineGame;
     NetworkGame* m_pNetworkGame;
+    PuzzleGame*  m_pPuzzleGame;
 };
 
 #endif // CHOOSEMAINWINDOW_H

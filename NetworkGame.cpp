@@ -214,6 +214,13 @@ void NetworkGame::slotRecv()
 {
     QByteArray arry = m_tcpSocket->readAll();
 
+    // 悔棋命令：0xFE 标记
+    if (static_cast<unsigned char>(arry[0]) == 0xFE) {
+        ChessBoard::back();
+        update();
+        return;
+    }
+
     int nCheckedID = arry[0];
     int nRow = arry[1];
     int nCol = arry[2];
@@ -221,6 +228,31 @@ void NetworkGame::slotRecv()
     //qDebug()<<nCheckedID<<"   "<<nRow<<"   "<<nCol<<"   ";
     ChessBoard::clickPieces(nCheckedID, nRow, nCol);
     update();   // Force repaint so the last-move trail & text stay in sync on both peers
+}
+
+void NetworkGame::back()
+{
+    // 只允许悔自己刚走的棋（当前轮到对方，说明自己刚走完）
+    if (m_ChessSteps.size() == 0 || m_bIsOver)
+        return;
+
+    bool currentTurnIsMyColor = (m_bIsRed == m_bIsTcpServer);
+    if (currentTurnIsMyColor) {
+        // 当前轮到自己，说明对方刚走完，不能悔对方的棋
+        return;
+    }
+
+    // 发送悔棋命令到对端
+    char arry[3];
+    arry[0] = static_cast<char>(0xFE);
+    arry[1] = 0;
+    arry[2] = 0;
+    if (m_tcpSocket)
+        m_tcpSocket->write(arry, 3);
+
+    // 本地执行悔棋
+    ChessBoard::back();
+    update();
 }
 
 void NetworkGame::onBtnTryConnect()

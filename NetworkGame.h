@@ -22,6 +22,7 @@ public:
     ~NetworkGame() = default;
     void initUI();
     void clickPieces(int checkedID, int& row, int& col) override;
+    void back() override;
 
 public slots:
     void slotNewConnection();
