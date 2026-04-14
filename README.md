@@ -15,7 +15,7 @@
 
 [![macos-badge](https://github.com/xmuli/ChineseChess/workflows/MacOS/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/MacOS/badge.svg)  [![win-badge](https://github.com/xmuli/ChineseChess/workflows/Windows/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/Windows/badge.svg)  [![ubuntu-badge](https://github.com/xmuli/ChineseChess/workflows/Ubuntu/badge.svg)](https://github.com/xmuli/ChineseChess/workflows/Ubuntu/badge.svg)   ![](https://img.shields.io/github/languages/code-size/XMuli/ChineseChess)  ![](https://img.shields.io/github/downloads/XMuli/ChineseChess/total)
 
-[<img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="260"/>](https://apps.microsoft.com/detail/9NK0TDS79DKG?mode=direct)
+[<img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="260"/>](https://apps.microsoft.com/detail/9PB0KV6JJL87?mode=direct)
 
 <br>
 
