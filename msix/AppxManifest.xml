@@ -6,7 +6,7 @@
     <TargetDeviceFamily MaxVersionTested="10.0.17763.0" MinVersion="10.0.17763.0" Name="Windows.Desktop" />
   </Dependencies>
   <Properties>
-    <DisplayName>中国象棋 · Xiangqi (ChineseChess)</DisplayName>
+    <DisplayName>中国象棋 · Xiangqi - (ChineseChess)</DisplayName>
     <PublisherDisplayName>Wengeng Zhang</PublisherDisplayName>
     <Description>中国象棋网络对战平台(含通讯功能)，实现了在单机或联网状态下，无论是单人还是多人，无论使用系统是否相同，均可以实现象棋游戏功能。</Description>
     <Logo>Assets\Logo.png</Logo>
@@ -14,10 +14,10 @@
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>
-  <Identity Publisher="CN=A54FFB99-BB48-4CCD-BEAF-A4FEC9E5241F" Name="58584VincentOrganization.323021E7C809F" Version="7.4.0.0" ProcessorArchitecture="x64" />
+  <Identity Publisher="CN=A54FFB99-BB48-4CCD-BEAF-A4FEC9E5241F" Name="58584VincentOrganization.Xiangqi-ChineseChess" Version="7.4.0.0" ProcessorArchitecture="x64" />
   <Applications>
     <Application Id="Xiangqi" EntryPoint="Windows.FullTrustApplication" Executable="ChineseChess.exe">
-      <uap:VisualElements DisplayName="中国象棋 · Xiangqi (ChineseChess)" Square150x150Logo="Assets/Logo.png" Square44x44Logo="Assets/Logo.png" BackgroundColor="#333333" Description="基于 QT 的跨平台网络象棋对战演示: Chinese Chess，也称『Xiangqi』『中国象棋』" />
+      <uap:VisualElements DisplayName="中国象棋 · Xiangqi (Chinese Chess)" Square150x150Logo="Assets/Logo.png" Square44x44Logo="Assets/Logo.png" BackgroundColor="#333333" Description="基于 QT 的跨平台网络象棋对战演示: Chinese Chess，也称『Xiangqi』『中国象棋』" />
     </Application>
   </Applications>
   <build:Metadata>
